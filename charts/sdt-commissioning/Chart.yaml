@@ -1,0 +1,12 @@
+apiVersion: v2
+appVersion: "1.0"
+description: A Helm chart for sdt-commissioning App
+name: sdt-sdt-commissioning
+home: https://github.com/hmcts/civil-sdt-commissioning
+version: 0.0.3
+maintainers:
+  - name: HMCTS sdt team
+dependencies:
+  - name: java
+    version: 4.0.12
+    repository: 'https://hmctspublic.azurecr.io/helm/v1/repo/'
