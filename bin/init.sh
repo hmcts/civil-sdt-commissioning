@@ -50,7 +50,7 @@ done
 # Replace port number
 for i in ${files_with_port[@]}
 do
-  perl -i -pe "s/4550/$port/g" ${i}
+  perl -i -pe "s/4750/$port/g" ${i}
 done
 
 # Replace spring-boot-template slug
