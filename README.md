@@ -1,4 +1,4 @@
-# Civil SDT Ccommissioning
+# Civil SDT Commissioning
 
 [![Build Status](https://travis-ci.org/hmcts/sdt-commissioning.svg?branch=master)](https://travis-ci.org/hmcts/sdt-commissioning)
 
