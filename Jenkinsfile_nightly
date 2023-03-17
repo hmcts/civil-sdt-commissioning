@@ -9,7 +9,7 @@ properties([
 
 def type = "java"
 def product = "civil"
-def component = "sdt-commissioning"
+def component = "civil-sdt-commissioning"
 
 withNightlyPipeline(type, product, component) {
   enableAksStagingDeployment()

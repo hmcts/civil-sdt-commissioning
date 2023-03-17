@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 #
 # Script to initialise project by executing steps as follows:
 #   - Replace port number
@@ -18,25 +18,25 @@ pushd $(dirname "$0")/.. > /dev/null
 
 slug="$product_name-$component_name"
 
-declare -a files_with_port=(.env Dockerfile README.md src/main/resources/application.yaml charts/rpe-spring-boot-template/values.yaml)
-declare -a files_with_slug=(build.gradle docker-compose.yml Dockerfile README.md ./infrastructure/main.tf ./src/main/java/uk/gov/hmcts/reform/demo/controllers/RootController.java charts/rpe-spring-boot-template/Chart.yaml)
+declare -a files_with_port=(.env Dockerfile README.md src/main/resources/application.yaml charts/civil-sdt-commissioning/values.yaml)
+declare -a files_with_slug=(build.gradle docker-compose.yml Dockerfile README.md ./infrastructure/main.tf ./src/main/java/uk/gov/hmcts/reform/demo/controllers/RootController.java charts/civil-sdt-commissioning/Chart.yaml)
 
 # Replace in CNP file
 for i in "Jenkinsfile_template"
 do
-  perl -i -pe "s/rpe/$product_name/g" ${i}
+  perl -i -pe "s/civil/$product_name/g" ${i}
   perl -i -pe "s/demo/$component_name/g" ${i}
 done
 
 # Replace image repo
 for i in "charts/rpe-spring-boot-template/values.yaml"
 do
-  perl -i -pe "s/rpe/$product_name/g" ${i}
-  perl -i -pe "s/spring-boot-template/$component_name/g" ${i}
+  perl -i -pe "s/civil/$product_name/g" ${i}
+  perl -i -pe "s/sdt-commissioning/$component_name/g" ${i}
 done
 
 #update maintainer name
-for i in "charts/rpe-spring-boot-template/Chart.yaml"
+for i in "charts/civil-sdt-commissioning/Chart.yaml"
 do
   perl -i -pe "s/rpe/$product_name/g" ${i}
 done
@@ -44,7 +44,7 @@ done
 #update app insights & file mount config
 for i in "src/main/resources/application.yaml"
 do
-  perl -i -pe "s/rpe/$product_name/g" ${i}
+  perl -i -pe "s/civil/$product_name/g" ${i}
 done
 
 # Replace port number
@@ -56,7 +56,7 @@ done
 # Replace spring-boot-template slug
 for i in ${files_with_slug[@]}
 do
-  perl -i -pe "s/spring-boot-template/$slug/g" ${i}
+  perl -i -pe "s/civil-sdt-commissioning/$slug/g" ${i}
 done
 
 # Replace demo package in all files under ./src

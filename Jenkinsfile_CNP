@@ -1,13 +1,30 @@
 #!groovy
-
+import uk.gov.hmcts.contino.AppPipelineDsl
+properties(
+        [
+                [
+                        $class       : 'GithubProjectProperty',
+                        projectUrlStr: 'https://github.com/hmcts/hmc-operational-reports-runner'
+                ],
+                pipelineTriggers([[$class: 'GitHubPushTrigger']])
+        ]
+)
 @Library("Infrastructure")
+
+import uk.gov.hmcts.contino.GradleBuilder
 
 def type = "java"
 def product = "civil"
 def component = "sdt-commissioning"
 
+GradleBuilder builder = new GradleBuilder(this, product)
+
 withPipeline(type, product, component) {
-  enableAksStagingDeployment()
-  disableLegacyDeployment()
-  nonServiceApp()
+
+  after('test') {
+    builder.gradle('integration')
+    // hmcts/cnp-jenkins-library may fail to copy artifacts after checkstyle error so repeat command (see /src/uk/gov/hmcts/contino/GradleBuilder.groovy)
+    steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/reports/checkstyle/*.html'
+  }
+
 }
