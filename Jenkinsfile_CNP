@@ -4,7 +4,7 @@ properties(
         [
                 [
                         $class       : 'GithubProjectProperty',
-                        projectUrlStr: 'https://github.com/hmcts/hmc-operational-reports-runner'
+                        projectUrlStr: 'https://github.com/hmcts/civil-sdt-commissioning'
                 ],
                 pipelineTriggers([[$class: 'GitHubPushTrigger']])
         ]
@@ -17,14 +17,83 @@ def type = "java"
 def product = "civil"
 def component = "sdt-commissioning"
 
+def branchesToSync = ['demo','perftest']
+
 GradleBuilder builder = new GradleBuilder(this, product)
 
 withPipeline(type, product, component) {
+  after('test') {
+    // hmcts/cnp-jenkins-library may fail to copy artifacts after checkstyle error so repeat command
+    // (see /src/uk/gov/hmcts/contino/GradleBuilder.groovy)
+    steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/reports/checkstyle/*.html'
+
+    steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/reports/pmd/*.html'
+  }
 
   after('test') {
     builder.gradle('integration')
-    // hmcts/cnp-jenkins-library may fail to copy artifacts after checkstyle error so repeat command (see /src/uk/gov/hmcts/contino/GradleBuilder.groovy)
+    // hmcts/cnp-jenkins-library may fail to copy artifacts after checkstyle error so repeat command
+    // (see /src/uk/gov/hmcts/contino/GradleBuilder.groovy)
     steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/reports/checkstyle/*.html'
   }
 
+  enableAksStagingDeployment()
+  disableLegacyDeployment()
+  nonServiceApp()
+  syncBranchesWithMaster(branchesToSync)
+
+  onPR() {
+    echo "Loading PR secrets"
+    loadVaultSecrets(prSecrets)
+    env.ENV='preview'
+  }
+
+  onNonPR() {
+    echo "Loading secrets"
+    loadVaultSecrets(secrets)
+    env.ENV='aat'
+  }
+
+  after('akschartsinstall') {
+
+    echo "Just waiting a while to ensure that the pod has run the job"
+    sh "sleep 120s"
+
+    // Execute functional tests
+    echo "Verifying that functional test run correctly"
+    try {
+      builder.gradle('functional')
+    } finally {
+      junit '**/test-results/**/*.xml'
+    }
+  }
+
+  after('functionalTest:preview') {
+    junit 'build/test-results/functional/**/*.xml'
+    archiveArtifacts 'build/reports/tests/functional/index.html'
+
+    publishHTML target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : "build/reports/tests/functional",
+            reportFiles          : "index.html",
+            reportName           : "civil-sdt-commissioning Functional Test Report"
+    ]
+  }
+
+  after('functionalTest:aat') {
+    junit 'build/test-results/functional/**/*.xml'
+    archiveArtifacts 'build/reports/tests/functional/index.html'
+
+    withPipeline(type, product, component) {}
+    publishHTML target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : "build/reports/tests/functional",
+            reportFiles          : "index.html",
+            reportName           : "civil-sdt-commissioning Functional Test Report"
+    ]
+  }
 }
