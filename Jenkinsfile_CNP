@@ -21,6 +21,25 @@ def branchesToSync = ['demo','perftest']
 
 GradleBuilder builder = new GradleBuilder(this, product)
 
+def secrets = [
+        'hmc-${env}': [
+        ]
+]
+
+def prSecrets = [
+        'hmc-aat': [
+        ]
+]
+
+static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
+  [$class     : 'AzureKeyVaultSecret',
+   secretType : 'Secret',
+   name       : secretName,
+   version    : '',
+   envVariable: envVar
+  ]
+}
+
 withPipeline(type, product, component) {
   after('test') {
     // hmcts/cnp-jenkins-library may fail to copy artifacts after checkstyle error so repeat command
