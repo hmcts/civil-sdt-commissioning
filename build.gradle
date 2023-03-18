@@ -1,6 +1,6 @@
 plugins {
   id 'application'
-  id 'checkstyle'
+  id 'uk.gov.hmcts.java' version '0.12.27'
   id 'pmd'
   id 'jacoco'
   id 'io.spring.dependency-management' version '1.1.0'
@@ -102,9 +102,11 @@ task smoke(type: Test) {
 }
 
 checkstyle {
-  maxWarnings = 0
   toolVersion = '10.7.0'
-  getConfigDirectory().set(new File(rootDir, 'config/checkstyle'))
+}
+
+tasks.withType(Checkstyle) {
+  exclude '**/package-info.java'
 }
 
 pmd {

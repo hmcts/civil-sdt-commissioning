@@ -3,7 +3,7 @@ appVersion: "1.0"
 description: A Helm chart for sdt-commissioning App
 name: sdt-sdt-commissioning
 home: https://github.com/hmcts/civil-sdt-commissioning
-version: 0.0.3
+version: 0.1.0
 maintainers:
   - name: HMCTS sdt team
 dependencies:
