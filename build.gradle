@@ -202,6 +202,7 @@ repositories {
 
 ext {
   log4JVersion = "2.19.0"
+  postgresqlVersion = '42.5.1'
 }
 
 ext['snakeyaml.version'] = '1.33'

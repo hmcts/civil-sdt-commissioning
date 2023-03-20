@@ -17,17 +17,20 @@ def type = "java"
 def product = "civil"
 def component = "sdt-commissioning"
 
-def branchesToSync = ['demo','perftest']
-
 GradleBuilder builder = new GradleBuilder(this, product)
 
 def secrets = [
-        'hmc-${env}': [
+        's2s-${env}': [
+                secret('microservicekey-civil-sdt-commissioning', 'SDT_COMMISSIONING_S2S_SECRET')
+        ],
+        'civil-${env}' : [
+                secret('OAUTH2-CLIENT-SECRET', 'OAUTH2_CLIENT_SECRET'),
+                secret('OAUTH2-CLIENT-ID', 'OAUTH2_CLIENT_ID'),
+                secret('LD-SDK-KEY', 'LD_SDK_KEY')
         ]
 ]
-
 def prSecrets = [
-        'hmc-aat': [
+        'civil-aat': [
         ]
 ]
 
@@ -40,26 +43,22 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
   ]
 }
 
+def vaultOverrides = [
+        'preview' : 'aat',
+        'spreview': 'saat'
+]
+// Configure branches to sync with master branch
+def branchesToSync = ['demo', 'ithc', 'perftest']
+
 withPipeline(type, product, component) {
-  after('test') {
-    // hmcts/cnp-jenkins-library may fail to copy artifacts after checkstyle error so repeat command
-    // (see /src/uk/gov/hmcts/contino/GradleBuilder.groovy)
-    steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/reports/checkstyle/*.html'
-
-    steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/reports/pmd/*.html'
-  }
-
-  after('test') {
-    builder.gradle('integration')
-    // hmcts/cnp-jenkins-library may fail to copy artifacts after checkstyle error so repeat command
-    // (see /src/uk/gov/hmcts/contino/GradleBuilder.groovy)
-    steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/reports/checkstyle/*.html'
-  }
-
+  overrideVaultEnvironments(vaultOverrides)
+  loadVaultSecrets(secrets)
+  enableDbMigration('civil')
   enableAksStagingDeployment()
-  disableLegacyDeployment()
-  nonServiceApp()
   syncBranchesWithMaster(branchesToSync)
+
+  env.S2S_URL_FOR_TESTS = "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+  env.IDAM_URL = "https://idam-api.aat.platform.hmcts.net"
 
   onPR() {
     echo "Loading PR secrets"
