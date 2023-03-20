@@ -29,7 +29,7 @@ do
 done
 
 # Replace image repo
-for i in "charts/rpe-spring-boot-template/values.yaml"
+for i in "charts/civil-sdt-commissioning/values.yaml"
 do
   perl -i -pe "s/civil/$product_name/g" ${i}
   perl -i -pe "s/sdt-commissioning/$component_name/g" ${i}
@@ -39,12 +39,6 @@ done
 for i in "charts/civil-sdt-commissioning/Chart.yaml"
 do
   perl -i -pe "s/rpe/$product_name/g" ${i}
-done
-
-#update app insights & file mount config
-for i in "src/main/resources/application.yaml"
-do
-  perl -i -pe "s/civil/$product_name/g" ${i}
 done
 
 # Replace port number
@@ -64,7 +58,7 @@ find ./src -type f -print0 | xargs -0 perl -i -pe "s/reform.demo/reform.$package
 perl -i -pe "s/reform.demo/reform.$package/g" build.gradle
 
 # Rename charts directory
-git mv charts/rpe-spring-boot-template charts/${slug}
+git mv charts/civil-sdt-commissioning charts/${slug}
 
 # Rename directory to provided package name
 git mv src/functionalTest/java/uk/gov/hmcts/reform/demo/ src/functionalTest/java/uk/gov/hmcts/reform/${package}

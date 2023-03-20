@@ -126,14 +126,14 @@ jacocoTestReport {
   }
 }
 
-project.tasks['sonarqube'].dependsOn jacocoTestReport
+project.tasks['sonarqube'].dependsOn test, integration, jacocoTestReport
 project.tasks['check'].dependsOn integration
 
 sonarqube {
   properties {
-    property "sonar.projectName", "Reform :: civil-sdt-commissioning"
-    property "sonar.projectKey", "uk.gov.hmcts.reform:civil-sdt-commissioning"
-    property "sonar.coverage.jacoco.xmlReportPaths", "${jacocoTestReport.reports.xml.destination.path}"
+    property "sonar.projectName", "Reform :: Civil SDT Ccommissioning"
+    property "sonar.projectKey", "CIVILSDTCOMMISSIONING"
+    property "sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml"
   }
 }
 
