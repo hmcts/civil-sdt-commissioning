@@ -20,17 +20,10 @@ def component = "sdt-commissioning"
 GradleBuilder builder = new GradleBuilder(this, product)
 
 def secrets = [
-        's2s-${env}': [
-                secret('microservicekey-civil-sdt-commissioning', 'SDT_COMMISSIONING_S2S_SECRET')
-        ],
         'civil-${env}' : [
                 secret('OAUTH2-CLIENT-SECRET', 'OAUTH2_CLIENT_SECRET'),
                 secret('OAUTH2-CLIENT-ID', 'OAUTH2_CLIENT_ID'),
                 secret('LD-SDK-KEY', 'LD_SDK_KEY')
-        ]
-]
-def prSecrets = [
-        'civil-aat': [
         ]
 ]
 
@@ -86,6 +79,50 @@ withPipeline(type, product, component) {
     }
   }
 
+
+  after('sonarscan') {
+    publishHTML target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : "build/reports/tests/test",
+            reportFiles          : "index.html",
+            reportName           : "Unit Tests Report"
+    ]
+
+    publishHTML target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : "build/reports/tests/integration",
+            reportFiles          : "index.html",
+            reportName           : "Integration Test Report"
+    ]
+  }
+
+  after('smoketest:preview') {
+    publishHTML target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : "build/reports/tests/smoke",
+            reportFiles          : "index.html",
+            reportName           : "Smoke Test Report"
+    ]
+  }
+
+  after('smoketest:aat') {
+    publishHTML target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : "build/reports/tests/smoke",
+            reportFiles          : "index.html",
+            reportName           : "Smoke Test Report"
+    ]
+  }
+
+
   after('functionalTest:preview') {
     junit 'build/test-results/functional/**/*.xml'
     archiveArtifacts 'build/reports/tests/functional/index.html'
@@ -112,6 +149,18 @@ withPipeline(type, product, component) {
             reportDir            : "build/reports/tests/functional",
             reportFiles          : "index.html",
             reportName           : "civil-sdt-commissioning Functional Test Report"
+    ]
+  }
+
+  after('functionalTest:preview') {
+    steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
+    publishHTML target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : "target/site/serenity/",
+            reportFiles          : "index.html",
+            reportName           : "Functional Tests Report"
     ]
   }
 }

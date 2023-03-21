@@ -3,8 +3,6 @@ provider "azurerm" {
 }
 locals {
   key_vault_name          = join("-", [var.product, "aat"])
-  s2s_key_vault_name        = join("-", ["s2s", var.env])
-  s2s_vault_resource_group  = join("-", ["rpe-service-auth-provider", var.env])
 }
 
 module "db-sdt-commissioning-v11" {
@@ -24,22 +22,6 @@ module "db-sdt-commissioning-v11" {
 data "azurerm_key_vault" "rd_key_vault" {
   name                = local.key_vault_name
   resource_group_name = local.key_vault_name
-}
-
-data "azurerm_key_vault" "s2s_key_vault" {
-  name                = local.s2s_key_vault_name
-  resource_group_name = local.s2s_vault_resource_group
-}
-
-data "azurerm_key_vault_secret" "s2s_secret" {
-  name          = "microservicekey-civil-sdt-commissioning"
-  key_vault_id  = data.azurerm_key_vault.s2s_key_vault.id
-}
-
-resource "azurerm_key_vault_secret" "sdt_commissioning_s2s_secret" {
-  name          = "civil-sdt-commissioning-s2s-secret"
-  value         = data.azurerm_key_vault_secret.s2s_secret.value
-  key_vault_id  = data.azurerm_key_vault.rd_key_vault.id
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES-USER" {

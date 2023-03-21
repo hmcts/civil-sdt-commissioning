@@ -32,7 +32,7 @@ done
 for i in "charts/civil-sdt-commissioning/values.yaml"
 do
   perl -i -pe "s/civil/$product_name/g" ${i}
-  perl -i -pe "s/sdt-commissioning/$component_name/g" ${i}
+  perl -i -pe "s/civil-sdt-commissioning/$component_name/g" ${i}
 done
 
 #update maintainer name
