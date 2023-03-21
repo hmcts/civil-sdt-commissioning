@@ -40,6 +40,7 @@ def vaultOverrides = [
         'preview' : 'aat',
         'spreview': 'saat'
 ]
+
 // Configure branches to sync with master branch
 def branchesToSync = ['demo', 'ithc', 'perftest']
 
@@ -78,7 +79,6 @@ withPipeline(type, product, component) {
       junit '**/test-results/**/*.xml'
     }
   }
-
 
   after('sonarscan') {
     publishHTML target: [
@@ -121,7 +121,6 @@ withPipeline(type, product, component) {
             reportName           : "Smoke Test Report"
     ]
   }
-
 
   after('functionalTest:preview') {
     junit 'build/test-results/functional/**/*.xml'

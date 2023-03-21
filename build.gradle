@@ -119,7 +119,7 @@ pmd {
 }
 
 jacocoTestReport {
-  executionData(test, integration)
+  executionData(test)
   reports {
     xml.required = true
     csv.required = false
@@ -128,22 +128,22 @@ jacocoTestReport {
 }
 
 pitest {
-  junit5PluginVersion = '0.12'
-  targetClasses = ['uk.gov.hmcts.reform.rd.commondata.*']
-  testSourceSets = [sourceSets.integrationTest, sourceSets.test]
+  junit5PluginVersion = '0.15'
+  targetClasses = ['uk.gov.hmcts.reform.cdapi.*']
   excludedClasses = [
-          'uk.gov.hmcts.reform.rd.commondata.RdCommondataLoadApplication'
-
+          'uk.gov.hmcts.reform.cdapi.config.*',
+          'uk.gov.hmcts.reform.cdapi.domain.*'
   ]
-  threads = 6
+  threads = 10
   enableDefaultIncrementalAnalysis = true
   historyInputLocation = 'build/reports/pitest/fastermutationtesting'
   historyOutputLocation = 'build/reports/pitest/fastermutationtestingoutput'
   outputFormats = ['XML', 'HTML']
   timestampedReports = true
-  mutationThreshold = 85
+  mutationThreshold = 90
   useClasspathFile = true
 }
+
 project.tasks['pitest'].group = "Verification"
 project.tasks['sonarqube'].group = "Verification"
 project.tasks['sonarqube'].dependsOn test,jacocoTestReport
@@ -201,8 +201,13 @@ repositories {
 }
 
 ext {
-  log4JVersion = "2.19.0"
+  log4JVersion = '2.19.0'
+  lombokVersion = '1.18.24'
+  serenity      = '2.0.76'
   postgresqlVersion = '42.5.1'
+  gradlePitest    = '1.5.1'
+  pitest          = '1.7.0'
+  sonarPitest     = '0.5'
 }
 
 ext['snakeyaml.version'] = '1.33'

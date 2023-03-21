@@ -12,10 +12,7 @@ def product = "civil"
 def component = "sdt-commissioning"
 
 def secrets = [
-        's2s-${env}': [
-                secret('microservicekey-civil-sdt-commissioning', 'SDT_COMMISSIONING_S2S_SECRET')
-        ],
-        'rd-${env}' : [
+        'civil-${env}' : [
                 secret('OAUTH2-CLIENT-SECRET', 'OAUTH2_CLIENT_SECRET'),
                 secret('OAUTH2-CLIENT-ID', 'OAUTH2_CLIENT_ID'),
                 secret('LD-SDK-KEY', 'LD_SDK_KEY')
