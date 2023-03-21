@@ -11,7 +11,7 @@
 
   <!--Please add all the temporary suppression under the below section-->
   <suppress>
-    <notes>Temporary Suppression1
+    <notes>Temporary Suppression
       CVE-2022-1471
     </notes>
     <cve>CVE-2022-1471</cve>
