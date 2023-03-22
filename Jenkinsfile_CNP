@@ -19,13 +19,13 @@ def component = "sdt-commissioning"
 
 GradleBuilder builder = new GradleBuilder(this, product)
 
-//def secrets = [
-//        'civil-${env}' : [
+def secrets = [
+        'civil-${env}' : [
 //                secret('OAUTH2-CLIENT-SECRET', 'OAUTH2_CLIENT_SECRET'),
 //                secret('OAUTH2-CLIENT-ID', 'OAUTH2_CLIENT_ID'),
 //                secret('LD-SDK-KEY', 'LD_SDK_KEY')
-//        ]
-//]
+        ]
+]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
   [$class     : 'AzureKeyVaultSecret',
@@ -46,7 +46,7 @@ def branchesToSync = ['demo', 'ithc', 'perftest']
 
 withPipeline(type, product, component) {
   overrideVaultEnvironments(vaultOverrides)
-  loadVaultSecrets(secrets)
+//  loadVaultSecrets(secrets)
   enableDbMigration('civil')
   enableAksStagingDeployment()
   syncBranchesWithMaster(branchesToSync)
@@ -55,13 +55,13 @@ withPipeline(type, product, component) {
 
   onPR() {
     echo "Loading PR secrets"
-    loadVaultSecrets(prSecrets)
+//    loadVaultSecrets(prSecrets)
     env.ENV='preview'
   }
 
   onNonPR() {
     echo "Loading secrets"
-    loadVaultSecrets(secrets)
+//    loadVaultSecrets(secrets)
     env.ENV='aat'
   }
 

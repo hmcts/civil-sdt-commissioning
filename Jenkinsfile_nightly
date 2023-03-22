@@ -11,13 +11,13 @@ def type = "java"
 def product = "civil"
 def component = "sdt-commissioning"
 
-//def secrets = [
-//        'civil-${env}' : [
+def secrets = [
+        'civil-${env}' : [
 //                secret('OAUTH2-CLIENT-SECRET', 'OAUTH2_CLIENT_SECRET'),
 //                secret('OAUTH2-CLIENT-ID', 'OAUTH2_CLIENT_ID'),
 //                secret('LD-SDK-KEY', 'LD_SDK_KEY')
-//        ]
-//]
+        ]
+]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
   [$class     : 'AzureKeyVaultSecret',
