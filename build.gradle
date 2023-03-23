@@ -133,7 +133,7 @@ jacocoTestReport {
   reports {
     xml.required = true
     csv.required = false
-    xml.destination file("${buildDir}/reports/jacoco/test/jacocoTestReport.xml")
+    html.required = true
   }
 }
 
@@ -162,7 +162,6 @@ sonarqube {
   properties {
     property "sonar.projectName", "Reform :: civil-sdt-commissioning"
     property "sonar.projectKey", "uk.gov.hmcts.reform:civil-sdt-commissioning"
-    property "sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml"
     property "sonar.pitest.mode", "reuseReport"
     property "sonar.pitest.reportsDirectory", "build/reports/pitest"
   }
