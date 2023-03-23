@@ -11,13 +11,62 @@ def type = "java"
 def product = "civil"
 def component = "sdt-commissioning"
 
-withNightlyPipeline(type, product, component) {
-  enableAksStagingDeployment()
-  disableLegacyDeployment()
-  nonServiceApp()
-  enableFortifyScan()
+def secrets = [
+        'civil-${env}' : [
+//                secret('OAUTH2-CLIENT-SECRET', 'OAUTH2_CLIENT_SECRET'),
+//                secret('OAUTH2-CLIENT-ID', 'OAUTH2_CLIENT_ID'),
+//                secret('LD-SDK-KEY', 'LD_SDK_KEY')
+        ]
+]
 
-  after('fortify-scan') {
-    steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/Fortify Scan/**/*'
+static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
+  [$class     : 'AzureKeyVaultSecret',
+   secretType : 'Secret',
+   name       : secretName,
+   version    : '',
+   envVariable: envVar
+  ]
+}
+
+def vaultOverrides = [
+        'preview' : 'aat',
+        'spreview': 'saat'
+]
+
+withNightlyPipeline(type, product, component) {
+  env.IDAM_URL = "https://idam-api.aat.platform.hmcts.net"
+  env.TEST_URL = "http://civil-sdt-commissioning-aat.service.core-compute-aat.internal"
+  env.Rules = params.SecurityRules
+  env.execution_environment = "aat"
+
+  overrideVaultEnvironments(vaultOverrides)
+  loadVaultSecrets(secrets)
+
+  enableMutationTest()
+  enableFullFunctionalTest()
+  enableSecurityScan()
+
+  after('mutationTest') {
+    publishHTML target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : "build/reports/pitest",
+            reportFiles          : "index.html",
+            reportName           : "Mutation Test Report"
+    ]
+  }
+
+  after('fullFunctionalTest') {
+    steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
+    steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'build/reports/**/*'
+    publishHTML target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : "target/site/serenity/",
+            reportFiles          : "index.html",
+            reportName           : "Functional Tests Report"
+    ]
   }
 }

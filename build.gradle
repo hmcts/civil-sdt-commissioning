@@ -1,13 +1,14 @@
 plugins {
   id 'application'
-  id 'checkstyle'
-  id 'pmd'
-  id 'jacoco'
-  id 'io.spring.dependency-management' version '1.1.0'
-  id 'org.springframework.boot' version '2.7.9'
-  id 'org.owasp.dependencycheck' version '8.1.2'
   id 'com.github.ben-manes.versions' version '0.45.0'
+  id 'info.solidsoft.pitest' version '1.9.0'
+  id 'io.spring.dependency-management' version '1.1.0'
+  id 'jacoco'
   id 'org.sonarqube' version '4.0.0.2929'
+  id 'org.springframework.boot' version '2.7.9'
+  id 'org.owasp.dependencycheck' version '8.2.0'
+  id 'pmd'
+  id 'uk.gov.hmcts.java' version '0.12.27'
 }
 
 group = 'uk.gov.hmcts.reform'
@@ -59,7 +60,7 @@ configurations {
   smokeTestRuntimeOnly.extendsFrom runtimeOnly
 }
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach() {
   options.compilerArgs << "-Xlint:unchecked" << "-Werror"
 }
 
@@ -68,7 +69,7 @@ tasks.withType(JavaExec).configureEach {
   javaLauncher.set(javaToolchains.launcherFor(java.toolchain))
 }
 
-tasks.withType(Test) {
+tasks.withType(Test).configureEach {
   useJUnitPlatform()
 
   testLogging {
@@ -102,10 +103,21 @@ task smoke(type: Test) {
 }
 
 checkstyle {
-  maxWarnings = 0
   toolVersion = '10.7.0'
-  getConfigDirectory().set(new File(rootDir, 'config/checkstyle'))
 }
+
+tasks.withType(Checkstyle).configureEach() {
+  exclude '**/package-info.java'
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'application'
+apply plugin: "org.sonarqube"
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.github.ben-manes.versions'
 
 pmd {
   toolVersion = "6.55.0"
@@ -117,22 +129,41 @@ pmd {
 }
 
 jacocoTestReport {
-  executionData(test, integration)
+  executionData(test)
   reports {
     xml.required = true
     csv.required = false
-    xml.destination file("${buildDir}/reports/jacoco/test/jacocoTestReport.xml")
+    html.required = true
   }
 }
 
-project.tasks['sonarqube'].dependsOn jacocoTestReport
-project.tasks['check'].dependsOn integration
+pitest {
+  junit5PluginVersion = '1.1.2'
+  targetClasses = ['uk.gov.hmcts.reform.sdt.*']
+  excludedClasses = [
+          'uk.gov.hmcts.reform.sdt.config.*',
+  ]
+  threads = 10
+  enableDefaultIncrementalAnalysis = true
+  historyInputLocation = 'build/reports/pitest/fastermutationtesting'
+  historyOutputLocation = 'build/reports/pitest/fastermutationtestingoutput'
+  outputFormats = ['XML', 'HTML']
+  timestampedReports = true
+  mutationThreshold = 90
+  useClasspathFile = true
+}
+
+project.tasks['pitest'].group = "Verification"
+project.tasks['sonarqube'].group = "Verification"
+project.tasks['sonarqube'].dependsOn test,jacocoTestReport
+
 
 sonarqube {
   properties {
     property "sonar.projectName", "Reform :: civil-sdt-commissioning"
     property "sonar.projectKey", "uk.gov.hmcts.reform:civil-sdt-commissioning"
-    property "sonar.coverage.jacoco.xmlReportPaths", "${jacocoTestReport.reports.xml.destination.path}"
+    property "sonar.pitest.mode", "reuseReport"
+    property "sonar.pitest.reportsDirectory", "build/reports/pitest"
   }
 }
 
@@ -159,16 +190,6 @@ dependencyCheck {
     // Disable scanning of .NET related binaries
     assemblyEnabled = false
   }
-  skipConfigurations = [
-    "checkstyle",
-    "compileOnly",
-    "pmd",
-    "integrationTest",
-    "functionalTest",
-    "smokeTest",
-    "contractTestRuntimeClasspath",
-    "contractTestCompileClasspath"
-  ]
 }
 
 repositories {
@@ -178,7 +199,13 @@ repositories {
 }
 
 ext {
-  log4JVersion = "2.19.0"
+  log4JVersion = '2.19.0'
+  lombokVersion = '1.18.24'
+  serenity      = '2.0.76'
+  postgresqlVersion = '42.5.1'
+  gradlePitest    = '1.5.1'
+  pitest          = '1.10.3'
+  sonarPitest     = '0.5'
 }
 
 ext['snakeyaml.version'] = '1.33'

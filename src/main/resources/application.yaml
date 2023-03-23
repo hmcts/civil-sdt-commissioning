@@ -15,11 +15,11 @@ springdoc:
   packagesToScan: uk.gov.hmcts.reform.sdt.controllers
 
 #If you use a database then uncomment below lines and update db properties accordingly
-spring:
-  config:
-    import: "optional:configtree:/mnt/secrets/sdt/"
-  application:
-    name: Civil SDT Commissioning
+#spring:
+#  config:
+#    import: "optional:configtree:/mnt/secrets/"
+#  application:
+#    name: Civil SDT Commissioning
 #  datasource:
 #    driver-class-name: org.postgresql.Driver
 #    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}${DB_OPTIONS:}
@@ -31,7 +31,7 @@ spring:
 #      minimumIdle: 2
 #      maximumPoolSize: 10
 #      idleTimeout: 10000
-#      poolName: {to-be-defined}HikariCP
+#      poolName: HikariCP
 #      maxLifetime: 7200000
 #      connectionTimeout: 30000
 #  jpa:
@@ -44,4 +44,4 @@ spring:
 
 azure:
   application-insights:
-    instrumentation-key: ${sdt.AppInsightsInstrumentationKey:00000000-0000-0000-0000-000000000000}
+    instrumentation-key: ${civil.AppInsightsInstrumentationKey:00000000-0000-0000-0000-000000000000}
