@@ -76,20 +76,6 @@ withPipeline(type, product, component) {
     ]
   }
 
-  after('functionalTest:preview') {
-    junit 'build/test-results/functional/**/*.xml'
-    archiveArtifacts 'build/reports/tests/functional/index.html'
-
-    publishHTML target: [
-            allowMissing         : true,
-            alwaysLinkToLastBuild: true,
-            keepAll              : true,
-            reportDir            : "build/reports/tests/functional",
-            reportFiles          : "index.html",
-            reportName           : "civil-sdt-commissioning Functional Test Report"
-    ]
-  }
-
   after('functionalTest:aat') {
     junit 'build/test-results/functional/**/*.xml'
     archiveArtifacts 'build/reports/tests/functional/index.html'
