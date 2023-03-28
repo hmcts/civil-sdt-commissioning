@@ -36,7 +36,7 @@ withNightlyPipeline(type, product, component) {
   enableMutationTest()
   enableSecurityScan()
 
-  alwaysAfter('mutationTest') {
+  after('mutationTest') {
     publishHTML target: [
             allowMissing         : true,
             alwaysLinkToLastBuild: true,
@@ -47,7 +47,7 @@ withNightlyPipeline(type, product, component) {
     ]
   }
 
-  alwaysAfter('fullFunctionalTest') {
+  after('fullFunctionalTest') {
     steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
     steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'build/reports/**/*'
     publishHTML target: [

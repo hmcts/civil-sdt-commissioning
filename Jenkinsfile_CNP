@@ -55,7 +55,7 @@ withPipeline(type, product, component) {
     env.ENV='aat'
   }
 
-  alwaysAfter('akschartsinstall') {
+  after('akschartsinstall') {
 
     echo "Just waiting a while to ensure that the pod has run the job"
     sh "sleep 120s"
@@ -69,7 +69,7 @@ withPipeline(type, product, component) {
     }
   }
 
-  alwaysAfter('sonarscan') {
+  after('sonarscan') {
     publishHTML target: [
             allowMissing         : true,
             alwaysLinkToLastBuild: true,
@@ -89,7 +89,7 @@ withPipeline(type, product, component) {
     ]
   }
 
-  alwaysAter('smoketest:preview') {
+  after('smoketest:preview') {
     publishHTML target: [
             allowMissing         : true,
             alwaysLinkToLastBuild: true,
@@ -100,7 +100,7 @@ withPipeline(type, product, component) {
     ]
   }
 
-  alwaysAfter('smoketest:aat') {
+  after('smoketest:aat') {
     publishHTML target: [
             allowMissing         : true,
             alwaysLinkToLastBuild: true,
@@ -111,7 +111,7 @@ withPipeline(type, product, component) {
     ]
   }
 
-  alwaysAfter('functionalTest:preview') {
+  after('functionalTest:preview') {
     junit 'build/test-results/functional/**/*.xml'
     archiveArtifacts 'build/reports/tests/functional/index.html'
 
@@ -125,7 +125,7 @@ withPipeline(type, product, component) {
     ]
   }
 
-  alwaysAfter('functionalTest:aat') {
+  after('functionalTest:aat') {
     junit 'build/test-results/functional/**/*.xml'
     archiveArtifacts 'build/reports/tests/functional/index.html'
 
@@ -140,7 +140,7 @@ withPipeline(type, product, component) {
     ]
   }
 
-  alwaysAfter('functionalTest:preview') {
+  after('functionalTest:preview') {
     steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
     publishHTML target: [
             allowMissing         : true,
