@@ -34,10 +34,9 @@ withNightlyPipeline(type, product, component) {
   overrideVaultEnvironments(vaultOverrides)
 
   enableMutationTest()
-  enableFullFunctionalTest()
   enableSecurityScan()
 
-  after('mutationTest') {
+  alwaysAfter('mutationTest') {
     publishHTML target: [
             allowMissing         : true,
             alwaysLinkToLastBuild: true,
@@ -48,7 +47,7 @@ withNightlyPipeline(type, product, component) {
     ]
   }
 
-  after('fullFunctionalTest') {
+  alwaysAfter('fullFunctionalTest') {
     steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
     steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'build/reports/**/*'
     publishHTML target: [

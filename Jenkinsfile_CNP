@@ -55,7 +55,41 @@ withPipeline(type, product, component) {
     env.ENV='aat'
   }
 
-  after('smoketest:aat') {
+  alwaysAfter('akschartsinstall') {
+
+    echo "Just waiting a while to ensure that the pod has run the job"
+    sh "sleep 120s"
+
+    // Execute functional tests
+    echo "Verifying that functional test run correctly"
+    try {
+      builder.gradle('functional')
+    } finally {
+      junit '**/test-results/**/*.xml'
+    }
+  }
+
+  alwaysAfter('sonarscan') {
+    publishHTML target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : "build/reports/tests/test",
+            reportFiles          : "index.html",
+            reportName           : "Unit Tests Report"
+    ]
+
+    publishHTML target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : "build/reports/tests/integration",
+            reportFiles          : "index.html",
+            reportName           : "Integration Test Report"
+    ]
+  }
+
+  alwaysAter('smoketest:preview') {
     publishHTML target: [
             allowMissing         : true,
             alwaysLinkToLastBuild: true,
@@ -66,7 +100,32 @@ withPipeline(type, product, component) {
     ]
   }
 
-  after('functionalTest:aat') {
+  alwaysAfter('smoketest:aat') {
+    publishHTML target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : "build/reports/tests/smoke",
+            reportFiles          : "index.html",
+            reportName           : "Smoke Test Report"
+    ]
+  }
+
+  alwaysAfter('functionalTest:preview') {
+    junit 'build/test-results/functional/**/*.xml'
+    archiveArtifacts 'build/reports/tests/functional/index.html'
+
+    publishHTML target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : "build/reports/tests/functional",
+            reportFiles          : "index.html",
+            reportName           : "civil-sdt-commissioning Functional Test Report"
+    ]
+  }
+
+  alwaysAfter('functionalTest:aat') {
     junit 'build/test-results/functional/**/*.xml'
     archiveArtifacts 'build/reports/tests/functional/index.html'
 
@@ -81,4 +140,15 @@ withPipeline(type, product, component) {
     ]
   }
 
+  alwaysAfter('functionalTest:preview') {
+    steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
+    publishHTML target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : "target/site/serenity/",
+            reportFiles          : "index.html",
+            reportName           : "Functional Tests Report"
+    ]
+  }
 }
