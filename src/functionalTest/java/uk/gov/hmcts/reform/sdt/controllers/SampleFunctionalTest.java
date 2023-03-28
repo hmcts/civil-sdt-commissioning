@@ -39,7 +39,7 @@ class SampleFunctionalTest {
             .then()
             .extract().response();
 
-        assertEquals(200, response.statusCode());
-        assertTrue(response.asString().startsWith("Welcome"));
+        assertEquals(200, response.statusCode(), "statusCode is NOT 200");
+        assertTrue(response.asString().startsWith("Welcome"), "response does NOT start with 'Welcome'");
     }
 }
