@@ -1,1 +1,3 @@
 rootProject.name = 'civil-sdt-commissioning'
+
+include 'producers-commissioning'
