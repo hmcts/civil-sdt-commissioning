@@ -1,0 +1,154 @@
+#!groovy
+import uk.gov.hmcts.contino.AppPipelineDsl
+properties(
+        [
+                [
+                        $class       : 'GithubProjectProperty',
+                        projectUrlStr: 'https://github.com/hmcts/civil-sdt-commissioning'
+                ],
+                pipelineTriggers([[$class: 'GitHubPushTrigger']])
+        ]
+)
+@Library("Infrastructure")
+
+import uk.gov.hmcts.contino.GradleBuilder
+
+def type = "java"
+def product = "civil"
+def component = "sdt-commissioning"
+
+GradleBuilder builder = new GradleBuilder(this, product)
+
+
+static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
+  [$class     : 'AzureKeyVaultSecret',
+   secretType : 'Secret',
+   name       : secretName,
+   version    : '',
+   envVariable: envVar
+  ]
+}
+
+def vaultOverrides = [
+        'preview' : 'aat',
+        'spreview': 'saat'
+]
+
+// Configure branches to sync with master branch
+def branchesToSync = ['demo', 'ithc', 'perftest']
+
+withPipeline(type, product, component) {
+  overrideVaultEnvironments(vaultOverrides)
+  enableDbMigration('civil')
+  enableAksStagingDeployment()
+  syncBranchesWithMaster(branchesToSync)
+
+  env.IDAM_URL = "https://idam-api.aat.platform.hmcts.net"
+
+  onPR() {
+    echo "Loading PR secrets"
+    env.ENV='preview'
+  }
+
+  onNonPR() {
+    echo "Loading secrets"
+    env.ENV='aat'
+  }
+
+  afterAlways('akschartsinstall') {
+
+    echo "Just waiting a while to ensure that the pod has run the job"
+    sh "sleep 120s"
+
+    // Execute functional tests
+    echo "Verifying that functional test run correctly"
+    try {
+         builder.gradle('functional')
+    } finally {
+         junit '**/test-results/**/*.xml'
+    }
+  }
+
+  afterAlways('sonarscan') {
+    publishHTML target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : "build/reports/tests/test",
+            reportFiles          : "index.html",
+            reportName           : "Unit Tests Report"
+    ]
+
+    publishHTML target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : "build/reports/tests/integration",
+            reportFiles          : "index.html",
+            reportName           : "Integration Test Report"
+    ]
+  }
+
+  afterAlways('smoketest:preview') {
+    publishHTML target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : "build/reports/tests/smoke",
+            reportFiles          : "index.html",
+            reportName           : "Smoke Test Report"
+    ]
+  }
+
+  afterAlways('smoketest:aat') {
+    publishHTML target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : "build/reports/tests/smoke",
+            reportFiles          : "index.html",
+            reportName           : "Smoke Test Report"
+    ]
+  }
+
+  afterAlways('functionalTest:preview') {
+    junit 'build/test-results/functional/**/*.xml'
+    archiveArtifacts 'build/reports/tests/functional/index.html'
+
+    publishHTML target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : "build/reports/tests/functional",
+            reportFiles          : "index.html",
+            reportName           : "civil-sdt-commissioning Functional Test Report"
+    ]
+  }
+
+  afterAlways('functionalTest:aat') {
+    junit 'build/test-results/functional/**/*.xml'
+    archiveArtifacts 'build/reports/tests/functional/index.html'
+
+    withPipeline(type, product, component) {}
+    publishHTML target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : "build/reports/tests/functional",
+            reportFiles          : "index.html",
+            reportName           : "civil-sdt-commissioning Functional Test Report"
+    ]
+  }
+
+  afterAlways('functionalTest:preview') {
+    steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
+    publishHTML target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : "target/site/serenity/",
+            reportFiles          : "index.html",
+            reportName           : "Functional Tests Report"
+    ]
+  }
+}
