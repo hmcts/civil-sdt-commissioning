@@ -11,14 +11,6 @@ def type = "java"
 def product = "civil"
 def component = "sdt-commissioning"
 
-def secrets = [
-        'civil-${env}' : [
-//                secret('OAUTH2-CLIENT-SECRET', 'OAUTH2_CLIENT_SECRET'),
-//                secret('OAUTH2-CLIENT-ID', 'OAUTH2_CLIENT_ID'),
-//                secret('LD-SDK-KEY', 'LD_SDK_KEY')
-        ]
-]
-
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
   [$class     : 'AzureKeyVaultSecret',
    secretType : 'Secret',
@@ -40,13 +32,11 @@ withNightlyPipeline(type, product, component) {
   env.execution_environment = "aat"
 
   overrideVaultEnvironments(vaultOverrides)
-  loadVaultSecrets(secrets)
 
   enableMutationTest()
-  enableFullFunctionalTest()
   enableSecurityScan()
 
-  after('mutationTest') {
+  afterAlways('mutationTest') {
     publishHTML target: [
             allowMissing         : true,
             alwaysLinkToLastBuild: true,
@@ -57,7 +47,7 @@ withNightlyPipeline(type, product, component) {
     ]
   }
 
-  after('fullFunctionalTest') {
+  afterAlways('fullFunctionalTest') {
     steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
     steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'build/reports/**/*'
     publishHTML target: [

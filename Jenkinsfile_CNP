@@ -19,13 +19,6 @@ def component = "sdt-commissioning"
 
 GradleBuilder builder = new GradleBuilder(this, product)
 
-def secrets = [
-        'civil-${env}' : [
-//                secret('OAUTH2-CLIENT-SECRET', 'OAUTH2_CLIENT_SECRET'),
-//                secret('OAUTH2-CLIENT-ID', 'OAUTH2_CLIENT_ID'),
-//                secret('LD-SDK-KEY', 'LD_SDK_KEY')
-        ]
-]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
   [$class     : 'AzureKeyVaultSecret',
@@ -46,7 +39,6 @@ def branchesToSync = ['demo', 'ithc', 'perftest']
 
 withPipeline(type, product, component) {
   overrideVaultEnvironments(vaultOverrides)
-//  loadVaultSecrets(secrets)
   enableDbMigration('civil')
   enableAksStagingDeployment()
   syncBranchesWithMaster(branchesToSync)
@@ -55,17 +47,15 @@ withPipeline(type, product, component) {
 
   onPR() {
     echo "Loading PR secrets"
-//    loadVaultSecrets(prSecrets)
     env.ENV='preview'
   }
 
   onNonPR() {
     echo "Loading secrets"
-//    loadVaultSecrets(secrets)
     env.ENV='aat'
   }
 
-  after('akschartsinstall') {
+  afterAlways('akschartsinstall') {
 
     echo "Just waiting a while to ensure that the pod has run the job"
     sh "sleep 120s"
@@ -73,13 +63,13 @@ withPipeline(type, product, component) {
     // Execute functional tests
     echo "Verifying that functional test run correctly"
     try {
-      builder.gradle('functional')
+         builder.gradle('functional')
     } finally {
-      junit '**/test-results/**/*.xml'
+         junit '**/test-results/**/*.xml'
     }
   }
 
-  after('sonarscan') {
+  afterAlways('sonarscan') {
     publishHTML target: [
             allowMissing         : true,
             alwaysLinkToLastBuild: true,
@@ -99,7 +89,7 @@ withPipeline(type, product, component) {
     ]
   }
 
-  after('smoketest:preview') {
+  afterAlways('smoketest:preview') {
     publishHTML target: [
             allowMissing         : true,
             alwaysLinkToLastBuild: true,
@@ -110,7 +100,7 @@ withPipeline(type, product, component) {
     ]
   }
 
-  after('smoketest:aat') {
+  afterAlways('smoketest:aat') {
     publishHTML target: [
             allowMissing         : true,
             alwaysLinkToLastBuild: true,
@@ -121,7 +111,7 @@ withPipeline(type, product, component) {
     ]
   }
 
-  after('functionalTest:preview') {
+  afterAlways('functionalTest:preview') {
     junit 'build/test-results/functional/**/*.xml'
     archiveArtifacts 'build/reports/tests/functional/index.html'
 
@@ -135,7 +125,7 @@ withPipeline(type, product, component) {
     ]
   }
 
-  after('functionalTest:aat') {
+  afterAlways('functionalTest:aat') {
     junit 'build/test-results/functional/**/*.xml'
     archiveArtifacts 'build/reports/tests/functional/index.html'
 
@@ -150,7 +140,7 @@ withPipeline(type, product, component) {
     ]
   }
 
-  after('functionalTest:preview') {
+  afterAlways('functionalTest:preview') {
     steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
     publishHTML target: [
             allowMissing         : true,
