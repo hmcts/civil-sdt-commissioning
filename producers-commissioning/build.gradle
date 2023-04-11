@@ -1,5 +1,27 @@
-apply plugin: 'info.solidsoft.pitest'
+sourceSets {
+  testUnit {
+    compileClasspath += sourceSets.main.output
+    runtimeClasspath += sourceSets.main.output
+    java {
+      srcDir file('src/unit-test/java')
+    }
+    resources.srcDir file('src/unit-test/resources')
+  }
 
-dependencyCheck {
-    suppressionFile = "${rootDir}/config/owasp/suppressions.xml"
+  testE2E {
+    compileClasspath += sourceSets.main.output
+    runtimeClasspath += sourceSets.main.output
+    java {
+      srcDir file('src/end-to-end-test/java')
+    }
+    resources.srcDir file('src/end-to-end-test/resources')
+  }
+}
+
+configurations {
+  testUnitImplementation.extendsFrom testImplementation
+  testUnitImplementation.extendsFrom runtimeOnly
+
+  testE2EImplementation.extendsFrom testImplementation
+  testE2ERuntimeOnly.extendsFrom runtimeOnly
 }

@@ -1,3 +1,14 @@
 rootProject.name = 'civil-sdt-commissioning'
 
 include 'producers-commissioning'
+
+dependencyResolutionManagement {
+  repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+      url 'https://jitpack.io'
+    }
+    jcenter()
+  }
+}
