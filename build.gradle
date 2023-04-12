@@ -337,6 +337,10 @@ subprojects {
     testImplementation group: 'com.github.hmcts', name: 'domain', version: sdtCommonVersion, classifier: 'test'
     testImplementation group: 'com.github.hmcts', name: 'producers-api', version: sdtCommonVersion, classifier: 'test'
     testImplementation 'junit:junit:4.13.2'
+
+    tasks.withType(Copy).all {
+      duplicatesStrategy 'exclude'
+    }
   }
 
   bootJar {
