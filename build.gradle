@@ -243,10 +243,10 @@ dependencies {
   testImplementation group: 'org.powermock', name: 'powermock-api-mockito2', version: '2.0.9'
   testImplementation group: 'org.powermock', name: 'powermock-module-junit4', version: '2.0.9'
   testImplementation group: 'com.github.hmcts', name: 'civil-sdt-common', version: sdtCommonVersion, classifier: 'test'
-  testImplementation group: 'com.github.hmcts', name: 'utils', version: sdtCommonVersion, classifier: 'test'
-  testImplementation group: 'com.github.hmcts', name: 'utils', version: sdtCommonVersion, classifier: 'integ-test'
-  testImplementation group: 'com.github.hmcts', name: 'domain', version: sdtCommonVersion, classifier: 'test'
-  testImplementation group: 'com.github.hmcts', name: 'producers-api', version: sdtCommonVersion, classifier: 'test'
+  testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'utils', version: sdtCommonVersion, classifier: 'test'
+  testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'utils', version: sdtCommonVersion, classifier: 'integ-test'
+  testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'domain', version: sdtCommonVersion, classifier: 'test'
+  testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'producers-api', version: sdtCommonVersion, classifier: 'test'
 
 
   tasks.withType(Copy).all {
@@ -341,10 +341,10 @@ subprojects {
     testImplementation group: 'org.powermock', name: 'powermock-api-mockito2', version: '2.0.9'
     testImplementation group: 'org.powermock', name: 'powermock-module-junit4', version: '2.0.9'
     testImplementation group: 'com.github.hmcts', name: 'civil-sdt-common', version: sdtCommonVersion, classifier: 'test'
-    testImplementation group: 'com.github.hmcts', name: 'utils', version: sdtCommonVersion, classifier: 'test'
-    testImplementation group: 'com.github.hmcts', name: 'utils', version: sdtCommonVersion, classifier: 'integ-test'
-    testImplementation group: 'com.github.hmcts', name: 'domain', version: sdtCommonVersion, classifier: 'test'
-    testImplementation group: 'com.github.hmcts', name: 'producers-api', version: sdtCommonVersion, classifier: 'test'
+    testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'utils', version: sdtCommonVersion, classifier: 'test'
+    testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'utils', version: sdtCommonVersion, classifier: 'integ-test'
+    testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'domain', version: sdtCommonVersion, classifier: 'test'
+    testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'producers-api', version: sdtCommonVersion, classifier: 'test'
 
     tasks.withType(Copy).all {
       duplicatesStrategy 'exclude'
