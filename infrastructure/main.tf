@@ -1,5 +1,9 @@
+provider "azurerm" {
+  features {}
+}
+
 locals {
-  key_vault_name          = join("-", [var.product, "aat"])
+  key_vault_name = join("-", [var.product, "aat"])
 }
 
 data "azurerm_key_vault" "rd_key_vault" {
