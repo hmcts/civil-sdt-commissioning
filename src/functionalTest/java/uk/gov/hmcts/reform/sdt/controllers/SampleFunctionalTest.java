@@ -17,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@TestPropertySource(properties = { "spring.config.location=classpath:application-functional-test.yaml" })
 class SampleFunctionalTest {
     protected static final String CONTENT_TYPE_VALUE = "application/json";
 
