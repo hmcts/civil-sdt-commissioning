@@ -39,7 +39,6 @@ def branchesToSync = ['demo', 'ithc', 'perftest']
 
 withPipeline(type, product, component) {
   overrideVaultEnvironments(vaultOverrides)
-  enableDbMigration('civil')
   enableAksStagingDeployment()
   syncBranchesWithMaster(branchesToSync)
 
