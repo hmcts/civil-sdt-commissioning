@@ -276,6 +276,9 @@ allprojects {
         if (details.requested.group == 'com.fasterxml.woodstox' && details.requested.name == 'woodstox-core') {
           details.useVersion '6.4.0' // CVE-2022-40152
         }
+        if (details.requested.group == 'org.eclipse.jetty') {
+          details.useVersion '9.4.51.v20230217' // CVE-2023-26049
+        }
       }
     }
     exclude group: 'org.springframework.security', module: 'spring-security-rsa'
