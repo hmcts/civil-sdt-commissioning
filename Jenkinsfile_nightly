@@ -2,7 +2,7 @@
 
 properties([
   // H allow predefined but random minute see https://en.wikipedia.org/wiki/Cron#Non-standard_characters
-  pipelineTriggers([cron('H 05 * * *')])
+  pipelineTriggers([cron('H 05 * * 1-5')])
 ])
 
 @Library("Infrastructure")
@@ -10,14 +10,6 @@ properties([
 def type = "java"
 def product = "civil"
 def component = "sdt-commissioning"
-
-def secrets = [
-        'civil-${env}' : [
-//                secret('OAUTH2-CLIENT-SECRET', 'OAUTH2_CLIENT_SECRET'),
-//                secret('OAUTH2-CLIENT-ID', 'OAUTH2_CLIENT_ID'),
-//                secret('LD-SDK-KEY', 'LD_SDK_KEY')
-        ]
-]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
   [$class     : 'AzureKeyVaultSecret',
@@ -35,23 +27,13 @@ def vaultOverrides = [
 
 withNightlyPipeline(type, product, component) {
   env.IDAM_URL = "https://idam-api.aat.platform.hmcts.net"
-  env.TEST_URL = "http://civil-sdt-commissioning-aat.service.core-compute-aat.internal"
-  env.Rules = params.SecurityRules
-  env.execution_environment = "aat"
 
   overrideVaultEnvironments(vaultOverrides)
-  loadVaultSecrets(secrets)
 
+  /*
   enableMutationTest()
-  enableFullFunctionalTest()
-  enableSecurityScan()
-  enableFortifyScan()
 
-  afterAlways('fortify-scan') {
-    steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/Fortify Scan/**/*'
-  }
-
-  after('mutationTest') {
+  afterAlways('mutationTest') {
     publishHTML target: [
             allowMissing         : true,
             alwaysLinkToLastBuild: true,
@@ -61,8 +43,17 @@ withNightlyPipeline(type, product, component) {
             reportName           : "Mutation Test Report"
     ]
   }
+  */
 
-  after('fullFunctionalTest') {
+  enableFullFunctionalTest()
+  enableSecurityScan()
+  enableFortifyScan()
+
+  afterAlways('fortify-scan') {
+    steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/Fortify Scan/**/*'
+  }
+  
+  afterAlways('fullFunctionalTest') {
     steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
     steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'build/reports/**/*'
     publishHTML target: [
