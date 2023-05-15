@@ -44,17 +44,4 @@ withNightlyPipeline(type, product, component) {
     ]
   }
   */
-
-  afterAlways('fullFunctionalTest') {
-    steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
-    steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'build/reports/**/*'
-    publishHTML target: [
-            allowMissing         : true,
-            alwaysLinkToLastBuild: true,
-            keepAll              : true,
-            reportDir            : "target/site/serenity/",
-            reportFiles          : "index.html",
-            reportName           : "Functional Tests Report"
-    ]
-  }
 }

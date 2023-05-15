@@ -128,7 +128,6 @@ withPipeline(type, product, component) {
     junit 'build/test-results/functional/**/*.xml'
     archiveArtifacts 'build/reports/tests/functional/index.html'
 
-    withPipeline(type, product, component) {}
     publishHTML target: [
             allowMissing         : true,
             alwaysLinkToLastBuild: true,
@@ -136,18 +135,6 @@ withPipeline(type, product, component) {
             reportDir            : "build/reports/tests/functional",
             reportFiles          : "index.html",
             reportName           : "civil-sdt-commissioning Functional Test Report"
-    ]
-  }
-
-  afterAlways('functionalTest:preview') {
-    steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
-    publishHTML target: [
-            allowMissing         : true,
-            alwaysLinkToLastBuild: true,
-            keepAll              : true,
-            reportDir            : "target/site/serenity/",
-            reportFiles          : "index.html",
-            reportName           : "Functional Tests Report"
     ]
   }
 }

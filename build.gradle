@@ -198,7 +198,6 @@ ext {
   log4JVersion = '2.20.0'
   lombokVersion = '1.18.24'
   cxfVersion = '3.5.5'
-  serenity      = '2.0.76'
   postgresqlVersion = '42.5.1'
   sdtCommonVersion = '1.0.0-SDT-105.1.0'
 }
