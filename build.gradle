@@ -32,10 +32,11 @@ java {
 }
 
 sourceSets {
+
   functionalTest {
     java {
-      compileClasspath += main.output
-      runtimeClasspath += main.output
+      compileClasspath += test.output
+      runtimeClasspath += test.output
       srcDir file('src/functionalTest/java')
     }
     resources.srcDir file('src/functionalTest/resources')
@@ -43,8 +44,8 @@ sourceSets {
 
   integrationTest {
     java {
-      compileClasspath += main.output
-      runtimeClasspath += main.output
+      compileClasspath += test.output
+      runtimeClasspath += test.output
       srcDir file('src/integrationTest/java')
     }
     resources.srcDir file('src/integrationTest/resources')
@@ -52,8 +53,8 @@ sourceSets {
 
   smokeTest {
     java {
-      compileClasspath += main.output
-      runtimeClasspath += main.output
+      compileClasspath += test.output
+      runtimeClasspath += test.output
       srcDir file('src/smokeTest/java')
     }
     resources.srcDir file('src/smokeTest/resources')
@@ -91,6 +92,7 @@ tasks.withType(Test).configureEach {
 test {
   failFast = true
 }
+
 
 task functional(type: Test) {
   description = "Runs functional tests"
@@ -147,7 +149,7 @@ jacocoTestReport {
 
 pitest {
   junit5PluginVersion = '1.1.2'
-  targetClasses = ['uk.gov.hmcts.reform.sdt.*']
+  targetClasses = ['uk.gov.hmcts.reform.sdt.*', 'uk.gov.moj.*']
   excludedClasses = [
           'uk.gov.hmcts.reform.sdt.config.*',
   ]
@@ -262,8 +264,6 @@ allprojects {
     testImplementation 'com.github.hmcts:fortify-client:1.2.2:all'
     testImplementation 'org.mockito:mockito-core:5.2.0'
     testImplementation group: 'org.mockito', name: 'mockito-inline', version: '3.11.1'
-    testImplementation group: 'org.powermock', name: 'powermock-api-mockito2', version: '2.0.9'
-    testImplementation group: 'org.powermock', name: 'powermock-module-junit4', version: '2.0.9'
     testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'utils', version: sdtCommonVersion, classifier: 'test'
     testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'utils', version: sdtCommonVersion, classifier: 'integ-test'
     testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'domain', version: sdtCommonVersion, classifier: 'test'

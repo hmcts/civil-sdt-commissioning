@@ -1,17 +1,21 @@
+dependencies {
+  testImplementation project(path: ':producers-commissioning')
+}
+
 sourceSets {
   testUnit {
-    compileClasspath += sourceSets.main.output
-    runtimeClasspath += sourceSets.main.output
     java {
+      compileClasspath += test.output
+      runtimeClasspath += test.output
       srcDir file('src/unit-test/java')
     }
     resources.srcDir file('src/unit-test/resources')
   }
 
   testE2E {
-    compileClasspath += sourceSets.main.output
-    runtimeClasspath += sourceSets.main.output
     java {
+      compileClasspath += test.output
+      runtimeClasspath += test.output
       srcDir file('src/end-to-end-test/java')
     }
     resources.srcDir file('src/end-to-end-test/resources')
@@ -24,4 +28,48 @@ configurations {
 
   testE2EImplementation.extendsFrom testImplementation
   testE2ERuntimeOnly.extendsFrom runtimeOnly
+}
+
+task printSourceSetInformation(){
+  doLast{
+    sourceSets.each { srcSet ->
+      println "["+srcSet.name+"]"
+      print "-->Source directories: "+srcSet.allJava.srcDirs+"\n"
+      print "-->Output directories: "+srcSet.output.classesDirs.files+"\n"
+      print "-->Compile classpath:\n"
+      srcSet.compileClasspath.files.each {
+        print "  "+it.path+"\n"
+      }
+      println ""
+    }
+  }
+}
+
+tasks.withType(Test) {
+  useJUnitPlatform()
+}
+
+pitest {
+  junit5PluginVersion = '1.1.2'
+  targetClasses = ['uk.gov.moj.sdt.producers.comx.cache.*',
+                   'uk.gov.moj.sdt.producers.comx.dao.*',
+                   'uk.gov.moj.sdt.producers.comx.sdtws.*',
+                   'uk.gov.moj.sdt.producers.comx.services.*',
+                   'uk.gov.moj.sdt.producers.comx.utils.*']
+  targetTests = ['uk.gov.moj.sdt.producers.comx.cache.*',
+                 'uk.gov.moj.sdt.producers.comx.sdtws.*']
+  enableDefaultIncrementalAnalysis = true
+  historyInputLocation = 'build/reports/pitest/fastermutationtesting'
+  historyOutputLocation = 'build/reports/pitest/fastermutationtestingoutput'
+  threads = 15
+  testSourceSets = [sourceSets.testUnit, sourceSets.testE2E]
+  mainSourceSets = [sourceSets.main]
+  fileExtensionsToFilter.addAll('xml','json')
+  outputFormats = ['XML', 'HTML','CSV']
+  mutationThreshold = 90
+  coverageThreshold = 90
+  jvmArgs = ['-Xms1G','-Xmx3G']
+  timestampedReports = true
+  failWhenNoMutations = false
+  detectInlinedCode = true
 }
