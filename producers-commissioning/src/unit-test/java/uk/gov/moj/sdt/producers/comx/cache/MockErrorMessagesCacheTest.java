@@ -29,43 +29,45 @@ class MockErrorMessagesCacheTest extends AbstractSdtUnitTestBase {
 
     @Test
     void testDupCustFileId() {
-        testGivenErrorCode(IErrorMessage.ErrorCode.DUP_CUST_FILEID);
+        testGivenErrorCode(IErrorMessage.ErrorCode.DUP_CUST_FILEID, MockErrorMessagesCache.DUP_CUST_FILEID_TEXT);
     }
 
     @Test
     void testDupCustReqId() {
-        testGivenErrorCode(IErrorMessage.ErrorCode.DUP_CUST_REQID);
+        testGivenErrorCode(IErrorMessage.ErrorCode.DUP_CUST_REQID, MockErrorMessagesCache.DUP_CUST_REQID_TEXT);
     }
 
     @Test
     void testCustNotSetup() {
-        testGivenErrorCode(IErrorMessage.ErrorCode.CUST_NOT_SETUP);
+        testGivenErrorCode(IErrorMessage.ErrorCode.CUST_NOT_SETUP, MockErrorMessagesCache.CUST_NOT_SETUP_TEXT);
     }
 
     @Test
     void testBulkRefInvalid() {
-        testGivenErrorCode(IErrorMessage.ErrorCode.BULK_REF_INVALID);
+        testGivenErrorCode(IErrorMessage.ErrorCode.BULK_REF_INVALID, MockErrorMessagesCache.BULK_REF_INVALID_TEXT);
     }
 
     @Test
     void testCustIdInvalid() {
-        testGivenErrorCode(IErrorMessage.ErrorCode.CUST_ID_INVALID);
+        testGivenErrorCode(IErrorMessage.ErrorCode.CUST_ID_INVALID, MockErrorMessagesCache.CUST_ID_INVALID_TEXT);
     }
 
     @Test
     void testReqCountMismatch() {
-        testGivenErrorCode(IErrorMessage.ErrorCode.REQ_COUNT_MISMATCH);
+        testGivenErrorCode(IErrorMessage.ErrorCode.REQ_COUNT_MISMATCH, MockErrorMessagesCache.REQ_COUNT_MISMATCH_TEXT);
     }
 
     @Test
     void testSdtIntErr() {
-        testGivenErrorCode(IErrorMessage.ErrorCode.SDT_INT_ERR);
+        testGivenErrorCode(IErrorMessage.ErrorCode.SDT_INT_ERR, MockErrorMessagesCache.SDT_INT_ERR_TEXT);
     }
 
-    private void testGivenErrorCode(IErrorMessage.ErrorCode errorCode) {
+    private void testGivenErrorCode(IErrorMessage.ErrorCode errorCode, String expectedMessage) {
         ErrorMessage errorMessage =
                 mockErrorMessagesCache.getValue(ErrorMessage.class, errorCode.toString());
 
         assertEquals(errorCode.toString(), errorMessage.getErrorCode());
+        assertEquals(expectedMessage, errorMessage.getErrorText());
     }
+
 }
