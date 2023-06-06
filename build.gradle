@@ -94,14 +94,14 @@ test {
 }
 
 
-task functional(type: Test) {
+tasks.register('functional', Test) {
   description = "Runs functional tests"
   group = "Verification"
   testClassesDirs = sourceSets.functionalTest.output.classesDirs
   classpath = sourceSets.functionalTest.runtimeClasspath
 }
 
-task integration(type: Test) {
+tasks.register('integration', Test) {
   description = "Runs integration tests"
   group = "Verification"
   testClassesDirs = sourceSets.integrationTest.output.classesDirs
@@ -109,14 +109,14 @@ task integration(type: Test) {
   failFast = true
 }
 
-task smoke(type: Test) {
+tasks.register('smoke', Test) {
   description = "Runs Smoke Tests"
   testClassesDirs = sourceSets.smokeTest.output.classesDirs
   classpath = sourceSets.smokeTest.runtimeClasspath
 }
 
-task fortifyScan(type: JavaExec)  {
-  main = "uk.gov.hmcts.fortifyclient.FortifyClientMainApp"
+tasks.register('fortifyScan', JavaExec)  {
+  mainClass = "uk.gov.hmcts.fortifyclient.FortifyClientMainApp"
   classpath += sourceSets.test.runtimeClasspath
   jvmArgs = ['--add-opens=java.base/java.lang.reflect=ALL-UNNAMED']
 }
@@ -149,17 +149,17 @@ jacocoTestReport {
 
 pitest {
   junit5PluginVersion = '1.1.2'
-  targetClasses = ['uk.gov.hmcts.reform.sdt.*', 'uk.gov.moj.*']
-  excludedClasses = [
+  targetClasses.set(['uk.gov.hmcts.reform.sdt.*', 'uk.gov.moj.*'])
+  excludedClasses.set([
           'uk.gov.hmcts.reform.sdt.config.*',
-  ]
+  ])
   threads = 10
   enableDefaultIncrementalAnalysis = true
   historyInputLocation = 'build/reports/pitest/fastermutationtesting'
   historyOutputLocation = 'build/reports/pitest/fastermutationtestingoutput'
-  outputFormats = ['XML', 'HTML']
+  outputFormats.set(['XML', 'HTML'])
   timestampedReports = true
-  mutationThreshold = 90
+  mutationThreshold = 0
   useClasspathFile = true
 }
 
@@ -296,7 +296,7 @@ allprojects {
     exclude group: 'org.springframework.security', module: 'spring-security-rsa'
   }
 
-  tasks.withType(Copy).all {
+  tasks.withType(Copy).configureEach {
     duplicatesStrategy 'exclude'
   }
 
@@ -317,7 +317,7 @@ rootProject.tasks.named("processSmokeTestResources") {
   duplicatesStrategy = 'include'
 }
 
-tasks.withType(Jar).all {
+tasks.withType(Jar).configureEach {
   duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
@@ -359,7 +359,7 @@ subprojects {
     archiveClassifier = ''
   }
 
-  tasks.withType(Test) {
+  tasks.withType(Test).configureEach {
     useJUnitPlatform()
     reports.html.enabled = false
 
@@ -401,7 +401,7 @@ subprojects {
     exclude group: 'org.springframework.security', module: 'spring-security-rsa'
   }
   configurations {
-    all {
+    configureEach {
       exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
     }
   }

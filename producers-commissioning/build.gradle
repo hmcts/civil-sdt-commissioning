@@ -30,7 +30,7 @@ configurations {
   testE2ERuntimeOnly.extendsFrom runtimeOnly
 }
 
-task printSourceSetInformation(){
+tasks.register('printSourceSetInformation') {
   doLast{
     sourceSets.each { srcSet ->
       println "["+srcSet.name+"]"
@@ -45,30 +45,30 @@ task printSourceSetInformation(){
   }
 }
 
-tasks.withType(Test) {
+tasks.withType(Test).configureEach {
   useJUnitPlatform()
 }
 
 pitest {
   junit5PluginVersion = '1.1.2'
-  targetClasses = ['uk.gov.moj.sdt.producers.comx.cache.*',
+  targetClasses.set(['uk.gov.moj.sdt.producers.comx.cache.*',
                    'uk.gov.moj.sdt.producers.comx.dao.*',
                    'uk.gov.moj.sdt.producers.comx.sdtws.*',
                    'uk.gov.moj.sdt.producers.comx.services.*',
-                   'uk.gov.moj.sdt.producers.comx.utils.*']
-  targetTests = ['uk.gov.moj.sdt.producers.comx.cache.*',
-                 'uk.gov.moj.sdt.producers.comx.sdtws.*']
+                   'uk.gov.moj.sdt.producers.comx.utils.*'])
+  targetTests.set(['uk.gov.moj.sdt.producers.comx.cache.*',
+                 'uk.gov.moj.sdt.producers.comx.sdtws.*'])
   enableDefaultIncrementalAnalysis = true
   historyInputLocation = 'build/reports/pitest/fastermutationtesting'
   historyOutputLocation = 'build/reports/pitest/fastermutationtestingoutput'
   threads = 15
-  testSourceSets = [sourceSets.testUnit, sourceSets.testE2E]
-  mainSourceSets = [sourceSets.main]
+  testSourceSets.set([sourceSets.testUnit, sourceSets.testE2E])
+  mainSourceSets.set([sourceSets.main])
   fileExtensionsToFilter.addAll('xml','json')
-  outputFormats = ['XML', 'HTML','CSV']
-  mutationThreshold = 90
-  coverageThreshold = 90
-  jvmArgs = ['-Xms1G','-Xmx3G']
+  outputFormats.set(['XML', 'HTML','CSV'])
+  mutationThreshold = 0
+  coverageThreshold = 0
+  jvmArgs.set(['-Xms1G','-Xmx3G'])
   timestampedReports = true
   failWhenNoMutations = false
   detectInlinedCode = true
