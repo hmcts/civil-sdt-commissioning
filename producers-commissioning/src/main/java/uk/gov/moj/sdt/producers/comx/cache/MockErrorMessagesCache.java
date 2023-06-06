@@ -43,14 +43,14 @@ public class MockErrorMessagesCache implements ICacheable, IErrorMessagesCache {
                         "within the originating Bulk Request.";
 
     MockErrorMessagesCache() {
-        hmErrorMessages.put(IErrorMessage.ErrorCode.DUP_CUST_FILEID.toString(), DUP_CUST_FILEID_TEXT);
-        hmErrorMessages.put(IErrorMessage.ErrorCode.REQ_COUNT_MISMATCH.toString(), REQ_COUNT_MISMATCH_TEXT);
-        hmErrorMessages.put(IErrorMessage.ErrorCode.SDT_INT_ERR.toString(), SDT_INT_ERR_TEXT);
-        hmErrorMessages.put(IErrorMessage.ErrorCode.CUST_NOT_SETUP.toString(), CUST_NOT_SETUP_TEXT);
-        hmErrorMessages.put(IErrorMessage.ErrorCode.CUST_ID_INVALID.toString(), CUST_ID_INVALID_TEXT);
         hmErrorMessages.put(IErrorMessage.ErrorCode.BULK_REF_INVALID.toString(), BULK_REF_INVALID_TEXT);
+        hmErrorMessages.put(IErrorMessage.ErrorCode.CUST_ID_INVALID.toString(), CUST_ID_INVALID_TEXT);
+        hmErrorMessages.put(IErrorMessage.ErrorCode.CUST_NOT_SETUP.toString(), CUST_NOT_SETUP_TEXT);
+        hmErrorMessages.put(IErrorMessage.ErrorCode.DUP_CUST_FILEID.toString(), DUP_CUST_FILEID_TEXT);
         hmErrorMessages.put(IErrorMessage.ErrorCode.DUP_CUST_REQID.toString(), DUP_CUST_REQID_TEXT);
         hmErrorMessages.put(IErrorMessage.ErrorCode.DUPLD_CUST_REQID.toString(), DUPLD_CUST_REQID_TEXT);
+        hmErrorMessages.put(IErrorMessage.ErrorCode.REQ_COUNT_MISMATCH.toString(), REQ_COUNT_MISMATCH_TEXT);
+        hmErrorMessages.put(IErrorMessage.ErrorCode.SDT_INT_ERR.toString(), SDT_INT_ERR_TEXT);
     }
 
     @Override
