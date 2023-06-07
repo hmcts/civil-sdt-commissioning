@@ -6,7 +6,7 @@ sourceSets {
   testUnit {
     java {
       compileClasspath += main.output
-      runtimeClasspath += main.output
+      runtimeClasspath += test.output
       srcDir file('src/unit-test/java')
     }
     resources.srcDir file('src/unit-test/resources')
@@ -15,7 +15,7 @@ sourceSets {
   testE2E {
     java {
       compileClasspath += main.output
-      runtimeClasspath += main.output
+      runtimeClasspath += test.output
       srcDir file('src/end-to-end-test/java')
     }
     resources.srcDir file('src/end-to-end-test/resources')
@@ -50,21 +50,28 @@ tasks.withType(Test).configureEach {
 }
 
 pitest {
+
   junit5PluginVersion = '1.1.2'
-  targetClasses.set(['uk.gov.moj.sdt.producers.comx.cache.*',
+  targetClasses.set([
+          'uk.gov.moj.sdt.producers.comx.cache.*',
+          'uk.gov.moj.sdt.producers.comx.dao.*',
+          'uk.gov.moj.sdt.producers.comx.sdtws.*',
+          'uk.gov.moj.sdt.producers.comx.services.*',
+          'uk.gov.moj.sdt.producers.comx.utils.*'
+  ])
+  targetTests.set(['uk.gov.moj.sdt.producers.comx.cache.*',
                    'uk.gov.moj.sdt.producers.comx.dao.*',
                    'uk.gov.moj.sdt.producers.comx.sdtws.*',
                    'uk.gov.moj.sdt.producers.comx.services.*',
                    'uk.gov.moj.sdt.producers.comx.utils.*'])
-  targetTests.set(['uk.gov.moj.sdt.producers.comx.cache.*',
-                 'uk.gov.moj.sdt.producers.comx.sdtws.*'])
+  testSourceSets.set([sourceSets.testUnit, sourceSets.testE2E])
+  mainSourceSets.set([sourceSets.main])
+  useClasspathFile = true
   enableDefaultIncrementalAnalysis = true
   historyInputLocation = 'build/reports/pitest/fastermutationtesting'
   historyOutputLocation = 'build/reports/pitest/fastermutationtestingoutput'
   threads = 15
-  testSourceSets.set([sourceSets.testUnit, sourceSets.testE2E])
-  mainSourceSets.set([sourceSets.main])
-  fileExtensionsToFilter.addAll('xml','json')
+  fileExtensionsToFilter.addAll('XML','JSON')
   outputFormats.set(['XML', 'HTML','CSV'])
   mutationThreshold = 0
   coverageThreshold = 0

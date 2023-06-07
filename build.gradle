@@ -36,7 +36,7 @@ sourceSets {
   functionalTest {
     java {
       compileClasspath += main.output
-      runtimeClasspath += main.output
+      runtimeClasspath += test.output
       srcDir file('src/functionalTest/java')
     }
     resources.srcDir file('src/functionalTest/resources')
@@ -45,7 +45,7 @@ sourceSets {
   integrationTest {
     java {
       compileClasspath += main.output
-      runtimeClasspath += main.output
+      runtimeClasspath += test.output
       srcDir file('src/integrationTest/java')
     }
     resources.srcDir file('src/integrationTest/resources')
@@ -54,7 +54,7 @@ sourceSets {
   smokeTest {
     java {
       compileClasspath += main.output
-      runtimeClasspath += main.output
+      runtimeClasspath += test.output
       srcDir file('src/smokeTest/java')
     }
     resources.srcDir file('src/smokeTest/resources')
@@ -149,18 +149,25 @@ jacocoTestReport {
 
 pitest {
   junit5PluginVersion = '1.1.2'
-  targetClasses.set(['uk.gov.hmcts.reform.sdt.*', 'uk.gov.moj.*'])
-  excludedClasses.set([
-          'uk.gov.hmcts.reform.sdt.config.*',
-  ])
-  threads = 10
+  targetClasses.set(['uk.gov.hmcts.reform.sdt.*',
+                     'uk.gov.hmcts.reform.sdt.config.*',
+                     'uk.gov.hmcts.reform.sdt.controllers.*'])
+  excludedClasses.set(['uk.gov.hmcts.reform.sdt.config.OpenAPIConfiguration.class'])
+  testSourceSets.set([sourceSets.integrationTest])
+  mainSourceSets.set([sourceSets.main])
+  useClasspathFile = true
   enableDefaultIncrementalAnalysis = true
   historyInputLocation = 'build/reports/pitest/fastermutationtesting'
   historyOutputLocation = 'build/reports/pitest/fastermutationtestingoutput'
-  outputFormats.set(['XML', 'HTML', 'CSV'])
-  timestampedReports = true
+  threads = 15
+  fileExtensionsToFilter.addAll('XML','JSON')
+  outputFormats.set(['XML', 'HTML','CSV'])
   mutationThreshold = 0
-  useClasspathFile = true
+  coverageThreshold = 0
+  jvmArgs.set(['-Xms1G','-Xmx3G'])
+  timestampedReports = true
+  failWhenNoMutations = false
+  detectInlinedCode = true
 }
 
 project.tasks['pitest'].group = "Verification"
