@@ -30,7 +30,6 @@ withNightlyPipeline(type, product, component) {
 
   overrideVaultEnvironments(vaultOverrides)
 
-  /*
   enableMutationTest()
 
   afterAlways('mutationTest') {
@@ -43,7 +42,6 @@ withNightlyPipeline(type, product, component) {
             reportName           : "Mutation Test Report"
     ]
   }
-  */
 
   enableFortifyScan()
 
