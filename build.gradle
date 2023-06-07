@@ -35,8 +35,12 @@ sourceSets {
 
   functionalTest {
     java {
-      compileClasspath += test.output
-      runtimeClasspath += test.output
+      compileClasspath += main.output
+      compileClasspath += main.compileClasspath
+      compileClasspath += test.compileClasspath
+      runtimeClasspath += main.output
+      runtimeClasspath += main.runtimeClasspath
+      runtimeClasspath += test.runtimeClasspath
       srcDir file('src/functionalTest/java')
     }
     resources.srcDir file('src/functionalTest/resources')
@@ -44,11 +48,28 @@ sourceSets {
 
   integrationTest {
     java {
-      compileClasspath += test.output
-      runtimeClasspath += test.output
+      compileClasspath += main.output
+      compileClasspath += main.compileClasspath
+      compileClasspath += test.compileClasspath
+      runtimeClasspath += main.output
+      runtimeClasspath += main.runtimeClasspath
+      runtimeClasspath += test.runtimeClasspath
       srcDir file('src/integrationTest/java')
     }
     resources.srcDir file('src/integrationTest/resources')
+  }
+
+  smokeTest {
+    java {
+      compileClasspath += main.output
+      compileClasspath += main.compileClasspath
+      compileClasspath += test.compileClasspath
+      runtimeClasspath += main.output
+      runtimeClasspath += main.runtimeClasspath
+      runtimeClasspath += test.runtimeClasspath
+      srcDir file('src/smokeTest/java')
+    }
+    resources.srcDir file('src/smokeTest/resources')
   }
 }
 
@@ -58,6 +79,9 @@ configurations {
 
   integrationTestImplementation.extendsFrom testImplementation
   integrationTestRuntimeOnly.extendsFrom runtimeOnly
+
+  smokeTestImplementation.extendsFrom testImplementation
+  smokeTestRuntimeOnly.extendsFrom runtimeOnly
 }
 
 tasks.withType(JavaCompile).configureEach() {
@@ -97,8 +121,14 @@ tasks.register('integration', Test) {
   failFast = true
 }
 
+tasks.register('smoke', Test) {
+  description = "Runs Smoke Tests"
+  testClassesDirs = sourceSets.smokeTest.output.classesDirs
+  classpath = sourceSets.smokeTest.runtimeClasspath
+}
+
 tasks.register('fortifyScan', JavaExec)  {
-  mainClass = "uk.gov.hmcts.fortifyclient.FortifyClientMainApp"
+  main = "uk.gov.hmcts.fortifyclient.FortifyClientMainApp"
   classpath += sourceSets.test.runtimeClasspath
   jvmArgs = ['--add-opens=java.base/java.lang.reflect=ALL-UNNAMED']
 }
@@ -113,7 +143,7 @@ tasks.withType(Checkstyle).configureEach() {
 
 pmd {
   toolVersion = "6.55.0"
-  sourceSets = [sourceSets.main, sourceSets.test, sourceSets.functionalTest, sourceSets.integrationTest]
+  sourceSets = [sourceSets.main, sourceSets.test, sourceSets.functionalTest, sourceSets.integrationTest, sourceSets.smokeTest]
   reportsDir = file("$project.buildDir/reports/pmd")
   // https://github.com/pmd/pmd/issues/876
   ruleSets = []
@@ -131,18 +161,25 @@ jacocoTestReport {
 
 pitest {
   junit5PluginVersion = '1.1.2'
-  targetClasses.set(['uk.gov.hmcts.reform.sdt.*', 'uk.gov.moj.*'])
-  excludedClasses.set([
-          'uk.gov.hmcts.reform.sdt.config.*',
-  ])
-  threads = 10
+  targetClasses.set(['uk.gov.hmcts.reform.sdt.*',
+                     'uk.gov.hmcts.reform.sdt.config.*',
+                     'uk.gov.hmcts.reform.sdt.controllers.*'])
+  excludedClasses.set(['uk.gov.hmcts.reform.sdt.config.OpenAPIConfiguration.class'])
+  testSourceSets.set([sourceSets.integrationTest])
+  mainSourceSets.set([sourceSets.main])
+  useClasspathFile = true
   enableDefaultIncrementalAnalysis = true
   historyInputLocation = 'build/reports/pitest/fastermutationtesting'
   historyOutputLocation = 'build/reports/pitest/fastermutationtestingoutput'
-  outputFormats.set(['XML', 'HTML'])
-  timestampedReports = true
+  threads = 15
+  fileExtensionsToFilter.addAll('XML','JSON')
+  outputFormats.set(['XML', 'HTML','CSV'])
   mutationThreshold = 0
-  useClasspathFile = true
+  coverageThreshold = 0
+  jvmArgs.set(['-Xms1G','-Xmx3G'])
+  timestampedReports = true
+  failWhenNoMutations = false
+  detectInlinedCode = true
 }
 
 project.tasks['pitest'].group = "Verification"
@@ -190,6 +227,7 @@ ext {
   cxfVersion = '3.5.5'
   postgresqlVersion = '42.5.1'
   sdtCommonVersion = '1.0.0-SDT-105.1.0'
+  testcontainers = '1.17.5'
 }
 
 ext['snakeyaml.version'] = '1.33'
@@ -236,7 +274,8 @@ allprojects {
     implementation group: 'org.apache.cxf', name: 'cxf-rt-features-logging', version: cxfVersion
     implementation group: 'javax.jws', name: 'javax.jws-api', version: '1.1'
 
-    testImplementation(platform('org.junit:junit-bom:5.9.2'))
+    testImplementation group: 'org.testcontainers', name: 'postgresql', version: testcontainers
+    testImplementation(platform('org.junit:junit-bom:5.8.2'))
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', {
       exclude group: 'junit', module: 'junit'
@@ -282,7 +321,7 @@ allprojects {
     duplicatesStrategy 'exclude'
   }
 
-  }
+}
 
 mainClassName = 'uk.gov.hmcts.reform.sdt.Application'
 
@@ -307,7 +346,7 @@ distZip {
 }
 
 wrapper {
-    distributionType = Wrapper.DistributionType.ALL
+  distributionType = Wrapper.DistributionType.ALL
 }
 
 subprojects {
