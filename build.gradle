@@ -50,6 +50,15 @@ sourceSets {
     }
     resources.srcDir file('src/integrationTest/resources')
   }
+
+  smokeTest {
+    java {
+      compileClasspath += test.output
+      runtimeClasspath += test.output
+      srcDir file('src/smokeTest/java')
+    }
+    resources.srcDir file('src/smokeTest/resources')
+  }
 }
 
 configurations {
@@ -58,6 +67,9 @@ configurations {
 
   integrationTestImplementation.extendsFrom testImplementation
   integrationTestRuntimeOnly.extendsFrom runtimeOnly
+
+  smokeTestImplementation.extendsFrom testImplementation
+  smokeTestRuntimeOnly.extendsFrom runtimeOnly
 }
 
 tasks.withType(JavaCompile).configureEach() {
@@ -97,8 +109,14 @@ tasks.register('integration', Test) {
   failFast = true
 }
 
+tasks.register('smoke', Test) {
+  description = "Runs Smoke Tests"
+  testClassesDirs = sourceSets.smokeTest.output.classesDirs
+  classpath = sourceSets.smokeTest.runtimeClasspath
+}
+
 tasks.register('fortifyScan', JavaExec)  {
-  mainClass = "uk.gov.hmcts.fortifyclient.FortifyClientMainApp"
+  main = "uk.gov.hmcts.fortifyclient.FortifyClientMainApp"
   classpath += sourceSets.test.runtimeClasspath
   jvmArgs = ['--add-opens=java.base/java.lang.reflect=ALL-UNNAMED']
 }
@@ -113,7 +131,7 @@ tasks.withType(Checkstyle).configureEach() {
 
 pmd {
   toolVersion = "6.55.0"
-  sourceSets = [sourceSets.main, sourceSets.test, sourceSets.functionalTest, sourceSets.integrationTest]
+  sourceSets = [sourceSets.main, sourceSets.test, sourceSets.functionalTest, sourceSets.integrationTest, sourceSets.smokeTest]
   reportsDir = file("$project.buildDir/reports/pmd")
   // https://github.com/pmd/pmd/issues/876
   ruleSets = []
@@ -139,7 +157,7 @@ pitest {
   enableDefaultIncrementalAnalysis = true
   historyInputLocation = 'build/reports/pitest/fastermutationtesting'
   historyOutputLocation = 'build/reports/pitest/fastermutationtestingoutput'
-  outputFormats.set(['XML', 'HTML'])
+  outputFormats.set(['XML', 'HTML', 'CSV'])
   timestampedReports = true
   mutationThreshold = 0
   useClasspathFile = true
@@ -282,7 +300,7 @@ allprojects {
     duplicatesStrategy 'exclude'
   }
 
-  }
+}
 
 mainClassName = 'uk.gov.hmcts.reform.sdt.Application'
 
@@ -307,7 +325,7 @@ distZip {
 }
 
 wrapper {
-    distributionType = Wrapper.DistributionType.ALL
+  distributionType = Wrapper.DistributionType.ALL
 }
 
 subprojects {
