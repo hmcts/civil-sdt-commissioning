@@ -6,7 +6,11 @@ sourceSets {
   testUnit {
     java {
       compileClasspath += main.output
-      runtimeClasspath += test.output
+      compileClasspath += main.compileClasspath
+      compileClasspath += test.compileClasspath
+      runtimeClasspath += main.output
+      runtimeClasspath += main.runtimeClasspath
+      runtimeClasspath += test.runtimeClasspath
       srcDir file('src/unit-test/java')
     }
     resources.srcDir file('src/unit-test/resources')
@@ -15,7 +19,11 @@ sourceSets {
   testE2E {
     java {
       compileClasspath += main.output
-      runtimeClasspath += test.output
+      compileClasspath += main.compileClasspath
+      compileClasspath += test.compileClasspath
+      runtimeClasspath += main.output
+      runtimeClasspath += main.runtimeClasspath
+      runtimeClasspath += test.runtimeClasspath
       srcDir file('src/end-to-end-test/java')
     }
     resources.srcDir file('src/end-to-end-test/resources')
