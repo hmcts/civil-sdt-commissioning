@@ -208,6 +208,7 @@ ext {
   cxfVersion = '3.5.5'
   postgresqlVersion = '42.5.1'
   sdtCommonVersion = '1.0.0-SDT-105.1.0'
+  testcontainers = '1.17.5'
 }
 
 ext['snakeyaml.version'] = '1.33'
@@ -254,6 +255,8 @@ allprojects {
     implementation group: 'org.apache.cxf', name: 'cxf-rt-features-logging', version: cxfVersion
     implementation group: 'javax.jws', name: 'javax.jws-api', version: '1.1'
 
+    testImplementation group: 'org.testcontainers', name: 'postgresql', version: testcontainers
+    testImplementation(platform('org.junit:junit-bom:5.8.2'))
     testImplementation(platform('org.junit:junit-bom:5.9.2'))
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', {
