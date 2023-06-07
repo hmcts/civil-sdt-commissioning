@@ -5,8 +5,8 @@ dependencies {
 sourceSets {
   testUnit {
     java {
-      compileClasspath += test.output
-      runtimeClasspath += test.output
+      compileClasspath += main.output
+      runtimeClasspath += main.output
       srcDir file('src/unit-test/java')
     }
     resources.srcDir file('src/unit-test/resources')
@@ -14,8 +14,8 @@ sourceSets {
 
   testE2E {
     java {
-      compileClasspath += test.output
-      runtimeClasspath += test.output
+      compileClasspath += main.output
+      runtimeClasspath += main.output
       srcDir file('src/end-to-end-test/java')
     }
     resources.srcDir file('src/end-to-end-test/resources')

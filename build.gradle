@@ -35,8 +35,8 @@ sourceSets {
 
   functionalTest {
     java {
-      compileClasspath += test.output
-      runtimeClasspath += test.output
+      compileClasspath += main.output
+      runtimeClasspath += main.output
       srcDir file('src/functionalTest/java')
     }
     resources.srcDir file('src/functionalTest/resources')
@@ -44,8 +44,8 @@ sourceSets {
 
   integrationTest {
     java {
-      compileClasspath += test.output
-      runtimeClasspath += test.output
+      compileClasspath += main.output
+      runtimeClasspath += main.output
       srcDir file('src/integrationTest/java')
     }
     resources.srcDir file('src/integrationTest/resources')
@@ -53,8 +53,8 @@ sourceSets {
 
   smokeTest {
     java {
-      compileClasspath += test.output
-      runtimeClasspath += test.output
+      compileClasspath += main.output
+      runtimeClasspath += main.output
       srcDir file('src/smokeTest/java')
     }
     resources.srcDir file('src/smokeTest/resources')
@@ -257,7 +257,6 @@ allprojects {
 
     testImplementation group: 'org.testcontainers', name: 'postgresql', version: testcontainers
     testImplementation(platform('org.junit:junit-bom:5.8.2'))
-    testImplementation(platform('org.junit:junit-bom:5.9.2'))
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', {
       exclude group: 'junit', module: 'junit'
