@@ -4,7 +4,7 @@ plugins {
   id 'jacoco'
   id 'checkstyle'
   id 'org.sonarqube' version '3.4.0.2513'
-  id 'org.springframework.boot' version '2.7.9'
+  id 'org.springframework.boot' version '2.7.12'
   id 'uk.gov.hmcts.java' version '0.12.27'
   id 'io.spring.dependency-management' version '1.1.0'
   id 'org.owasp.dependencycheck' version '8.0.2'
@@ -283,7 +283,7 @@ allprojects {
           details.useVersion '5.3.27' // CVE-2023-20861
         }
         if (details.requested.group == 'org.springframework.boot') {
-          details.useVersion '2.7.11' // CVE-2023-20873
+          details.useVersion '2.7.12' // CVE-2023-20883
         }
         if (details.requested.group == 'com.fasterxml.woodstox' && details.requested.name == 'woodstox-core') {
           details.useVersion '6.4.0' // CVE-2022-40152
@@ -388,7 +388,7 @@ subprojects {
           details.useVersion '5.3.27' // CVE-2023-20861
         }
         if (details.requested.group == 'org.springframework.boot') {
-          details.useVersion '2.7.11' // CVE-2023-20873
+          details.useVersion '2.7.12' // CVE-2023-20883
         }
         if (details.requested.group == 'com.fasterxml.woodstox' && details.requested.name == 'woodstox-core') {
           details.useVersion '6.4.0' // CVE-2022-40152
