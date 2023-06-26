@@ -1,27 +1,18 @@
-sourceSets {
-  testUnit {
-    compileClasspath += sourceSets.main.output
-    runtimeClasspath += sourceSets.main.output
-    java {
-      srcDir file('src/unit-test/java')
-    }
-    resources.srcDir file('src/unit-test/resources')
-  }
+apply plugin: 'info.solidsoft.pitest'
 
-  testE2E {
-    compileClasspath += sourceSets.main.output
-    runtimeClasspath += sourceSets.main.output
-    java {
-      srcDir file('src/end-to-end-test/java')
-    }
-    resources.srcDir file('src/end-to-end-test/resources')
-  }
+jar {
+  enabled = true
+  archiveBaseName = 'civil-sdt-consumers'
 }
 
-configurations {
-  testUnitImplementation.extendsFrom testImplementation
-  testUnitImplementation.extendsFrom runtimeOnly
+dependencyCheck {
+  suppressionFile = "${rootDir}/config/owasp/suppressions.xml"
+}
 
-  testE2EImplementation.extendsFrom testImplementation
-  testE2ERuntimeOnly.extendsFrom runtimeOnly
+bootJar {
+  enabled = false
+}
+
+test {
+  useJUnitPlatform()
 }
