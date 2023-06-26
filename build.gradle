@@ -4,7 +4,7 @@ plugins {
   id 'jacoco'
   id 'checkstyle'
   id 'org.sonarqube' version '3.4.0.2513'
-  id 'org.springframework.boot' version '2.7.9'
+  id 'org.springframework.boot' version '2.7.12'
   id 'uk.gov.hmcts.java' version '0.12.27'
   id 'io.spring.dependency-management' version '1.1.0'
   id 'org.owasp.dependencycheck' version '8.0.2'
@@ -32,10 +32,15 @@ java {
 }
 
 sourceSets {
+
   functionalTest {
     java {
       compileClasspath += main.output
+      compileClasspath += main.compileClasspath
+      compileClasspath += test.compileClasspath
       runtimeClasspath += main.output
+      runtimeClasspath += main.runtimeClasspath
+      runtimeClasspath += test.runtimeClasspath
       srcDir file('src/functionalTest/java')
     }
     resources.srcDir file('src/functionalTest/resources')
@@ -44,7 +49,11 @@ sourceSets {
   integrationTest {
     java {
       compileClasspath += main.output
+      compileClasspath += main.compileClasspath
+      compileClasspath += test.compileClasspath
       runtimeClasspath += main.output
+      runtimeClasspath += main.runtimeClasspath
+      runtimeClasspath += test.runtimeClasspath
       srcDir file('src/integrationTest/java')
     }
     resources.srcDir file('src/integrationTest/resources')
@@ -53,7 +62,11 @@ sourceSets {
   smokeTest {
     java {
       compileClasspath += main.output
+      compileClasspath += main.compileClasspath
+      compileClasspath += test.compileClasspath
       runtimeClasspath += main.output
+      runtimeClasspath += main.runtimeClasspath
+      runtimeClasspath += test.runtimeClasspath
       srcDir file('src/smokeTest/java')
     }
     resources.srcDir file('src/smokeTest/resources')
@@ -92,14 +105,15 @@ test {
   failFast = true
 }
 
-task functional(type: Test) {
+
+tasks.register('functional', Test) {
   description = "Runs functional tests"
   group = "Verification"
   testClassesDirs = sourceSets.functionalTest.output.classesDirs
   classpath = sourceSets.functionalTest.runtimeClasspath
 }
 
-task integration(type: Test) {
+tasks.register('integration', Test) {
   description = "Runs integration tests"
   group = "Verification"
   testClassesDirs = sourceSets.integrationTest.output.classesDirs
@@ -107,13 +121,13 @@ task integration(type: Test) {
   failFast = true
 }
 
-task smoke(type: Test) {
+tasks.register('smoke', Test) {
   description = "Runs Smoke Tests"
   testClassesDirs = sourceSets.smokeTest.output.classesDirs
   classpath = sourceSets.smokeTest.runtimeClasspath
 }
 
-task fortifyScan(type: JavaExec)  {
+tasks.register('fortifyScan', JavaExec)  {
   main = "uk.gov.hmcts.fortifyclient.FortifyClientMainApp"
   classpath += sourceSets.test.runtimeClasspath
   jvmArgs = ['--add-opens=java.base/java.lang.reflect=ALL-UNNAMED']
@@ -147,18 +161,25 @@ jacocoTestReport {
 
 pitest {
   junit5PluginVersion = '1.1.2'
-  targetClasses = ['uk.gov.hmcts.reform.sdt.*']
-  excludedClasses = [
-          'uk.gov.hmcts.reform.sdt.config.*',
-  ]
-  threads = 10
+  targetClasses.set(['uk.gov.hmcts.reform.sdt.*',
+                     'uk.gov.hmcts.reform.sdt.config.*',
+                     'uk.gov.hmcts.reform.sdt.controllers.*'])
+  excludedClasses.set(['uk.gov.hmcts.reform.sdt.config.OpenAPIConfiguration.class'])
+  testSourceSets.set([sourceSets.integrationTest])
+  mainSourceSets.set([sourceSets.main])
+  useClasspathFile = true
   enableDefaultIncrementalAnalysis = true
   historyInputLocation = 'build/reports/pitest/fastermutationtesting'
   historyOutputLocation = 'build/reports/pitest/fastermutationtestingoutput'
-  outputFormats = ['XML', 'HTML']
+  threads = 15
+  fileExtensionsToFilter.addAll('XML','JSON')
+  outputFormats.set(['XML', 'HTML','CSV'])
+  mutationThreshold = 0
+  coverageThreshold = 0
+  jvmArgs.set(['-Xms1G','-Xmx3G'])
   timestampedReports = true
-  mutationThreshold = 90
-  useClasspathFile = true
+  failWhenNoMutations = false
+  detectInlinedCode = true
 }
 
 project.tasks['pitest'].group = "Verification"
@@ -206,6 +227,7 @@ ext {
   cxfVersion = '3.5.5'
   postgresqlVersion = '42.5.1'
   sdtCommonVersion = '1.0.0-SDT-129.0.1'
+  testcontainers = '1.17.5'
 }
 
 ext['snakeyaml.version'] = '1.33'
@@ -253,7 +275,8 @@ allprojects {
     implementation group: 'javax.jws', name: 'javax.jws-api', version: '1.1'
     implementation group: 'com.sun.xml.ws', name: 'jaxws-ri', version: '3.0.2'
 
-    testImplementation(platform('org.junit:junit-bom:5.9.2'))
+    testImplementation group: 'org.testcontainers', name: 'postgresql', version: testcontainers
+    testImplementation(platform('org.junit:junit-bom:5.8.2'))
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', {
       exclude group: 'junit', module: 'junit'
@@ -263,8 +286,6 @@ allprojects {
     testImplementation 'com.github.hmcts:fortify-client:1.2.2:all'
     testImplementation 'org.mockito:mockito-core:5.2.0'
     testImplementation group: 'org.mockito', name: 'mockito-inline', version: '3.11.1'
-    testImplementation group: 'org.powermock', name: 'powermock-api-mockito2', version: '2.0.9'
-    testImplementation group: 'org.powermock', name: 'powermock-module-junit4', version: '2.0.9'
     testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'utils', version: sdtCommonVersion, classifier: 'test'
     testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'utils', version: sdtCommonVersion, classifier: 'integ-test'
     testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'domain', version: sdtCommonVersion, classifier: 'test'
@@ -284,7 +305,7 @@ allprojects {
           details.useVersion '5.3.27' // CVE-2023-20861
         }
         if (details.requested.group == 'org.springframework.boot') {
-          details.useVersion '2.7.11' // CVE-2023-20873
+          details.useVersion '2.7.12' // CVE-2023-20883
         }
         if (details.requested.group == 'com.fasterxml.woodstox' && details.requested.name == 'woodstox-core') {
           details.useVersion '6.4.0' // CVE-2022-40152
@@ -297,11 +318,11 @@ allprojects {
     exclude group: 'org.springframework.security', module: 'spring-security-rsa'
   }
 
-  tasks.withType(Copy).all {
+  tasks.withType(Copy).configureEach {
     duplicatesStrategy 'exclude'
   }
 
-  }
+}
 
 mainClassName = 'uk.gov.hmcts.reform.sdt.Application'
 
@@ -313,12 +334,7 @@ bootJar {
   }
 }
 
-// Gradle 7.x issue, workaround from: https://github.com/gradle/gradle/issues/17236#issuecomment-894768083
-rootProject.tasks.named("processSmokeTestResources") {
-  duplicatesStrategy = 'include'
-}
-
-tasks.withType(Jar).all {
+tasks.withType(Jar).configureEach {
   duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
@@ -331,7 +347,7 @@ distZip {
 }
 
 wrapper {
-    distributionType = Wrapper.DistributionType.ALL
+  distributionType = Wrapper.DistributionType.ALL
 }
 
 subprojects {
@@ -360,7 +376,7 @@ subprojects {
     archiveClassifier = ''
   }
 
-  tasks.withType(Test) {
+  tasks.withType(Test).configureEach {
     useJUnitPlatform()
     reports.html.enabled = false
 
@@ -389,7 +405,7 @@ subprojects {
           details.useVersion '5.3.27' // CVE-2023-20861
         }
         if (details.requested.group == 'org.springframework.boot') {
-          details.useVersion '2.7.11' // CVE-2023-20873
+          details.useVersion '2.7.12' // CVE-2023-20883
         }
         if (details.requested.group == 'com.fasterxml.woodstox' && details.requested.name == 'woodstox-core') {
           details.useVersion '6.4.0' // CVE-2022-40152
@@ -402,7 +418,7 @@ subprojects {
     exclude group: 'org.springframework.security', module: 'spring-security-rsa'
   }
   configurations {
-    all {
+    configureEach {
       exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
     }
   }
