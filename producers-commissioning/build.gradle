@@ -1,18 +1,75 @@
-apply plugin: 'info.solidsoft.pitest'
-
-jar {
-  enabled = true
-  archiveBaseName = 'civil-sdt-consumers'
+dependencies {
+  testImplementation project(path: ':producers-commissioning')
 }
 
-dependencyCheck {
-  suppressionFile = "${rootDir}/config/owasp/suppressions.xml"
+sourceSets {
+  testUnit {
+    java {
+      compileClasspath += main.output
+      compileClasspath += main.compileClasspath
+      compileClasspath += test.compileClasspath
+      runtimeClasspath += main.output
+      runtimeClasspath += main.runtimeClasspath
+      runtimeClasspath += test.runtimeClasspath
+      srcDir file('src/unit-test/java')
+    }
+    resources.srcDir file('src/unit-test/resources')
+  }
+
+  testE2E {
+    java {
+      compileClasspath += main.output
+      compileClasspath += main.compileClasspath
+      compileClasspath += test.compileClasspath
+      runtimeClasspath += main.output
+      runtimeClasspath += main.runtimeClasspath
+      runtimeClasspath += test.runtimeClasspath
+      srcDir file('src/end-to-end-test/java')
+    }
+    resources.srcDir file('src/end-to-end-test/resources')
+  }
 }
 
-bootJar {
-  enabled = false
+configurations {
+  testUnitImplementation.extendsFrom testImplementation
+  testUnitImplementation.extendsFrom runtimeOnly
+
+  testE2EImplementation.extendsFrom testImplementation
+  testE2ERuntimeOnly.extendsFrom runtimeOnly
 }
 
-test {
+tasks.withType(Test).configureEach {
   useJUnitPlatform()
+}
+
+pitest {
+
+  junit5PluginVersion = '1.1.2'
+  targetClasses.set([
+          'uk.gov.moj.sdt.producers.comx.cache.*',
+          'uk.gov.moj.sdt.producers.comx.dao.*',
+          'uk.gov.moj.sdt.producers.comx.sdtws.*',
+          'uk.gov.moj.sdt.producers.comx.services.*',
+          'uk.gov.moj.sdt.producers.comx.utils.*'
+  ])
+  targetTests.set(['uk.gov.moj.sdt.producers.comx.cache.*',
+                   'uk.gov.moj.sdt.producers.comx.dao.*',
+                   'uk.gov.moj.sdt.producers.comx.sdtws.*',
+                   'uk.gov.moj.sdt.producers.comx.services.*',
+                   'uk.gov.moj.sdt.producers.comx.utils.*'])
+  testSourceSets.set([sourceSets.testUnit, sourceSets.testE2E])
+  mainSourceSets.set([sourceSets.main])
+  useClasspathFile = true
+  enableDefaultIncrementalAnalysis = true
+  historyInputLocation = 'build/reports/pitest/fastermutationtesting'
+  historyOutputLocation = 'build/reports/pitest/fastermutationtestingoutput'
+  threads = 15
+  fileExtensionsToFilter.addAll('XML','JSON')
+  outputFormats.set(['XML', 'HTML','CSV'])
+  mutationThreshold = 0
+  coverageThreshold = 0
+  jvmArgs.set(['-Xms1G','-Xmx3G'])
+  timestampedReports = true
+  failWhenNoMutations = false
+  detectInlinedCode = true
 }
