@@ -1,6 +1,5 @@
 package uk.gov.moj.sdt.interceptors.service;
 
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 import uk.gov.moj.sdt.domain.api.IDomainObject;
 
@@ -8,12 +7,12 @@ import uk.gov.moj.sdt.domain.api.IDomainObject;
 public class PersistServiceRequestImpl implements IPersistServiceRequest {
 
     @Override
-    public void persist(Object domainObject) throws DataAccessException {
+    public void persist(Object domainObject) {
 
     }
 
     @Override
-    public <D extends IDomainObject> D fetch(Class<D> domainType, long id) throws DataAccessException {
+    public <D extends IDomainObject> D fetch(Class<D> domainType, long id) {
         return null;
     }
 }
