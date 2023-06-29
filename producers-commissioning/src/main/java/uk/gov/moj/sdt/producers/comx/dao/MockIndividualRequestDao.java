@@ -47,7 +47,7 @@ import java.util.List;
  * @author d130680
  *
  */
-@Component("MockIndividualRequestDao")
+@Component("IndividualRequestDao")
 public class MockIndividualRequestDao extends MockGenericDao implements IIndividualRequestDao
 {
 

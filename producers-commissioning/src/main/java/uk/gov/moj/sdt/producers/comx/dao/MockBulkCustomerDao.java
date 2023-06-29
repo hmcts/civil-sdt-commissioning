@@ -40,6 +40,7 @@ import uk.gov.moj.sdt.domain.api.IBulkCustomer;
 import uk.gov.moj.sdt.domain.api.IBulkCustomerApplication;
 import uk.gov.moj.sdt.domain.api.ITargetApplication;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,13 +49,17 @@ import java.util.List;
  * @author d130680
  *
  */
-@Component("MockBulkCustomerDao")
+@Component("BulkCustomerDao")
 public class MockBulkCustomerDao extends MockGenericDao implements IBulkCustomerDao
 {
     /**
      * Collection of target application codes to be associated with customer.
      */
-    private List<String> targetAppCodes;
+    private List<String> targetAppCodes = new ArrayList<>();
+
+    public MockBulkCustomerDao() {
+        targetAppCodes.add("MCOL");
+    }
 
     /**
      * Mock the behaviour of Bulk customer DAO, returns a static array of bulk customer.

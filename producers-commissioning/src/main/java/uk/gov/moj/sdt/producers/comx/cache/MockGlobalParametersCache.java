@@ -43,7 +43,7 @@ import uk.gov.moj.sdt.services.cache.api.IGlobalParametersCache;
  * @author d130680
  *
  */
-@Component("MockGlobalParametersCache")
+@Component("GlobalParametersCache")
 public class MockGlobalParametersCache implements ICacheable, IGlobalParametersCache
 {
 

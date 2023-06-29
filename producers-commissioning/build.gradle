@@ -1,4 +1,6 @@
 dependencies {
+  implementation 'com.google.guava:guava:30.0-jre'
+
   testImplementation project(path: ':producers-commissioning')
 }
 

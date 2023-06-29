@@ -40,7 +40,7 @@ import uk.gov.moj.sdt.services.api.IUpdateRequestService;
  * @author Manoj Kulkarni
  *
  */
-@Component("MockUpdateRequestService")
+@Component("UpdateRequestService")
 public class MockUpdateRequestService implements IUpdateRequestService
 {
 

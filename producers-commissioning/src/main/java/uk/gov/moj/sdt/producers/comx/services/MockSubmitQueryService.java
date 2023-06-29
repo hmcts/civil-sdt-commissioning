@@ -30,8 +30,11 @@
  * $LastChangedBy: $ */
 package uk.gov.moj.sdt.producers.comx.services;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import uk.gov.moj.sdt.domain.SubmitQueryRequest;
 import uk.gov.moj.sdt.domain.api.ISubmitQueryRequest;
@@ -45,14 +48,31 @@ import uk.gov.moj.sdt.utils.SdtContext;
  * @author d130680
  *
  */
-@Service("MockSubmitQueryService")
+@Service("SubmitQueryService")
 public class MockSubmitQueryService implements ISubmitQueryService
 {
 
     /**
      * Map of the response content by the criteria type as key.
      */
-    private Map<String, SubmitQueryRequest> responseContentMap;
+    private Map<String, SubmitQueryRequest> responseContentMap = new HashMap<>();
+
+    @Autowired
+    public MockSubmitQueryService(@Qualifier("uk.gov.moj.sdt.domain.api.ISubmitQueryRequestMCOLDefence1") SubmitQueryRequest submitQueryRequest1,
+                                  @Qualifier("uk.gov.moj.sdt.domain.api.ISubmitQueryRequestMCOLDefence2") SubmitQueryRequest submitQueryRequest2,
+                                  @Qualifier("uk.gov.moj.sdt.domain.api.ISubmitQueryRequestMCOLDefence3") SubmitQueryRequest submitQueryRequest3,
+                                  @Qualifier("uk.gov.moj.sdt.domain.api.ISubmitQueryRequestMCOLDefence4") SubmitQueryRequest submitQueryRequest4,
+                                  @Qualifier("uk.gov.moj.sdt.domain.api.ISubmitQueryRequestMCOLDefence5") SubmitQueryRequest submitQueryRequest5,
+                                  @Qualifier("uk.gov.moj.sdt.domain.api.ISubmitQueryRequestMCOLDefence6") SubmitQueryRequest submitQueryRequest6) {
+
+        responseContentMap.put("MCOLDefence1", submitQueryRequest1);
+        responseContentMap.put("MCOLDefence2", submitQueryRequest2);
+        responseContentMap.put("MCOLDefence3", submitQueryRequest3);
+        responseContentMap.put("MCOLDefence4", submitQueryRequest4);
+        responseContentMap.put("MCOLDefence5", submitQueryRequest5);
+        responseContentMap.put("MCOLDefence6", submitQueryRequest6);
+
+    }
 
     @Override
     public void submitQuery (final ISubmitQueryRequest request)

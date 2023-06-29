@@ -43,7 +43,7 @@ import uk.gov.moj.sdt.domain.api.ITargetApplication;
  * @author d130680
  *
  */
-@Component("MockTargetApplicationDao")
+@Component("TargetApplicationDao")
 public class MockTargetApplicationDao extends MockGenericDao implements ITargetApplicationDao
 {
 

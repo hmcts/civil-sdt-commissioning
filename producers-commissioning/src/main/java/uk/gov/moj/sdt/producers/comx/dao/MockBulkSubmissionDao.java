@@ -38,6 +38,7 @@ import uk.gov.moj.sdt.domain.api.IBulkCustomer;
 import uk.gov.moj.sdt.domain.api.IBulkSubmission;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,7 +47,7 @@ import java.util.List;
  * @author d130680
  *
  */
-@Component("MockBulkSubmissionDao")
+@Component("BulkSubmissionDao")
 public class MockBulkSubmissionDao extends MockGenericDao implements IBulkSubmissionDao
 {
 
@@ -54,6 +55,14 @@ public class MockBulkSubmissionDao extends MockGenericDao implements IBulkSubmis
      * Pre-defined values for valid bulk references, injected from spring context file.
      */
     private List<String> bulkReferenceList;
+
+    public MockBulkSubmissionDao() {
+        bulkReferenceList = new ArrayList<>();
+        bulkReferenceList.add("MCOL_20130722000000_A00000001");
+        bulkReferenceList.add("MCOL_20130722000000_B00000001");
+        bulkReferenceList.add("MCOL_20130722000000_B00000002");
+        bulkReferenceList.add("MCOL_20130722000000_C00000001");
+    }
 
     @Override
     public IBulkSubmission getBulkSubmission (final IBulkCustomer bulkCustomer, final String customerReference,

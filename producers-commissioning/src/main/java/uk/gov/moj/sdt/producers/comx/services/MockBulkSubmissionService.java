@@ -32,6 +32,7 @@ package uk.gov.moj.sdt.producers.comx.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.gov.moj.sdt.domain.api.IBulkSubmission;
 import uk.gov.moj.sdt.services.api.IBulkSubmissionService;
@@ -46,7 +47,7 @@ import uk.gov.moj.sdt.utils.mbeans.SdtMetricsMBean;
  * @author d130680
  *
  */
-@Component("MockBulkSubmissionService")
+@Component("BulkSubmissionService")
 public class MockBulkSubmissionService implements IBulkSubmissionService
 {
     /**
@@ -58,6 +59,11 @@ public class MockBulkSubmissionService implements IBulkSubmissionService
      * SDT Bulk reference generator.
      */
     private ISdtBulkReferenceGenerator sdtBulkReferenceGenerator;
+
+    @Autowired
+    public MockBulkSubmissionService(ISdtBulkReferenceGenerator sdtBulkReferenceGenerator) {
+        this.sdtBulkReferenceGenerator = sdtBulkReferenceGenerator;
+    }
 
     @Override
     public void saveBulkSubmission (final IBulkSubmission bulkSubmission)

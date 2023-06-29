@@ -14,7 +14,7 @@ import java.util.HashMap;
  *
  * @author d164190
  */
-@Component("MockErrorMessagesCache")
+@Component("ErrorMessagesCache")
 public class MockErrorMessagesCache implements ICacheable, IErrorMessagesCache {
 
     private final HashMap<String, String> hmErrorMessages = new HashMap<>();

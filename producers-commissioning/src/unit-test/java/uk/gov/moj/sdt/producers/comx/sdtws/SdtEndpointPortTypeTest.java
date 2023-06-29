@@ -1,7 +1,7 @@
 package uk.gov.moj.sdt.producers.comx.sdtws;
 
 /* Copyrights and Licenses
- * 
+ *
  * Copyright (c) 2013 by the Ministry of Justice. All rights reserved.
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
@@ -25,18 +25,11 @@ package uk.gov.moj.sdt.producers.comx.sdtws;
  * or business interruption). However caused any on any theory of liability, whether in contract,
  * strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this
  * software, even if advised of the possibility of such damage.
- * 
+ *
  * $Id$
  * $LastChangedRevision$
  * $LastChangedDate$
  * $LastChangedBy$ */
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -60,11 +53,18 @@ import uk.gov.moj.sdt.ws._2013.sdt.bulkresponseschema.BulkResponseType;
 import uk.gov.moj.sdt.ws._2013.sdt.submitqueryrequestschema.SubmitQueryRequestType;
 import uk.gov.moj.sdt.ws._2013.sdt.submitqueryresponseschema.SubmitQueryResponseType;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 /**
  * Unit test for {@link SdtEndpointPortType}.
- * 
+ *
  * @author d276205
- * 
+ *
  */
 @ExtendWith(MockitoExtension.class)
 class SdtEndpointPortTypeTest extends AbstractSdtUnitTestBase {
@@ -110,10 +110,7 @@ class SdtEndpointPortTypeTest extends AbstractSdtUnitTestBase {
     @Override
     public void setUp ()
     {
-        portType = new SdtEndpointPortType();
-        portType.setWsCreateBulkRequestHandler(mockCreateBulkRequestHandler);
-        portType.setWsReadBulkRequestHandler(mockBulkRequestHandler);
-        portType.setWsReadSubmitQueryHandler(mockSubmitQueryHandler);
+        portType = new SdtEndpointPortType(mockCreateBulkRequestHandler, mockBulkRequestHandler, mockSubmitQueryHandler);
     }
 
     /**
@@ -219,7 +216,7 @@ class SdtEndpointPortTypeTest extends AbstractSdtUnitTestBase {
 
     /**
      * Creates dummy bulk submission request.
-     * 
+     *
      * @return dummy request.
      */
     private BulkRequestType createBulkRequest() {
@@ -237,7 +234,7 @@ class SdtEndpointPortTypeTest extends AbstractSdtUnitTestBase {
 
     /**
      * Creates dummy bulk submission response.
-     * 
+     *
      * @return dummy response.
      */
     private BulkResponseType createBulkResponse() {
@@ -252,7 +249,7 @@ class SdtEndpointPortTypeTest extends AbstractSdtUnitTestBase {
 
     /**
      * Creates dummy request.
-     * 
+     *
      * @return dummy request.
      */
     private BulkFeedbackRequestType createBulkFeedbackRequestType() {
@@ -269,7 +266,7 @@ class SdtEndpointPortTypeTest extends AbstractSdtUnitTestBase {
 
     /**
      * Creates dummy bulk feedback response.
-     * 
+     *
      * @return dummy response.
      */
     private BulkFeedbackResponseType createBulkFeedbackResponse() {
@@ -294,7 +291,7 @@ class SdtEndpointPortTypeTest extends AbstractSdtUnitTestBase {
 
     /**
      * Creates dummy request.
-     * 
+     *
      * @return dummy request.
      */
     private SubmitQueryRequestType createsubmitQueryRequestType() {
@@ -311,7 +308,7 @@ class SdtEndpointPortTypeTest extends AbstractSdtUnitTestBase {
 
     /**
      * Creates dummy submit query response.
-     * 
+     *
      * @return dummy response.
      */
     private SubmitQueryResponseType createSubmitQueryResponse() {
