@@ -20,8 +20,6 @@ import uk.gov.moj.sdt.ws._2013.sdt.submitqueryresponseschema.SubmitQueryResponse
  */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@ContextConfiguration(locations = {"classpath*:/uk/gov/moj/sdt/producers/comx/spring*e2e.test.xml",
-        "classpath*:/uk/gov/moj/sdt/utils/**/spring*.xml", "classpath*:/uk/gov/moj/sdt/transformers/**/spring*.xml"})
 public class SubmitQueryTest extends AbstractWebServiceTest<SubmitQueryRequestType, SubmitQueryResponseType> {
 
     /**
