@@ -226,7 +226,7 @@ ext {
   lombokVersion = '1.18.24'
   cxfVersion = '3.5.5'
   postgresqlVersion = '42.5.1'
-  sdtCommonVersion = '1.0.0-SDT-129.0.1'
+  sdtCommonVersion = '1.0.0-SDT-128.0.1'
   testcontainers = '1.17.5'
 }
 
@@ -250,6 +250,7 @@ allprojects {
   apply plugin: 'java'
 
   dependencies {
+    implementation 'com.google.guava:guava:32.1.1-jre'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop'

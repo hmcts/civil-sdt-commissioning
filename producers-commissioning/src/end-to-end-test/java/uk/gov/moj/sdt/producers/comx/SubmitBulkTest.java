@@ -4,9 +4,8 @@ import javax.xml.bind.JAXBElement;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import uk.gov.moj.sdt.ws._2013.sdt.bulkrequestschema.BulkRequestType;
 import uk.gov.moj.sdt.ws._2013.sdt.bulkresponseschema.BulkResponseType;
 import uk.gov.moj.sdt.ws._2013.sdt.bulkresponseschema.ObjectFactory;
@@ -18,6 +17,7 @@ import uk.gov.moj.sdt.ws._2013.sdt.sdtendpoint.ISdtEndpointPortType;
  * @author Robin Compston
  */
 @ExtendWith(SpringExtension.class)
+@SpringBootTest
 public class SubmitBulkTest extends AbstractWebServiceTest<BulkRequestType, BulkResponseType> {
 
     /**

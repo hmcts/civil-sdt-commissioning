@@ -5,7 +5,6 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Marshaller;
@@ -19,7 +18,6 @@ import org.apache.cxf.transport.http.HTTPConduit;
 import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import uk.gov.moj.sdt.utils.SpringApplicationContext;
 import uk.gov.moj.sdt.ws._2013.sdt.sdtendpoint.ISdtEndpointPortType;
 

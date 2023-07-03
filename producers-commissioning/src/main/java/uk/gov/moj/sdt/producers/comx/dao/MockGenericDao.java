@@ -57,7 +57,7 @@ import javax.persistence.criteria.CriteriaQuery;
  * @author d130680
  *
  */
-@Component("MockGenericDao")
+@Component("GenericDao")
 public class MockGenericDao implements IGenericDao
 {
     /**

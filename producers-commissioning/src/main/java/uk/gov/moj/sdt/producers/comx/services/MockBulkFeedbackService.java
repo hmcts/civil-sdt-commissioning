@@ -31,11 +31,13 @@
 
 package uk.gov.moj.sdt.producers.comx.services;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import uk.gov.moj.sdt.domain.api.IBulkFeedbackRequest;
 import uk.gov.moj.sdt.domain.api.IBulkSubmission;
@@ -50,7 +52,7 @@ import uk.gov.moj.sdt.utils.SdtContext;
  * @author d130680
  *
  */
-@Component("MockBulkFeedbackService")
+@Component("BulkFeedbackService")
 public class MockBulkFeedbackService implements IBulkFeedbackService
 {
     /**
@@ -61,7 +63,18 @@ public class MockBulkFeedbackService implements IBulkFeedbackService
     /**
      * Map of bulk feedback factories.
      */
-    private Map<String, BulkFeedbackFactory> bulkFeedbackFactoryMap;
+    private Map<String, BulkFeedbackFactory> bulkFeedbackFactoryMap = new HashMap<>();
+
+    @Autowired
+    public MockBulkFeedbackService(@Qualifier("uk.gov.moj.sdt.producers.comx.utils.BulkFeedbackFactoryA00000001") BulkFeedbackFactory bulkFeedbackFactory1,
+                                   @Qualifier("uk.gov.moj.sdt.producers.comx.utils.BulkFeedbackFactoryB00000001") BulkFeedbackFactory bulkFeedbackFactory2,
+                                   @Qualifier("uk.gov.moj.sdt.producers.comx.utils.BulkFeedbackFactoryB00000002") BulkFeedbackFactory bulkFeedbackFactory3,
+                                   @Qualifier("uk.gov.moj.sdt.producers.comx.utils.BulkFeedbackFactoryC00000001") BulkFeedbackFactory bulkFeedbackFactory4) {
+        bulkFeedbackFactoryMap.put("MCOL_20130722000000_A00000001", bulkFeedbackFactory1);
+        bulkFeedbackFactoryMap.put("MCOL_20130722000000_B00000001", bulkFeedbackFactory2);
+        bulkFeedbackFactoryMap.put("MCOL_20130722000000_B00000002", bulkFeedbackFactory3);
+        bulkFeedbackFactoryMap.put("MCOL_20130722000000_C00000001", bulkFeedbackFactory4);
+    }
 
     @Override
     public IBulkSubmission getBulkFeedback(final IBulkFeedbackRequest bulkFeedbackRequest) {

@@ -43,7 +43,7 @@ import uk.gov.moj.sdt.services.utils.api.ISdtBulkReferenceGenerator;
  *
  *         This class generates the bulk SDT reference number for the SDT commissioning application
  */
-@Component("MockSdtBulkReferenceGenerator")
+@Component("SdtBulkReferenceGenerator")
 public class MockSdtBulkReferenceGenerator implements ISdtBulkReferenceGenerator
 {
 
