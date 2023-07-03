@@ -86,7 +86,7 @@ public class BulkFeedbackConfigBTwo {
                 """
                       <![CDATA[
                           <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
-                          	  <mresp:issueDate>2014-01-23</mresp:issueDate>
+                              <mresp:issueDate>2014-01-23</mresp:issueDate>
                               <mresp:warrantNumber>0Z000150</mresp:warrantNumber>
                               <mresp:enforcingCourtCode>127</mresp:enforcingCourtCode>
                               <mresp:enforcingCourtName>BIRMINGHAM</mresp:enforcingCourtName>
