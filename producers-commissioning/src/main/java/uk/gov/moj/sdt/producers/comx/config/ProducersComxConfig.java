@@ -14,10 +14,10 @@ import uk.gov.moj.sdt.utils.mbeans.SdtMetricsMBean;
 
 @Configuration
 @EnableAutoConfiguration
-public class MBeanConfig {
+public class ProducersComxConfig {
 
     @Bean
-    @Qualifier("sdtProducersMetrics")
+    @Qualifier("sdtProducersComxMetrics")
     public MBeanExporter mBeanExporterProducerMetrics() {
         MBeanExporter mBeanExporter = new MBeanExporter();
         Map<String, Object> beans = new HashMap<>();

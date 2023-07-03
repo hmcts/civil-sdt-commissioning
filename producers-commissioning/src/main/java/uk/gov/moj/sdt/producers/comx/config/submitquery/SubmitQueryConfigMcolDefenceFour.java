@@ -8,7 +8,7 @@ import uk.gov.moj.sdt.domain.SubmitQueryRequest;
 
 @Configuration
 @EnableAutoConfiguration
-public class SubmitQueryConfigFour {
+public class SubmitQueryConfigMcolDefenceFour {
 
     @Bean("uk.gov.moj.sdt.domain.api.ISubmitQueryRequestMCOLDefence4")
     public SubmitQueryRequest submitQueryRequest() {

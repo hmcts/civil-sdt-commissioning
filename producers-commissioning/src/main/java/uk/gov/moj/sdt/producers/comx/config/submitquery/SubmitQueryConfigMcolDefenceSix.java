@@ -8,9 +8,9 @@ import uk.gov.moj.sdt.domain.SubmitQueryRequest;
 
 @Configuration
 @EnableAutoConfiguration
-public class SubmitQueryConfigFive {
+public class SubmitQueryConfigMcolDefenceSix {
 
-    @Bean("uk.gov.moj.sdt.domain.api.ISubmitQueryRequestMCOLDefence5")
+    @Bean("uk.gov.moj.sdt.domain.api.ISubmitQueryRequestMCOLDefence6")
     public SubmitQueryRequest submitQueryRequest() {
         SubmitQueryRequest submitQueryRequest = new SubmitQueryRequest();
         submitQueryRequest.setResultCount(0);
@@ -21,8 +21,8 @@ public class SubmitQueryConfigFive {
 
     private ErrorLog errorLog() {
         ErrorLog errorLog = new ErrorLog();
-        errorLog.setErrorCode("2");
-        errorLog.setErrorText("MCOL customer number specified has not been set up for SDT use on MCOL.");
+        errorLog.setErrorCode("74");
+        errorLog.setErrorText("To Date and Time must be later than From Date and Time.");
         return errorLog;
     }
 }
