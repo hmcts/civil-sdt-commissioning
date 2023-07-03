@@ -658,10 +658,10 @@ public class BulkFeedbackConfigCOne {
                 "Judgment: Rejected by CCBC - rejection number 6.",
                 """
                      <![CDATA[
-                                                <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
-                                                    <mresp:judgmentWarrantStatus>Judgment rejected by CCBC</mresp:judgmentWarrantStatus>
-                                                </ind:mcolResponseDetail>
-                                            ]]>
+                       <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
+                           <mresp:judgmentWarrantStatus>Judgment rejected by CCBC</mresp:judgmentWarrantStatus>
+                       </ind:mcolResponseDetail>
+                     ]]>
                     """
             ),
             Lists.newArrayList(
@@ -672,10 +672,10 @@ public class BulkFeedbackConfigCOne {
                 "Judgment: Rejected by CCBC - rejection number 6.  Warrant: Rejected by CCBC - rejection number 6.",
                 """
                      <![CDATA[
-                                                 <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
-                                                     <mresp:judgmentWarrantStatus>Judgment rejected by CCBC. Warrant rejected by CCBC.</mresp:judgmentWarrantStatus>
-                                                 </ind:mcolResponseDetail>
-                                             ]]>
+                        <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
+                            <mresp:judgmentWarrantStatus>Judgment rejected by CCBC. Warrant rejected by CCBC.</mresp:judgmentWarrantStatus>
+                        </ind:mcolResponseDetail>
+                     ]]>
                     """
             ),
             Lists.newArrayList(
@@ -758,7 +758,6 @@ public class BulkFeedbackConfigCOne {
                 "Representing who must be specified if applicant type is Legal Representative.",
                 ""
             ),
-
             Lists.newArrayList(
                 "USER_REQUEST_ID_c86",
                 "mcolSetAside",
@@ -895,8 +894,6 @@ public class BulkFeedbackConfigCOne {
                 "A party on the case is currently in active breathing space.",
                 ""
             )
-
-
         ));
     }
 }
