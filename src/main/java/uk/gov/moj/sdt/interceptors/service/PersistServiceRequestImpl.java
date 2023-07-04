@@ -9,7 +9,7 @@ import uk.gov.moj.sdt.producers.comx.dao.MockGenericDao;
 @Component
 public class PersistServiceRequestImpl implements IPersistServiceRequest {
 
-    private MockGenericDao mockGenericDao;
+    private final MockGenericDao mockGenericDao;
 
     @Autowired
     public PersistServiceRequestImpl(@Qualifier("GenericDao") MockGenericDao mockGenericDao) {
