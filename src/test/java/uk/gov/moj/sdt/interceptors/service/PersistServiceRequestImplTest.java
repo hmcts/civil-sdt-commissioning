@@ -6,10 +6,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.moj.sdt.domain.ServiceRequest;
-import uk.gov.moj.sdt.domain.api.IDomainObject;
 import uk.gov.moj.sdt.producers.comx.dao.MockGenericDao;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
