@@ -33,7 +33,7 @@ public class BulkFeedbackConfigCOne {
     public void invokingBean() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         MethodInvokingFactoryBean methodInvokingFactoryBean = new MethodInvokingFactoryBean();
         methodInvokingFactoryBean.setTargetObject(bulkFeedbackFactory());
-        methodInvokingFactoryBean.setTargetMethod("createIndividualRequest");
+        methodInvokingFactoryBean.setTargetMethod("createIndividualRequests");
         methodInvokingFactoryBean.setArguments(Lists.newArrayList(
             Lists.newArrayList(
                 "USER_REQUEST_ID_c1",
@@ -658,12 +658,10 @@ public class BulkFeedbackConfigCOne {
                 "75",
                 "Judgment: Rejected by CCBC - rejection number 6.",
                 """
-                     <![CDATA[
-                       <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
-                           <mresp:judgmentWarrantStatus>Judgment rejected by CCBC</mresp:judgmentWarrantStatus>
-                       </ind:mcolResponseDetail>
-                     ]]>
-                    """
+                   <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
+                       <mresp:judgmentWarrantStatus>Judgment rejected by CCBC</mresp:judgmentWarrantStatus>
+                   </ind:mcolResponseDetail>
+                 """
             ),
             Lists.newArrayList(
                 "USER_REQUEST_ID_c75e",
@@ -672,12 +670,10 @@ public class BulkFeedbackConfigCOne {
                 "75",
                 "Judgment: Rejected by CCBC - rejection number 6.  Warrant: Rejected by CCBC - rejection number 6.",
                 """
-                     <![CDATA[
-                        <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
-                            <mresp:judgmentWarrantStatus>Judgment rejected by CCBC. Warrant rejected by CCBC.</mresp:judgmentWarrantStatus>
-                        </ind:mcolResponseDetail>
-                     ]]>
-                    """
+                    <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
+                        <mresp:judgmentWarrantStatus>Judgment rejected by CCBC. Warrant rejected by CCBC.</mresp:judgmentWarrantStatus>
+                    </ind:mcolResponseDetail>
+                 """
             ),
             Lists.newArrayList(
                 "USER_REQUEST_ID_c75f",

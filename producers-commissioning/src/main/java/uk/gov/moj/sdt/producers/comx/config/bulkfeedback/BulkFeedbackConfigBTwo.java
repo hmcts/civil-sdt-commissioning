@@ -85,17 +85,15 @@ public class BulkFeedbackConfigBTwo {
                 "",
                 "",
                 """
-                      <![CDATA[
-                          <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
-                              <mresp:issueDate>2014-01-23</mresp:issueDate>
-                              <mresp:warrantNumber>0Z000150</mresp:warrantNumber>
-                              <mresp:enforcingCourtCode>127</mresp:enforcingCourtCode>
-                              <mresp:enforcingCourtName>BIRMINGHAM</mresp:enforcingCourtName>
-                              <mresp:fee>10000</mresp:fee>
-                              <mresp:judgmentWarrantStatus>Warrant accepted by CCBC</mresp:judgmentWarrantStatus>
-                          </ind:mcolResponseDetail>
-                      ]]>
-                    """
+                  <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
+                      <mresp:issueDate>2014-01-23</mresp:issueDate>
+                      <mresp:warrantNumber>0Z000150</mresp:warrantNumber>
+                      <mresp:enforcingCourtCode>127</mresp:enforcingCourtCode>
+                      <mresp:enforcingCourtName>BIRMINGHAM</mresp:enforcingCourtName>
+                      <mresp:fee>10000</mresp:fee>
+                      <mresp:judgmentWarrantStatus>Warrant accepted by CCBC</mresp:judgmentWarrantStatus>
+                  </ind:mcolResponseDetail>
+                 """
             ),
             Lists.newArrayList(
                 "USER_REQUEST_ID_B7",
@@ -104,19 +102,17 @@ public class BulkFeedbackConfigBTwo {
                 "",
                 "",
                 """
-                    <![CDATA[
-                        <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
-                            <mresp:issueDate>2014-01-23</mresp:issueDate>
-                            <mresp:judgmentEnteredDate>2014-01-23</mresp:judgmentEnteredDate>
-                            <mresp:firstPaymentDate>2014-03-03</mresp:firstPaymentDate>
-                            <mresp:warrantNumber>0Z000151</mresp:warrantNumber>
-                            <mresp:enforcingCourtCode>127</mresp:enforcingCourtCode>
-                            <mresp:enforcingCourtName>BIRMINGHAM</mresp:enforcingCourtName>
-                            <mresp:fee>10000</mresp:fee>
-                            <mresp:judgmentWarrantStatus>Judgment accepted by CCBC. Warrant accepted by CCBC</mresp:judgmentWarrantStatus>
-                        </ind:mcolResponseDetail>
-                     ]]>
-                      """
+                 <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
+                     <mresp:issueDate>2014-01-23</mresp:issueDate>
+                     <mresp:judgmentEnteredDate>2014-01-23</mresp:judgmentEnteredDate>
+                     <mresp:firstPaymentDate>2014-03-03</mresp:firstPaymentDate>
+                     <mresp:warrantNumber>0Z000151</mresp:warrantNumber>
+                     <mresp:enforcingCourtCode>127</mresp:enforcingCourtCode>
+                     <mresp:enforcingCourtName>BIRMINGHAM</mresp:enforcingCourtName>
+                     <mresp:fee>10000</mresp:fee>
+                     <mresp:judgmentWarrantStatus>Judgment accepted by CCBC. Warrant accepted by CCBC</mresp:judgmentWarrantStatus>
+                 </ind:mcolResponseDetail>
+                 """
             ),
             Lists.newArrayList(
                 "USER_REQUEST_ID_B8",
@@ -141,12 +137,10 @@ public class BulkFeedbackConfigBTwo {
                 "24",
                 "This judgment request is invalid on the referenced claim.",
                 """
-                    <![CDATA[
-                         <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
-                             <mresp:judgmentWarrantStatus>Judgment Request error</mresp:judgmentWarrantStatus>
-                         </ind:mcolResponseDetail>
-                    ]]>
-                    """
+                  <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
+                      <mresp:judgmentWarrantStatus>Judgment Request error</mresp:judgmentWarrantStatus>
+                  </ind:mcolResponseDetail>
+                 """
             ),
             Lists.newArrayList(
                 "USER_REQUEST_ID_B11",
@@ -155,15 +149,13 @@ public class BulkFeedbackConfigBTwo {
                 "",
                 "",
                 """
-                    <![CDATA[
-                     <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
-                         <mresp:claimNumber>A0ZZ0045</mresp:claimNumber>
-                         <mresp:issueDate>2014-01-23</mresp:issueDate>
-                         <mresp:serviceDate>2014-01-28</mresp:serviceDate>
-                         <mresp:fee>21000</mresp:fee>
-                     </ind:mcolResponseDetail>
-                    ]]>
-                    """
+                 <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
+                     <mresp:claimNumber>A0ZZ0045</mresp:claimNumber>
+                     <mresp:issueDate>2014-01-23</mresp:issueDate>
+                     <mresp:serviceDate>2014-01-28</mresp:serviceDate>
+                     <mresp:fee>21000</mresp:fee>
+                 </ind:mcolResponseDetail>
+                 """
             ),
             Lists.newArrayList(
                 "USER_REQUEST_ID_B12",
@@ -172,17 +164,15 @@ public class BulkFeedbackConfigBTwo {
                 "",
                 "",
                 """
-                    <![CDATA[
-                      <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
-                          <mresp:issueDate>2014-01-23</mresp:issueDate>
-                          <mresp:warrantNumber>0Z000152</mresp:warrantNumber>
-                          <mresp:enforcingCourtCode>127</mresp:enforcingCourtCode>
-                          <mresp:enforcingCourtName>BIRMINGHAM</mresp:enforcingCourtName>
-                          <mresp:fee>10000</mresp:fee>
-                          <mresp:judgmentWarrantStatus>Warrant accepted by CCBC</mresp:judgmentWarrantStatus>
-                      </ind:mcolResponseDetail>
-                    ]]>
-                    """
+                  <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
+                      <mresp:issueDate>2014-01-23</mresp:issueDate>
+                      <mresp:warrantNumber>0Z000152</mresp:warrantNumber>
+                      <mresp:enforcingCourtCode>127</mresp:enforcingCourtCode>
+                      <mresp:enforcingCourtName>BIRMINGHAM</mresp:enforcingCourtName>
+                      <mresp:fee>10000</mresp:fee>
+                      <mresp:judgmentWarrantStatus>Warrant accepted by CCBC</mresp:judgmentWarrantStatus>
+                  </ind:mcolResponseDetail>
+                 """
             ),
             Lists.newArrayList(
                 "USER_REQUEST_ID_B13",
@@ -191,14 +181,12 @@ public class BulkFeedbackConfigBTwo {
                 "",
                 "",
                 """
-                     <![CDATA[
-                      <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
-                          <mresp:judgmentEnteredDate>2014-01-23</mresp:judgmentEnteredDate>
-                          <mresp:firstPaymentDate>2014-02-21</mresp:firstPaymentDate>
-                          <mresp:judgmentWarrantStatus>Judgment accepted by CCBC</mresp:judgmentWarrantStatus>
-                      </ind:mcolResponseDetail>
-                    ]]>
-                    """
+                  <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
+                      <mresp:judgmentEnteredDate>2014-01-23</mresp:judgmentEnteredDate>
+                      <mresp:firstPaymentDate>2014-02-21</mresp:firstPaymentDate>
+                      <mresp:judgmentWarrantStatus>Judgment accepted by CCBC</mresp:judgmentWarrantStatus>
+                  </ind:mcolResponseDetail>
+                """
             ),
             Lists.newArrayList(
                 "USER_REQUEST_ID_B14",
@@ -207,15 +195,13 @@ public class BulkFeedbackConfigBTwo {
                 "",
                 "",
                 """
-                     <![CDATA[
-                       <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
-                           <mresp:claimNumber>A0ZZ0046</mresp:claimNumber>
-                           <mresp:issueDate>2014-01-23</mresp:issueDate>
-                           <mresp:serviceDate>2014-01-28</mresp:serviceDate>
-                           <mresp:fee>34000</mresp:fee>
-                       </ind:mcolResponseDetail>
-                    ]]>
-                    """
+                   <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
+                       <mresp:claimNumber>A0ZZ0046</mresp:claimNumber>
+                       <mresp:issueDate>2014-01-23</mresp:issueDate>
+                       <mresp:serviceDate>2014-01-28</mresp:serviceDate>
+                       <mresp:fee>34000</mresp:fee>
+                   </ind:mcolResponseDetail>
+                 """
             ),
             Lists.newArrayList(
                 "USER_REQUEST_ID_B15",
@@ -232,13 +218,11 @@ public class BulkFeedbackConfigBTwo {
                 "",
                 "",
                 """
-                     <![CDATA[
-                       <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
-                           <mresp:issueDate>2014-01-23</mresp:issueDate>
-                           <mresp:fee>5000</mresp:fee>
-                       </ind:mcolResponseDetail>
-                    ]]>
-                    """
+                   <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
+                       <mresp:issueDate>2014-01-23</mresp:issueDate>
+                       <mresp:fee>5000</mresp:fee>
+                   </ind:mcolResponseDetail>
+                 """
             ),
             Lists.newArrayList(
                 "USER_REQUEST_ID_B17",
