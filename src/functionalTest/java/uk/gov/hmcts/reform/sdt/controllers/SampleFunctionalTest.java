@@ -23,7 +23,7 @@ class SampleFunctionalTest {
 
     @BeforeEach
     public void setUp() {
-        RestAssured.baseURI = testUrl + "/producers-comx/service";
+        RestAssured.baseURI = testUrl;
         RestAssured.useRelaxedHTTPSValidation();
     }
 

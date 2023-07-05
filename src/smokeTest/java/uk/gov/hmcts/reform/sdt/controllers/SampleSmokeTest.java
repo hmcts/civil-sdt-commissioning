@@ -25,7 +25,7 @@ class SampleSmokeTest {
 
     @BeforeEach
     public void setUp() {
-        RestAssured.baseURI = testUrl + "/producers-comx/service";
+        RestAssured.baseURI = testUrl;
         RestAssured.useRelaxedHTTPSValidation();
     }
 
@@ -40,5 +40,5 @@ class SampleSmokeTest {
 
         assertEquals(200, response.statusCode(), "Status 200 was expected");
         assertTrue(response.asString().startsWith("Welcome"), "Response does not contain 'Welcome'");
-    }
+    } 
 }
