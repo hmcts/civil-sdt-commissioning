@@ -1,5 +1,6 @@
 package uk.gov.moj.sdt.producers.comx.config.bulkfeedback;
 
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
 
 import com.google.common.collect.Lists;
@@ -15,7 +16,7 @@ import uk.gov.moj.sdt.producers.comx.utils.BulkFeedbackFactory;
 public class BulkFeedbackConfigBOne {
 
     @Bean("createIndividualRequestB0000001")
-    public void invokingBean() {
+    public void invokingBean() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         MethodInvokingFactoryBean methodInvokingFactoryBean = new MethodInvokingFactoryBean();
         methodInvokingFactoryBean.setTargetObject(bulkFeedbackFactory());
         methodInvokingFactoryBean.setTargetMethod("createIndividualRequests");
@@ -71,7 +72,6 @@ public class BulkFeedbackConfigBOne {
                 "USER_REQUEST_ID_B4",
                 "mcolClaimStatusUpdate",
                 "Initially Accepted",
-                "DUP_CUST_REQID",
                 "",
                 "",
                 ""
@@ -178,7 +178,7 @@ public class BulkFeedbackConfigBOne {
                 "Awaiting Data",
                 "",
                 "",
-                               ""
+                ""
             ),
             Lists.newArrayList(
                 "USER_REQUEST_ID_B14",
@@ -219,14 +219,17 @@ public class BulkFeedbackConfigBOne {
                 ""
             )
         ));
+
+        methodInvokingFactoryBean.prepare();
+        methodInvokingFactoryBean.invoke();
     }
 
     @Bean("uk.gov.moj.sdt.producers.comx.utils.BulkFeedbackFactoryB00000001")
     public BulkFeedbackFactory bulkFeedbackFactory() {
-        return new BulkFeedbackFactory(bulkSumissionB00000001());
+        return new BulkFeedbackFactory(bulkSbumissionB00000001());
     }
 
-    private BulkSubmission bulkSumissionB00000001() {
+    private BulkSubmission bulkSbumissionB00000001() {
         BulkSubmission bulkSubmission = new BulkSubmission();
         bulkSubmission.setCustomerReference("USER_FILE_REFERENCE_B1");
         bulkSubmission.setNumberOfRequest(19);

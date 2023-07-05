@@ -1,5 +1,6 @@
 package uk.gov.moj.sdt.producers.comx.config.bulkfeedback;
 
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
 
 import com.google.common.collect.Lists;
@@ -15,7 +16,7 @@ import uk.gov.moj.sdt.producers.comx.utils.BulkFeedbackFactory;
 public class BulkFeedbackConfigBTwo {
 
     @Bean("createIndividualRequestB0000002")
-    public void invokingBean() {
+    public void invokingBean() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         MethodInvokingFactoryBean methodInvokingFactoryBean = new MethodInvokingFactoryBean();
         methodInvokingFactoryBean.setTargetObject(bulkFeedbackFactory());
         methodInvokingFactoryBean.setTargetMethod("createIndividualRequests");
@@ -248,14 +249,16 @@ public class BulkFeedbackConfigBTwo {
                 ""
             )
         ));
+        methodInvokingFactoryBean.prepare();
+        methodInvokingFactoryBean.invoke();
     }
 
     @Bean("uk.gov.moj.sdt.producers.comx.utils.BulkFeedbackFactoryB00000002")
     public BulkFeedbackFactory bulkFeedbackFactory() {
-        return new BulkFeedbackFactory(bulkSumissionB00000001());
+        return new BulkFeedbackFactory(bulkSubmissionB00000001());
     }
 
-    private BulkSubmission bulkSumissionB00000001() {
+    private BulkSubmission bulkSubmissionB00000001() {
         BulkSubmission bulkSubmission = new BulkSubmission();
         bulkSubmission.setCustomerReference("USER_FILE_REFERENCE_B2");
         bulkSubmission.setNumberOfRequest(19);

@@ -1,5 +1,6 @@
 package uk.gov.moj.sdt.producers.comx.config.bulkfeedback;
 
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
 
 import com.google.common.collect.Lists;
@@ -16,10 +17,10 @@ public class BulkFeedbackConfigCOne {
 
     @Bean("uk.gov.moj.sdt.producers.comx.utils.BulkFeedbackFactoryC00000001")
     public BulkFeedbackFactory bulkFeedbackFactory() {
-        return new BulkFeedbackFactory(bulkSumissionC00000001());
+        return new BulkFeedbackFactory(bulkSubmissionC00000001());
     }
 
-    private BulkSubmission bulkSumissionC00000001() {
+    private BulkSubmission bulkSubmissionC00000001() {
         BulkSubmission bulkSubmission = new BulkSubmission();
         bulkSubmission.setCustomerReference("USER_FILE_REFERENCE_C1");
         bulkSubmission.setNumberOfRequest(106);
@@ -29,7 +30,7 @@ public class BulkFeedbackConfigCOne {
     }
 
     @Bean("createIndividualRequestC0000001")
-    public void invokingBean() {
+    public void invokingBean() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         MethodInvokingFactoryBean methodInvokingFactoryBean = new MethodInvokingFactoryBean();
         methodInvokingFactoryBean.setTargetObject(bulkFeedbackFactory());
         methodInvokingFactoryBean.setTargetMethod("createIndividualRequest");
@@ -166,7 +167,7 @@ public class BulkFeedbackConfigCOne {
                 "USER_REQUEST_ID_c17",
                 "mcolClaim",
                 "Rejected",
-                "16",
+                "17",
                 "Maximum number of lines for the claim particulars exceeded.",
                 ""
             ),
@@ -438,7 +439,7 @@ public class BulkFeedbackConfigCOne {
                 "USER_REQUEST_ID_c52",
                 "mcolJudgment",
                 "Rejected",
-                "51",
+                "52",
                 "Interest cannot be specified when requesting a judgment by admission following a part admission.",
                 ""
             ),
@@ -598,7 +599,7 @@ public class BulkFeedbackConfigCOne {
                 "USER_REQUEST_ID_c70",
                 "mcolClaimStatusUpdate",
                 "Rejected",
-                "71",
+                "70",
                 "Invalid status update requested for this defendant.",
                 ""
             ),
@@ -895,5 +896,7 @@ public class BulkFeedbackConfigCOne {
                 ""
             )
         ));
+        methodInvokingFactoryBean.prepare();
+        methodInvokingFactoryBean.invoke();
     }
 }
