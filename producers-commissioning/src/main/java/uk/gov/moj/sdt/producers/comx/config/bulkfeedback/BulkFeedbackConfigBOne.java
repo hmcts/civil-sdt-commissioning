@@ -214,10 +214,10 @@ public class BulkFeedbackConfigBOne {
 
     @Bean("uk.gov.moj.sdt.producers.comx.utils.BulkFeedbackFactoryB00000001")
     public BulkFeedbackFactory bulkFeedbackFactory() {
-        return new BulkFeedbackFactory(bulkSbumissionB00000001());
+        return new BulkFeedbackFactory(bulkSubmissionB00000001());
     }
 
-    private BulkSubmission bulkSbumissionB00000001() {
+    private BulkSubmission bulkSubmissionB00000001() {
         BulkSubmission bulkSubmission = new BulkSubmission();
         bulkSubmission.setCustomerReference("USER_FILE_REFERENCE_B1");
         bulkSubmission.setNumberOfRequest(19);
