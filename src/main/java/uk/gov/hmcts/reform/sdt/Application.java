@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 
 // Disable auto configuration of data source as civil-sdt-commissioning doesn't use a database
-@SpringBootApplication(exclude = {
+@SpringBootApplication(scanBasePackages = {"uk.gov.moj.sdt", "uk.gov.hmcts.reform.sdt"}, exclude = {
     DataSourceAutoConfiguration.class,
     DataSourceTransactionManagerAutoConfiguration.class,
     HibernateJpaAutoConfiguration.class

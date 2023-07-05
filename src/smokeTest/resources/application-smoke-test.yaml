@@ -1,13 +1,3 @@
-spring:
-  datasource:
-    url: jdbc:tc:postgresql:11:///civil_sdt_integ?stringtype=unspecified
-    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
-    username: ${SDT_DB_USERNAME:postgres}
-    password: ${SDT_DB_PASSWORD:test}
-  jpa:
-    database: postgresql
-  flyway:
-    enabled: false
 sdt:
   tx-timeout:
     default:  1000

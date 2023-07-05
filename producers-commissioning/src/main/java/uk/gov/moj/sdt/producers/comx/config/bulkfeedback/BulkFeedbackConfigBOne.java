@@ -1,5 +1,6 @@
 package uk.gov.moj.sdt.producers.comx.config.bulkfeedback;
 
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
 
 import com.google.common.collect.Lists;
@@ -15,7 +16,7 @@ import uk.gov.moj.sdt.producers.comx.utils.BulkFeedbackFactory;
 public class BulkFeedbackConfigBOne {
 
     @Bean("createIndividualRequestB0000001")
-    public void invokingBean() {
+    public void invokingBean() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         MethodInvokingFactoryBean methodInvokingFactoryBean = new MethodInvokingFactoryBean();
         methodInvokingFactoryBean.setTargetObject(bulkFeedbackFactory());
         methodInvokingFactoryBean.setTargetMethod("createIndividualRequests");
@@ -60,18 +61,15 @@ public class BulkFeedbackConfigBOne {
                 "",
                 "",
                 """
-                    <![CDATA[
-                       <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
-                       <mresp:firstPaymentDate>2014-02-14</mresp:firstPaymentDate>
-                       </ind:mcolResponseDetail>
-                    ]]>
-                      """
+                   <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
+                   <mresp:firstPaymentDate>2014-02-14</mresp:firstPaymentDate>
+                   </ind:mcolResponseDetail>
+                """
             ),
             Lists.newArrayList(
                 "USER_REQUEST_ID_B4",
                 "mcolClaimStatusUpdate",
                 "Initially Accepted",
-                "DUP_CUST_REQID",
                 "",
                 "",
                 ""
@@ -91,15 +89,13 @@ public class BulkFeedbackConfigBOne {
                 "",
                 "",
                 """
-                    <![CDATA[
-                        <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
-                        <mresp:warrantNumber>0Z000150</mresp:warrantNumber>
-                        <mresp:enforcingCourtCode>127</mresp:enforcingCourtCode>
-                        <mresp:enforcingCourtName>BIRMINGHAM</mresp:enforcingCourtName>
-                        <mresp:fee>10000</mresp:fee>
-                        </ind:mcolResponseDetail>
-                    ]]>
-                       """
+                  <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
+                  <mresp:warrantNumber>0Z000150</mresp:warrantNumber>
+                  <mresp:enforcingCourtCode>127</mresp:enforcingCourtCode>
+                  <mresp:enforcingCourtName>BIRMINGHAM</mresp:enforcingCourtName>
+                  <mresp:fee>10000</mresp:fee>
+                  </ind:mcolResponseDetail>
+                """
             ),
             Lists.newArrayList(
                 "USER_REQUEST_ID_B7",
@@ -108,16 +104,14 @@ public class BulkFeedbackConfigBOne {
                 "",
                 "",
                 """
-                    <![CDATA[
-                      <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
-                         <mresp:firstPaymentDate>2014-03-03</mresp:firstPaymentDate>
-                         <mresp:warrantNumber>0Z000151</mresp:warrantNumber>
-                         <mresp:enforcingCourtCode>127</mresp:enforcingCourtCode>
-                         <mresp:enforcingCourtName>BIRMINGHAM</mresp:enforcingCourtName>
-                         <mresp:fee>10000</mresp:fee>
-                      </ind:mcolResponseDetail>
-                    ]]>
-                       """
+                 <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
+                    <mresp:firstPaymentDate>2014-03-03</mresp:firstPaymentDate>
+                    <mresp:warrantNumber>0Z000151</mresp:warrantNumber>
+                    <mresp:enforcingCourtCode>127</mresp:enforcingCourtCode>
+                    <mresp:enforcingCourtName>BIRMINGHAM</mresp:enforcingCourtName>
+                    <mresp:fee>10000</mresp:fee>
+                 </ind:mcolResponseDetail>
+                """
             ),
             Lists.newArrayList(
                 "USER_REQUEST_ID_B8",
@@ -142,12 +136,10 @@ public class BulkFeedbackConfigBOne {
                 "24",
                 "This judgment request is invalid on the referenced claim.",
                 """
-                    <![CDATA[
-                        <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
-                            <mresp:judgmentWarrantStatus>Judgment Request error</mresp:judgmentWarrantStatus>
-                        </ind:mcolResponseDetail>
-                    ]]>
-                    """
+                  <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
+                      <mresp:judgmentWarrantStatus>Judgment Request error</mresp:judgmentWarrantStatus>
+                  </ind:mcolResponseDetail>
+                 """
             ),
             Lists.newArrayList(
                 "USER_REQUEST_ID_B11",
@@ -156,13 +148,11 @@ public class BulkFeedbackConfigBOne {
                 "",
                 "",
                 """
-                    <![CDATA[
-                        <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
-                            <mresp:claimNumber>A0ZZ0045</mresp:claimNumber>
-                            <mresp:fee>21000</mresp:fee>
-                        </ind:mcolResponseDetail>
-                    ]]>
-                      """
+                 <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
+                     <mresp:claimNumber>A0ZZ0045</mresp:claimNumber>
+                     <mresp:fee>21000</mresp:fee>
+                 </ind:mcolResponseDetail>
+                """
             ),
             Lists.newArrayList(
                 "USER_REQUEST_ID_B12",
@@ -178,7 +168,7 @@ public class BulkFeedbackConfigBOne {
                 "Awaiting Data",
                 "",
                 "",
-                               ""
+                ""
             ),
             Lists.newArrayList(
                 "USER_REQUEST_ID_B14",
@@ -203,12 +193,10 @@ public class BulkFeedbackConfigBOne {
                 "",
                 "",
                 """
-                     <![CDATA[
-                      <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
-                      <mresp:fee>5000</mresp:fee>
-                      </ind:mcolResponseDetail>
-                     ]]>
-                    """
+                  <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
+                  <mresp:fee>5000</mresp:fee>
+                  </ind:mcolResponseDetail>
+                 """
             ),
             Lists.newArrayList(
                 "USER_REQUEST_ID_B17",
@@ -219,14 +207,17 @@ public class BulkFeedbackConfigBOne {
                 ""
             )
         ));
+
+        methodInvokingFactoryBean.prepare();
+        methodInvokingFactoryBean.invoke();
     }
 
     @Bean("uk.gov.moj.sdt.producers.comx.utils.BulkFeedbackFactoryB00000001")
     public BulkFeedbackFactory bulkFeedbackFactory() {
-        return new BulkFeedbackFactory(bulkSumissionB00000001());
+        return new BulkFeedbackFactory(bulkSubmissionB00000001());
     }
 
-    private BulkSubmission bulkSumissionB00000001() {
+    private BulkSubmission bulkSubmissionB00000001() {
         BulkSubmission bulkSubmission = new BulkSubmission();
         bulkSubmission.setCustomerReference("USER_FILE_REFERENCE_B1");
         bulkSubmission.setNumberOfRequest(19);

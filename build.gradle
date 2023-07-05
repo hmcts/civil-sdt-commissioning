@@ -225,7 +225,6 @@ ext {
   log4JVersion = '2.20.0'
   lombokVersion = '1.18.24'
   cxfVersion = '3.5.5'
-  postgresqlVersion = '42.5.1'
   sdtCommonVersion = '1.0.0-SDT-128.0.1'
   testcontainers = '1.17.5'
 }
@@ -276,7 +275,6 @@ allprojects {
     implementation group: 'javax.jws', name: 'javax.jws-api', version: '1.1'
     implementation group: 'com.sun.xml.ws', name: 'jaxws-ri', version: '3.0.2'
 
-    testImplementation group: 'org.testcontainers', name: 'postgresql', version: testcontainers
     testImplementation(platform('org.junit:junit-bom:5.8.2'))
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', {
@@ -288,7 +286,6 @@ allprojects {
     testImplementation 'org.mockito:mockito-core:5.2.0'
     testImplementation group: 'org.mockito', name: 'mockito-inline', version: '3.11.1'
     testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'utils', version: sdtCommonVersion, classifier: 'test'
-    testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'utils', version: sdtCommonVersion, classifier: 'integ-test'
     testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'domain', version: sdtCommonVersion, classifier: 'test'
     testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'producers-api', version: sdtCommonVersion, classifier: 'test'
   }
@@ -349,6 +346,10 @@ distZip {
 
 wrapper {
   distributionType = Wrapper.DistributionType.ALL
+}
+
+dependencies {
+  implementation project(':producers-commissioning')
 }
 
 subprojects {

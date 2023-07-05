@@ -15,7 +15,6 @@ public class SubmitQueryConfigMcolDefenceOne {
         submitQueryRequest.setResultCount(6);
         submitQueryRequest.setStatus("Ok");
         String response = """
-            <![CDATA[
             <sub:mcolDefenceDetail xmlns:sub="http://ws.sdt.moj.gov.uk/2013/sdt/SubmitQueryResponseSchema" xmlns:mquer="http://ws.sdt.moj.gov.uk/2013/mcol/QuerySchema">
             		<mquer:claimNumber>A0ZZ1234</mquer:claimNumber>
             		<mquer:defendantResponse defendantId="1">
@@ -72,7 +71,6 @@ public class SubmitQueryConfigMcolDefenceOne {
                       <mquer:responseType>AS</mquer:responseType>
                   </mquer:defendantResponse>
               </sub:mcolDefenceDetail>
-            ]]>
            """;
         submitQueryRequest.setTargetApplicationResponse(response);
         return submitQueryRequest;
