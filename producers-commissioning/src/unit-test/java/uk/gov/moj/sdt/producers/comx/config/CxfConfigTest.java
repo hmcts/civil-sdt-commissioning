@@ -36,6 +36,10 @@ class CxfConfigTest extends AbstractSdtUnitTestBase {
     private static final String INTERCEPTOR_TYPE_OUT = "Out";
     private static final String INTERCEPTOR_TYPE_OUT_FAULT = "Out Fault";
 
+    private static final String PROPERTY_SCHEMA_VALIDATION_ENABLED = "schema-validation-enabled";
+    private static final String PROPERTY_DISABLE_OUTPUTSTREAM_OPTIMIZATION = "disable.outputstream.optimization";
+    private static final String PROPERTY_SOAP_ENV_NAMESPACE_MAP = "soap.env.ns.map";
+
     private static final String ENDPOINT_ADDRESS = "/sdtapi";
 
     @Mock
@@ -126,9 +130,9 @@ class CxfConfigTest extends AbstractSdtUnitTestBase {
                            expectedOutFaultInterceptors, sdtEndpoint.getOutFaultInterceptors());
 
         List<String> expectedProperties = new ArrayList<>();
-        expectedProperties.add("schema-validation-enabled");
-        expectedProperties.add("disable.outputstream.optimization");
-        expectedProperties.add("soap.env.ns.map");
+        expectedProperties.add(PROPERTY_SCHEMA_VALIDATION_ENABLED);
+        expectedProperties.add(PROPERTY_DISABLE_OUTPUTSTREAM_OPTIMIZATION);
+        expectedProperties.add(PROPERTY_SOAP_ENV_NAMESPACE_MAP);
         assertProperties(expectedProperties, sdtEndpoint.getProperties());
 
         assertEquals(ENDPOINT_ADDRESS, sdtEndpoint.getAddress(), "Enpoint has unexpected address");
@@ -162,6 +166,26 @@ class CxfConfigTest extends AbstractSdtUnitTestBase {
         for (String expectedProperty : expectedProperties) {
             assertTrue(properties.containsKey(expectedProperty),
                        "Properties does not contain " + expectedProperty + " property");
+        }
+
+        List<String> expectedNamespaces = new ArrayList<>();
+        expectedNamespaces.add("base");
+        expectedNamespaces.add("breq");
+        expectedNamespaces.add("bresp");
+        expectedNamespaces.add("bfreq");
+        expectedNamespaces.add("bfresp");
+        expectedNamespaces.add("qreq");
+        expectedNamespaces.add("qresp");
+
+        Map<String, Object> actualNamespaces = (Map<String, Object>) properties.get(PROPERTY_SOAP_ENV_NAMESPACE_MAP);
+
+        assertEquals(expectedNamespaces.size(),
+                     actualNamespaces.size(),
+                     "Unexpected number of namespaces");
+
+        for (String expectedNamespace : expectedNamespaces) {
+            assertTrue(actualNamespaces.containsKey(expectedNamespace),
+                       "Namespaces does not contain " + expectedNamespace + " namespace");
         }
     }
 }
