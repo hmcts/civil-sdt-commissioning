@@ -31,11 +31,15 @@ package uk.gov.moj.sdt.producers.comx.sdtws;
  * $LastChangedDate$
  * $LastChangedBy$ */
 
-import org.junit.jupiter.api.BeforeEach;
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.slf4j.LoggerFactory;
 import uk.gov.moj.sdt.handlers.api.IWsCreateBulkRequestHandler;
 import uk.gov.moj.sdt.handlers.api.IWsReadBulkRequestHandler;
 import uk.gov.moj.sdt.handlers.api.IWsReadSubmitQueryHandler;
@@ -53,6 +57,9 @@ import uk.gov.moj.sdt.ws._2013.sdt.bulkresponseschema.BulkResponseType;
 import uk.gov.moj.sdt.ws._2013.sdt.submitqueryrequestschema.SubmitQueryRequestType;
 import uk.gov.moj.sdt.ws._2013.sdt.submitqueryresponseschema.SubmitQueryResponseType;
 
+import java.util.List;
+
+import static ch.qos.logback.classic.Level.DEBUG;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -68,6 +75,16 @@ import static org.mockito.Mockito.when;
  */
 @ExtendWith(MockitoExtension.class)
 class SdtEndpointPortTypeTest extends AbstractSdtUnitTestBase {
+
+    /**
+     * Constant for commissioning SDT service.
+     */
+    private static final String SDT_COMX_SERVICE = "SDT Commissioning";
+    private static final String RESPONSE_EXPECTED = "Response expected";
+    private static final String RUNTIME_EXCEPTION_SHOULD_HAVE_BEEN_THROWN = "Runtime exception should have been thrown";
+    private static final String SDT_SYSTEM_COMPONENT_ERROR =
+            "A SDT system component error has occurred. Please contact the SDT support team for assistance";
+    private static final String ERROR_LOG_MESSAGE_NOT_FOUND = "Expected message not found in log";
 
     /**
      * Test subject.
@@ -93,22 +110,10 @@ class SdtEndpointPortTypeTest extends AbstractSdtUnitTestBase {
     private IWsReadSubmitQueryHandler mockSubmitQueryHandler;
 
     /**
-     * Constant for commissioning SDT service.
-     */
-    private static final String SDT_COMX_SERVICE = "SDT Commissioning";
-    private static final String RESPONSE_EXPECTED = "Response expected";
-    private static final String RUNTIME_EXCEPTION_SHOULD_HAVE_BEEN_THROWN = "Runtime exception should have been thrown";
-
-
-    private static final String SDT_SYSTEM_COMPONENT_ERROR =
-            "A SDT system component error has occurred. Please contact the SDT support team for assistance";
-
-    /**
      * Set up common for all tests.
      */
-    @BeforeEach
     @Override
-    public void setUp ()
+    protected void setUpLocalTests()
     {
         portType = new SdtEndpointPortType(mockCreateBulkRequestHandler, mockBulkRequestHandler, mockSubmitQueryHandler);
     }
@@ -123,7 +128,7 @@ class SdtEndpointPortTypeTest extends AbstractSdtUnitTestBase {
 
         when(mockCreateBulkRequestHandler.submitBulk(dummyRequest)).thenReturn(dummyResponse);
 
-        final BulkResponseType response = portType.submitBulk (dummyRequest);
+        final BulkResponseType response = portType.submitBulk(dummyRequest);
 
         verify(mockCreateBulkRequestHandler).submitBulk(dummyRequest);
         assertNotNull(response, RESPONSE_EXPECTED);
@@ -136,7 +141,7 @@ class SdtEndpointPortTypeTest extends AbstractSdtUnitTestBase {
     @Test
     void testSubmitBulkException() {
         when(mockCreateBulkRequestHandler.submitBulk(any(BulkRequestType.class)))
-                .thenThrow(new RuntimeException ("test"));
+                .thenThrow(new RuntimeException("test"));
 
         try {
             portType.submitBulk(createBulkRequest());
@@ -144,6 +149,35 @@ class SdtEndpointPortTypeTest extends AbstractSdtUnitTestBase {
         } catch (final RuntimeException re) {
             assertEquals(SDT_SYSTEM_COMPONENT_ERROR, re.getMessage());
         }
+
+        verify(mockCreateBulkRequestHandler).submitBulk(any(BulkRequestType.class));
+    }
+
+    @Test
+    void testSubmitBulkLogging() {
+        Logger logger = (Logger) LoggerFactory.getLogger(SdtEndpointPortType.class);
+        Level originalLevel = logger.getLevel();
+        logger.setLevel(DEBUG);
+
+        ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
+        listAppender.start();
+        logger.addAppender(listAppender);
+
+        BulkResponseType bulkResponse = createBulkResponse();
+        when(mockCreateBulkRequestHandler.submitBulk(any(BulkRequestType.class))).thenReturn(bulkResponse);
+
+        BulkRequestType bulkRequest = createBulkRequest();
+        portType.submitBulk(bulkRequest);
+
+        String actualLogMessage = getFirstLogMessage(listAppender.list);
+
+        // Reset log level to original value so as not to affect other tests
+        logger.setLevel(originalLevel);
+        logger.detachAndStopAllAppenders();
+
+        assertEquals("Endpoint called for submit bulk by customer [12345678]",
+                     actualLogMessage,
+                     ERROR_LOG_MESSAGE_NOT_FOUND);
 
         verify(mockCreateBulkRequestHandler).submitBulk(any(BulkRequestType.class));
     }
@@ -156,10 +190,10 @@ class SdtEndpointPortTypeTest extends AbstractSdtUnitTestBase {
         when(mockBulkRequestHandler.getBulkFeedback(any(BulkFeedbackRequestType.class)))
                 .thenReturn(createBulkFeedbackResponse());
 
-        final BulkFeedbackResponseType response = portType.getBulkFeedback(createBulkFeedbackRequestType ());
+        final BulkFeedbackResponseType response = portType.getBulkFeedback(createBulkFeedbackRequestType());
 
         assertNotNull(response, RESPONSE_EXPECTED);
-        assertEquals (SDT_COMX_SERVICE, response.getBulkRequestStatus().getSdtService());
+        assertEquals(SDT_COMX_SERVICE, response.getBulkRequestStatus().getSdtService());
         verify(mockBulkRequestHandler).getBulkFeedback(any(BulkFeedbackRequestType.class));
     }
 
@@ -169,16 +203,45 @@ class SdtEndpointPortTypeTest extends AbstractSdtUnitTestBase {
     @Test
     void testBulkFeedbackException() {
         when(mockBulkRequestHandler.getBulkFeedback(any(BulkFeedbackRequestType.class)))
-                .thenThrow (new RuntimeException("test"));
+                .thenThrow(new RuntimeException("test"));
 
         try {
-            portType.getBulkFeedback (createBulkFeedbackRequestType());
-            fail (RUNTIME_EXCEPTION_SHOULD_HAVE_BEEN_THROWN);
+            portType.getBulkFeedback(createBulkFeedbackRequestType());
+            fail(RUNTIME_EXCEPTION_SHOULD_HAVE_BEEN_THROWN);
         } catch (final RuntimeException re) {
-            assertEquals (SDT_SYSTEM_COMPONENT_ERROR, re.getMessage());
+            assertEquals(SDT_SYSTEM_COMPONENT_ERROR, re.getMessage());
         }
 
-        verify (mockBulkRequestHandler).getBulkFeedback(any(BulkFeedbackRequestType.class));
+        verify(mockBulkRequestHandler).getBulkFeedback(any(BulkFeedbackRequestType.class));
+    }
+
+    @Test
+    void testBulkFeedbackLogging() {
+        Logger logger = (Logger) LoggerFactory.getLogger(SdtEndpointPortType.class);
+        Level originalLevel = logger.getLevel();
+        logger.setLevel(DEBUG);
+
+        ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
+        listAppender.start();
+        logger.addAppender(listAppender);
+
+        BulkFeedbackResponseType bulkFeedbackResponse = createBulkFeedbackResponse();
+        when(mockBulkRequestHandler.getBulkFeedback(any(BulkFeedbackRequestType.class)))
+            .thenReturn(bulkFeedbackResponse);
+
+        BulkFeedbackRequestType bulkFeedbackRequest = createBulkFeedbackRequestType();
+        portType.getBulkFeedback(bulkFeedbackRequest);
+
+        String actualLogMessage = getFirstLogMessage(listAppender.list);
+
+        logger.setLevel(originalLevel);
+        logger.detachAndStopAllAppenders();
+
+        assertEquals("Endpoint called for bulk feedback by customer [12345678]",
+                     actualLogMessage,
+                     ERROR_LOG_MESSAGE_NOT_FOUND);
+
+        verify(mockBulkRequestHandler).getBulkFeedback(any(BulkFeedbackRequestType.class));
     }
 
     /**
@@ -189,7 +252,7 @@ class SdtEndpointPortTypeTest extends AbstractSdtUnitTestBase {
         when(mockSubmitQueryHandler.submitQuery(any(SubmitQueryRequestType.class)))
                 .thenReturn(createSubmitQueryResponse());
 
-        final SubmitQueryResponseType response = portType.submitQuery (createsubmitQueryRequestType());
+        final SubmitQueryResponseType response = portType.submitQuery(createsubmitQueryRequestType());
 
         assertNotNull(response, RESPONSE_EXPECTED);
         assertEquals(SDT_COMX_SERVICE, response.getSdtService());
@@ -202,14 +265,43 @@ class SdtEndpointPortTypeTest extends AbstractSdtUnitTestBase {
     @Test
     void testSubmitQueryException() {
         when(mockSubmitQueryHandler.submitQuery(any(SubmitQueryRequestType.class)))
-                .thenThrow(new RuntimeException ("test"));
+                .thenThrow(new RuntimeException("test"));
 
         try {
-            portType.submitQuery (createsubmitQueryRequestType());
-            fail (RUNTIME_EXCEPTION_SHOULD_HAVE_BEEN_THROWN);
+            portType.submitQuery(createsubmitQueryRequestType());
+            fail(RUNTIME_EXCEPTION_SHOULD_HAVE_BEEN_THROWN);
         } catch (final RuntimeException re) {
             assertEquals(SDT_SYSTEM_COMPONENT_ERROR, re.getMessage());
         }
+
+        verify(mockSubmitQueryHandler).submitQuery(any(SubmitQueryRequestType.class));
+    }
+
+    @Test
+    void testSubmitQueryLogging() {
+        Logger logger = (Logger) LoggerFactory.getLogger(SdtEndpointPortType.class);
+        Level originalLevel = logger.getLevel();
+        logger.setLevel(DEBUG);
+
+        ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
+        listAppender.start();
+        logger.addAppender(listAppender);
+
+        SubmitQueryResponseType submitQueryResponse = createSubmitQueryResponse();
+        when(mockSubmitQueryHandler.submitQuery(any(SubmitQueryRequestType.class)))
+            .thenReturn(submitQueryResponse);
+
+        SubmitQueryRequestType submitQueryRequest = createsubmitQueryRequestType();
+        portType.submitQuery(submitQueryRequest);
+
+        String actualLogMessage = getFirstLogMessage(listAppender.list);
+
+        logger.setLevel(originalLevel);
+        logger.detachAndStopAllAppenders();
+
+        assertEquals("Endpoint called for submit query by customer [12345678]",
+                     actualLogMessage,
+                     ERROR_LOG_MESSAGE_NOT_FOUND);
 
         verify(mockSubmitQueryHandler).submitQuery(any(SubmitQueryRequestType.class));
     }
@@ -295,7 +387,7 @@ class SdtEndpointPortTypeTest extends AbstractSdtUnitTestBase {
      * @return dummy request.
      */
     private SubmitQueryRequestType createsubmitQueryRequestType() {
-        final SubmitQueryRequestType request = new SubmitQueryRequestType ();
+        final SubmitQueryRequestType request = new SubmitQueryRequestType();
 
         final uk.gov.moj.sdt.ws._2013.sdt.submitqueryrequestschema.HeaderType header =
                 new uk.gov.moj.sdt.ws._2013.sdt.submitqueryrequestschema.HeaderType();
@@ -322,4 +414,13 @@ class SdtEndpointPortTypeTest extends AbstractSdtUnitTestBase {
         return response;
     }
 
+    private String getFirstLogMessage(List<ILoggingEvent> logList) {
+        String logMessage = "";
+
+        if (!logList.isEmpty()) {
+            logMessage = logList.get(0).getFormattedMessage();
+        }
+
+        return logMessage;
+    }
 }
