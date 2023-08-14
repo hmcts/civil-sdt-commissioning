@@ -66,6 +66,7 @@ class MockBulkFeedbackServiceTest extends AbstractSdtUnitTestBase {
 
             IBulkSubmission bulkSubmission = mockBulkFeedbackService.getBulkFeedback(bulkFeedbackRequest);
 
+            assertNotNull(bulkSubmission, "BulkSubmission should not be null");
             assertEquals(sdtBulkReference,
                          bulkSubmission.getSdtBulkReference(),
                          "BulkSubmission has unexpected SDT bulk reference");
