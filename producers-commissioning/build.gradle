@@ -8,11 +8,7 @@ sourceSets {
   testUnit {
     java {
       compileClasspath += main.output
-      compileClasspath += main.compileClasspath
-      compileClasspath += test.compileClasspath
       runtimeClasspath += main.output
-      runtimeClasspath += main.runtimeClasspath
-      runtimeClasspath += test.runtimeClasspath
       srcDir file('src/unit-test/java')
     }
     resources.srcDir file('src/unit-test/resources')
@@ -21,11 +17,7 @@ sourceSets {
   testE2E {
     java {
       compileClasspath += main.output
-      compileClasspath += main.compileClasspath
-      compileClasspath += test.compileClasspath
       runtimeClasspath += main.output
-      runtimeClasspath += main.runtimeClasspath
-      runtimeClasspath += test.runtimeClasspath
       srcDir file('src/end-to-end-test/java')
     }
     resources.srcDir file('src/end-to-end-test/resources')
@@ -74,4 +66,21 @@ pitest {
   timestampedReports = true
   failWhenNoMutations = false
   detectInlinedCode = true
+}
+
+test {
+  useJUnitPlatform()
+
+  testLogging {
+    events "passed", "skipped", "failed"
+  }
+
+  reports {
+    html.getRequired().set(true)
+  }
+  failFast = true
+
+  description = "Runs Tests"
+  testClassesDirs = sourceSets.testUnit.output.classesDirs
+  classpath = sourceSets.testUnit.runtimeClasspath
 }

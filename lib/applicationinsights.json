@@ -1,7 +1,7 @@
 {
   "connectionString": "${file:/mnt/secrets/civil-sdt/APPINSIGHTS_CONNECTION_STRING}",
   "role": {
-    "name": "civil-sdt-gateway"
+    "name": "civil-sdt-commissioning"
   },
   "preview": {
     "sampling": {
