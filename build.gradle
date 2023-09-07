@@ -257,7 +257,7 @@ allprojects {
     implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: log4JVersion
     implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: log4JVersion
     implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j2-impl', version: log4JVersion
-    implementation 'com.sun.xml.bind:jaxb-core:4.0.2'
+    implementation 'com.sun.xml.bind:jaxb-core:4.0.3'
     implementation 'com.sun.xml.bind:jaxb-impl:4.0.2'
 
     implementation group: 'io.rest-assured', name: 'rest-assured'
