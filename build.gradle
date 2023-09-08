@@ -245,7 +245,7 @@ allprojects {
   apply plugin: 'java'
 
   dependencies {
-    implementation 'com.google.guava:guava:32.1.1-jre'
+    implementation 'com.google.guava:guava:32.1.2-jre'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop'
