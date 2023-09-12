@@ -289,23 +289,8 @@ allprojects {
   configurations.configureEach {
     resolutionStrategy {
       eachDependency { details ->
-        if (details.requested.group == 'com.github.ben-manes.caffeine' && details.requested.name == 'caffeine') {
-          details.useVersion '2.8.5'
-        }
         if (details.requested.group == 'org.apache.tomcat.embed') {
-          details.useVersion '9.0.75' // CVE-2023-34981
-        }
-        if (details.requested.group == 'org.springframework') {
-          details.useVersion '5.3.27' // CVE-2023-20861
-        }
-        if (details.requested.group == 'org.springframework.boot') {
-          details.useVersion '2.7.12' // CVE-2023-20883
-        }
-        if (details.requested.group == 'com.fasterxml.woodstox' && details.requested.name == 'woodstox-core') {
-          details.useVersion '6.4.0' // CVE-2022-40152
-        }
-        if (details.requested.group == 'org.eclipse.jetty') {
-          details.useVersion '9.4.51.v20230217' // CVE-2023-26049
+          details.useVersion '9.0.80' // CVE-2023-41080
         }
       }
     }
@@ -384,23 +369,8 @@ subprojects {
   configurations.configureEach {
     resolutionStrategy {
       eachDependency { details ->
-        if (details.requested.group == 'com.github.ben-manes.caffeine' && details.requested.name == 'caffeine') {
-          details.useVersion '2.8.5'
-        }
         if (details.requested.group == 'org.apache.tomcat.embed') {
-          details.useVersion '9.0.75' // CVE-2023-34981
-        }
-        if (details.requested.group == 'org.springframework') {
-          details.useVersion '5.3.27' // CVE-2023-20861
-        }
-        if (details.requested.group == 'org.springframework.boot') {
-          details.useVersion '2.7.12' // CVE-2023-20883
-        }
-        if (details.requested.group == 'com.fasterxml.woodstox' && details.requested.name == 'woodstox-core') {
-          details.useVersion '6.4.0' // CVE-2022-40152
-        }
-        if (details.requested.group == 'org.eclipse.jetty') {
-          details.useVersion '9.4.51.v20230217' // CVE-2023-26049
+          details.useVersion '9.0.80' // CVE-2023-41080
         }
       }
     }
