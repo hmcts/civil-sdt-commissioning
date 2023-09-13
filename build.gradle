@@ -263,7 +263,7 @@ allprojects {
     implementation group: 'io.rest-assured', name: 'rest-assured'
     implementation group: 'com.github.hmcts', name: 'civil-sdt-common', version: sdtCommonVersion
     implementation group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
-    implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.13.0'
 
     implementation group: 'org.apache.cxf', name: 'cxf-spring-boot-starter-jaxws', version: cxfVersion
     implementation group: 'org.apache.cxf', name: 'cxf-rt-transports-http-jetty', version: cxfVersion
