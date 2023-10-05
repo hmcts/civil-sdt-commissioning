@@ -11,7 +11,7 @@ plugins {
   id 'com.github.kt3k.coveralls' version '2.12.2'
   id 'com.github.ben-manes.versions' version '0.48.0'
   id "org.jetbrains.gradle.plugin.idea-ext" version "0.10"
-  id 'info.solidsoft.pitest' version '1.9.11' apply(false)
+  id 'info.solidsoft.pitest' version '1.15.0' apply(false)
 }
 
 apply plugin: 'java'
