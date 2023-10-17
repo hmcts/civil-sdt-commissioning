@@ -215,6 +215,7 @@ ext {
   cxfVersion = '3.6.2'
   sdtCommonVersion = '1.1.0'
   testcontainers = '1.17.5'
+  tomcatVersion = '9.0.82'
   limits = [
     'instruction': 99,
     'branch'     : 99,
@@ -290,7 +291,7 @@ allprojects {
     resolutionStrategy {
       eachDependency { details ->
         if (details.requested.group == 'org.apache.tomcat.embed') {
-          details.useVersion '9.0.80' // CVE-2023-41080
+          details.useVersion tomcatVersion
         }
       }
     }
@@ -370,7 +371,7 @@ subprojects {
     resolutionStrategy {
       eachDependency { details ->
         if (details.requested.group == 'org.apache.tomcat.embed') {
-          details.useVersion '9.0.80' // CVE-2023-41080
+          details.useVersion tomcatVersion
         }
       }
     }
