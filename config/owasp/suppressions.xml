@@ -20,8 +20,10 @@
   <!--Please add all the temporary suppression under the below section-->
   <suppress>
     <notes>Temporary Suppression
+      CVE-2023-46589
       CVE-2023-46604
     </notes>
+    <cve>CVE-2023-46589</cve>
     <cve>CVE-2023-46604</cve>
   </suppress>
   <!--End of temporary suppression section -->
