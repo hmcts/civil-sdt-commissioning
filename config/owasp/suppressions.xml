@@ -21,11 +21,9 @@
   <suppress>
     <notes>Temporary Suppression
       CVE-2023-6378
-      CVE-2023-46589
       CVE-2023-46604
     </notes>
     <cve>CVE-2023-6378</cve>
-    <cve>CVE-2023-46589</cve>
     <cve>CVE-2023-46604</cve>
   </suppress>
   <!--End of temporary suppression section -->
