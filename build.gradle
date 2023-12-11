@@ -227,6 +227,7 @@ ext {
 }
 
 ext['snakeyaml.version'] = '1.33'
+ext['logback.version'] = '1.2.13'
 
 allprojects {
   group 'uk.gov.hmcts.civil.sdt'
