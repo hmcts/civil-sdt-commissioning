@@ -440,5 +440,6 @@ subprojects {
     }
   }
 
+  jacocoTestReport.dependsOn compileJava, processResources
   check.dependsOn jacocoTestReport
 }
