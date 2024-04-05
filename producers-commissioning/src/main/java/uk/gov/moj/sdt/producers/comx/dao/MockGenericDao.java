@@ -42,6 +42,7 @@ import uk.gov.moj.sdt.domain.api.IBulkSubmission;
 import uk.gov.moj.sdt.domain.api.IDomainObject;
 import uk.gov.moj.sdt.domain.api.IServiceRequest;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -152,6 +153,11 @@ public class MockGenericDao implements IGenericDao
 
             if (LOGGER.isWarnEnabled ())
             {
+                String requestPayload = null == serviceRequest.getRequestPayload() ? null :
+                    new String(serviceRequest.getRequestPayload(), StandardCharsets.UTF_8);
+
+                String responsePayload = null == serviceRequest.getResponsePayload() ? null :
+                    new String(serviceRequest.getResponsePayload(), StandardCharsets.UTF_8);
                 // Note that log level is unusually set to warn to force this message to be logged under normal logging
                 // configuration as required by NFR which says we should log incoming and outgoing messages on SDT
                 // Commissioning. Since cannot log to the database, we log instead to the log4j file.
@@ -159,8 +165,7 @@ public class MockGenericDao implements IGenericDao
                         "], bulk customer [" + serviceRequest.getBulkCustomerId () + "], bulk reference [" +
                         serviceRequest.getBulkReference () + "], request type [" + serviceRequest.getRequestType () +
                         "], hostname [" + serviceRequest.getServerHostName () + "], request payload [" +
-                        serviceRequest.getRequestPayload () + "], response payload [" +
-                        serviceRequest.getResponsePayload () + "]");
+                        requestPayload + "], response payload [" + responsePayload + "]");
             }
         }
     }
