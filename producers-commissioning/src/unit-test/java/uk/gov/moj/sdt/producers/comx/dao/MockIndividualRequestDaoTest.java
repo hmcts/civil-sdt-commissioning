@@ -72,6 +72,6 @@ class MockIndividualRequestDaoTest extends AbstractSdtUnitTestBase {
     @Test
     void testCountStaleIndividualRequests() {
         long requestCount = mockIndividualRequestDao.countStaleIndividualRequests(MINIMUM_AGE_IN_MINUTES);
-        assertEquals(0L, requestCount, "Count of stale IndividualRequests should be null");
+        assertEquals(0L, requestCount, "Count of stale IndividualRequests should be 0");
     }
 }
