@@ -8,6 +8,7 @@ import uk.gov.moj.sdt.utils.AbstractSdtUnitTestBase;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -21,6 +22,7 @@ class MockIndividualRequestDaoTest extends AbstractSdtUnitTestBase {
     private static final String SDT_REF_ID = "SdtRefId";
 
     private static final int MAX_ATTEMPTS = 3;
+    private static final int MINIMUM_AGE_IN_MINUTES = 15;
 
     private MockIndividualRequestDao mockIndividualRequestDao;
 
@@ -65,5 +67,11 @@ class MockIndividualRequestDaoTest extends AbstractSdtUnitTestBase {
         List<IIndividualRequest> staleIndividualRequests =
             mockIndividualRequestDao.getStaleIndividualRequests(MAX_ATTEMPTS);
         assertNull(staleIndividualRequests, "List of stale IndividualRequests should be null");
+    }
+
+    @Test
+    void testCountStaleIndividualRequests() {
+        long requestCount = mockIndividualRequestDao.countStaleIndividualRequests(MINIMUM_AGE_IN_MINUTES);
+        assertEquals(0L, requestCount, "Count of stale IndividualRequests should be null");
     }
 }

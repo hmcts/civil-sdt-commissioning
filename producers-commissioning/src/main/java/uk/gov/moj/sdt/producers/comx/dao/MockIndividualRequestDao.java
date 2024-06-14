@@ -102,4 +102,10 @@ public class MockIndividualRequestDao extends MockGenericDao implements IIndivid
         // This method is implemented for the producers application only.
         return null;
     }
+
+    @Override
+    public long countStaleIndividualRequests(final int minimumAgeInMinutes) throws DataAccessException {
+        // This method is implemented for the producers application only.
+        return 0L;
+    }
 }
