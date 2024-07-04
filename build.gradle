@@ -213,7 +213,7 @@ ext {
   log4JVersion = '2.23.1'
   lombokVersion = '1.18.24'
   cxfVersion = '3.6.3'
-  sdtCommonVersion = '3.1.0'
+  sdtCommonVersion = '3.2.0'
   testcontainers = '1.17.5'
   tomcatVersion = '9.0.90'
   limits = [
