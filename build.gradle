@@ -215,7 +215,7 @@ ext {
   cxfVersion = '3.6.4'
   sdtCommonVersion = '3.2.1'
   testcontainers = '1.17.5'
-  tomcatVersion = '9.0.93'
+  tomcatVersion = '9.0.94'
   limits = [
     'instruction': 99,
     'branch'     : 99,
