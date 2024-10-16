@@ -10,7 +10,7 @@ plugins {
   id 'org.owasp.dependencycheck' version '9.2.0'
   id 'com.github.kt3k.coveralls' version '2.12.2'
   id 'com.github.ben-manes.versions' version '0.51.0'
-  id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.8"
+  id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.9"
   id 'info.solidsoft.pitest' version '1.15.0' apply(false)
 }
 
@@ -120,7 +120,7 @@ tasks.register('fortifyScan', JavaExec)  {
 }
 
 checkstyle {
-  toolVersion = '10.17.0'
+  toolVersion = '10.18.2'
 }
 
 tasks.withType(Checkstyle).configureEach() {
@@ -210,12 +210,12 @@ dependencyCheck {
 }
 
 ext {
-  log4JVersion = '2.23.1'
+  log4JVersion = '2.24.1'
   lombokVersion = '1.18.24'
   cxfVersion = '3.6.4'
   sdtCommonVersion = '3.2.1'
   testcontainers = '1.17.5'
-  tomcatVersion = '9.0.93'
+  tomcatVersion = '9.0.96'
   limits = [
     'instruction': 99,
     'branch'     : 99,
@@ -264,7 +264,7 @@ allprojects {
     implementation group: 'io.rest-assured', name: 'rest-assured'
     implementation group: 'com.github.hmcts', name: 'civil-sdt-common', version: sdtCommonVersion
     implementation group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
-    implementation group: 'commons-io', name: 'commons-io', version: '2.16.1'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.17.0'
 
     implementation group: 'org.apache.cxf', name: 'cxf-spring-boot-starter-jaxws', version: cxfVersion
     implementation group: 'org.apache.cxf', name: 'cxf-rt-transports-http-jetty', version: cxfVersion
@@ -272,7 +272,7 @@ allprojects {
     implementation group: 'javax.jws', name: 'javax.jws-api', version: '1.1'
     implementation group: 'com.sun.xml.ws', name: 'jaxws-ri', version: '3.0.2'
 
-    testImplementation(platform('org.junit:junit-bom:5.10.3'))
+    testImplementation(platform('org.junit:junit-bom:5.11.2'))
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', {
       exclude group: 'junit', module: 'junit'
@@ -280,7 +280,7 @@ allprojects {
     }
 
     testImplementation 'com.github.hmcts:fortify-client:1.4.4:all'
-    testImplementation 'org.mockito:mockito-core:5.12.0'
+    testImplementation 'org.mockito:mockito-core:5.13.0'
     testImplementation group: 'org.mockito', name: 'mockito-inline', version: '5.2.0'
     testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'utils', version: sdtCommonVersion, classifier: 'test'
     testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'domain', version: sdtCommonVersion, classifier: 'test'
