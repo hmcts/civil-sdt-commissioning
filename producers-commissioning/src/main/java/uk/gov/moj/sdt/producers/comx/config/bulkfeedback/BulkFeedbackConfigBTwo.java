@@ -2,6 +2,8 @@ package uk.gov.moj.sdt.producers.comx.config.bulkfeedback;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
@@ -13,75 +15,107 @@ import uk.gov.moj.sdt.producers.comx.utils.BulkFeedbackFactory;
 
 @Configuration
 @EnableAutoConfiguration
-public class BulkFeedbackConfigBTwo {
+public class BulkFeedbackConfigBTwo extends BulkFeedbackConfigBase {
 
     @Bean("createIndividualRequestB0000002")
-    public void invokingBean() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public void invokingBean()
+        throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         MethodInvokingFactoryBean methodInvokingFactoryBean = new MethodInvokingFactoryBean();
         methodInvokingFactoryBean.setTargetObject(bulkFeedbackFactory());
         methodInvokingFactoryBean.setTargetMethod("createIndividualRequests");
+        methodInvokingFactoryBean.setArguments(createIndividualRequestsList());
+        methodInvokingFactoryBean.prepare();
+        methodInvokingFactoryBean.invoke();
+    }
 
-        methodInvokingFactoryBean.setArguments(Lists.newArrayList(
+    @Bean("uk.gov.moj.sdt.producers.comx.utils.BulkFeedbackFactoryB00000002")
+    public BulkFeedbackFactory bulkFeedbackFactory() {
+        return new BulkFeedbackFactory(bulkSubmissionB00000001());
+    }
+
+    private BulkSubmission bulkSubmissionB00000001() {
+        LocalDateTime createdDate = LocalDateTime.of(2014, 1, 22, 13, 0);
+        return createBulkSubmission("USER_FILE_REFERENCE_B2", 20, BULK_SUBMISSION_STATUS_COMPLETED, createdDate);
+    }
+
+    private List<List<String>> createIndividualRequestsList() {
+        List<List<String>> individualRequestsList = new ArrayList<>();
+
+        individualRequestsList.add(
             Lists.newArrayList(
                 "USER_REQUEST_ID_B1a",
-                "mcolClaim",
-                "Rejected",
+                REQUEST_TYPE_CLAIM,
+                REQUEST_STATUS_REJECTED,
                 "DUP_CUST_REQID",
                 "Duplicate User Request Identifier submitted USER_REQUEST_ID_B1a.",
                 ""
-            ),
+            )
+        );
+        individualRequestsList.add(
             Lists.newArrayList(
                 "USER_REQUEST_ID_B1b",
-                "mcolJudgment",
-                "Rejected",
+                REQUEST_TYPE_JUDGMENT,
+                REQUEST_STATUS_REJECTED,
                 "DUPLD_CUST_REQID",
                 "Unique Request Identifier has been specified more than once within the originating Bulk Request.",
                 ""
-            ),
+            )
+        );
+        individualRequestsList.add(
             Lists.newArrayList(
                 "USER_REQUEST_ID_B1b",
-                "mcolJudgment",
-                "Rejected",
+                REQUEST_TYPE_JUDGMENT,
+                REQUEST_STATUS_REJECTED,
                 "DUPLD_CUST_REQID",
                 "Unique Request Identifier has been specified more than once within the originating Bulk Request.",
                 ""
-            ),
+            )
+        );
+        individualRequestsList.add(
             Lists.newArrayList(
                 "USER_REQUEST_ID_B2",
-                "mcolClaim",
-                "Rejected",
+                REQUEST_TYPE_CLAIM,
+                REQUEST_STATUS_REJECTED,
                 "8",
                 "First defendant's postcode is not in England or Wales.",
                 ""
-            ),
+            )
+        );
+        individualRequestsList.add(
             Lists.newArrayList(
                 "USER_REQUEST_ID_B3",
-                "mcolJudgment",
-                "Rejected",
+                REQUEST_TYPE_JUDGMENT,
+                REQUEST_STATUS_REJECTED,
                 "75",
                 "Rejected by CCBC - rejection number 6.",
                 ""
-            ),
+            )
+        );
+        individualRequestsList.add(
             Lists.newArrayList(
                 "USER_REQUEST_ID_B4",
-                "mcolClaimStatusUpdate",
-                "Accepted",
+                REQUEST_TYPE_CLAIM_STATUS_UPDATE,
+                REQUEST_STATUS_ACCEPTED,
                 "",
                 "",
                 ""
-            ),
+            )
+        );
+        individualRequestsList.add(
             Lists.newArrayList(
                 "USER_REQUEST_ID_B5",
-                "mcolJudgment",
-                "Rejected",
+                REQUEST_TYPE_JUDGMENT,
+                REQUEST_STATUS_REJECTED,
                 "24",
                 "This judgment request is invalid on the referenced claim.",
                 ""
-            ),
+            )
+        );
+        individualRequestsList.add(
             Lists.newArrayList(
                 "USER_REQUEST_ID_B6",
-                "mcolWarrant",
-                "Accepted",
+                REQUEST_TYPE_WARRANT,
+                REQUEST_STATUS_ACCEPTED,
                 "",
                 "",
                 """
@@ -94,11 +128,13 @@ public class BulkFeedbackConfigBTwo {
                       <mresp:judgmentWarrantStatus>Warrant accepted by CCBC</mresp:judgmentWarrantStatus>
                   </ind:mcolResponseDetail>
                  """
-            ),
+            )
+        );
+        individualRequestsList.add(
             Lists.newArrayList(
                 "USER_REQUEST_ID_B7",
-                "mcolJudgmentWarrant",
-                "Accepted",
+                REQUEST_TYPE_JUDGMENT_WARRANT,
+                REQUEST_STATUS_ACCEPTED,
                 "",
                 "",
                 """
@@ -113,27 +149,33 @@ public class BulkFeedbackConfigBTwo {
                      <mresp:judgmentWarrantStatus>Judgment accepted by CCBC. Warrant accepted by CCBC</mresp:judgmentWarrantStatus>
                  </ind:mcolResponseDetail>
                  """
-            ),
+            )
+        );
+        individualRequestsList.add(
             Lists.newArrayList(
                 "USER_REQUEST_ID_B8",
-                "mcolClaimStatusUpdate",
-                "Rejected",
+                REQUEST_TYPE_CLAIM_STATUS_UPDATE,
+                REQUEST_STATUS_REJECTED,
                 "67",
                 "This claim status update is invalid on the referenced claim.",
                 ""
-            ),
+            )
+        );
+        individualRequestsList.add(
             Lists.newArrayList(
                 "USER_REQUEST_ID_B9",
-                "mcolWarrant",
-                "Rejected",
+                REQUEST_TYPE_WARRANT,
+                REQUEST_STATUS_REJECTED,
                 "28",
                 "Defendant 2 is specified but there is only 1 defendant on the claim.",
                 ""
-            ),
+            )
+        );
+        individualRequestsList.add(
             Lists.newArrayList(
                 "USER_REQUEST_ID_B10",
-                "mcolJudgmentWarrant",
-                "Rejected",
+                REQUEST_TYPE_JUDGMENT_WARRANT,
+                REQUEST_STATUS_REJECTED,
                 "24",
                 "This judgment request is invalid on the referenced claim.",
                 """
@@ -141,11 +183,13 @@ public class BulkFeedbackConfigBTwo {
                       <mresp:judgmentWarrantStatus>Judgment Request error</mresp:judgmentWarrantStatus>
                   </ind:mcolResponseDetail>
                  """
-            ),
+            )
+        );
+        individualRequestsList.add(
             Lists.newArrayList(
                 "USER_REQUEST_ID_B11",
-                "mcolClaim",
-                "Accepted",
+                REQUEST_TYPE_CLAIM,
+                REQUEST_STATUS_ACCEPTED,
                 "",
                 "",
                 """
@@ -156,11 +200,13 @@ public class BulkFeedbackConfigBTwo {
                      <mresp:fee>21000</mresp:fee>
                  </ind:mcolResponseDetail>
                  """
-            ),
+            )
+        );
+        individualRequestsList.add(
             Lists.newArrayList(
                 "USER_REQUEST_ID_B12",
-                "mcolWarrant",
-                "Accepted",
+                REQUEST_TYPE_WARRANT,
+                REQUEST_STATUS_ACCEPTED,
                 "",
                 "",
                 """
@@ -173,11 +219,13 @@ public class BulkFeedbackConfigBTwo {
                       <mresp:judgmentWarrantStatus>Warrant accepted by CCBC</mresp:judgmentWarrantStatus>
                   </ind:mcolResponseDetail>
                  """
-            ),
+            )
+        );
+        individualRequestsList.add(
             Lists.newArrayList(
                 "USER_REQUEST_ID_B13",
-                "mcolJudgment",
-                "Accepted",
+                REQUEST_TYPE_JUDGMENT,
+                REQUEST_STATUS_ACCEPTED,
                 "",
                 "",
                 """
@@ -187,11 +235,13 @@ public class BulkFeedbackConfigBTwo {
                       <mresp:judgmentWarrantStatus>Judgment accepted by CCBC</mresp:judgmentWarrantStatus>
                   </ind:mcolResponseDetail>
                 """
-            ),
+            )
+        );
+        individualRequestsList.add(
             Lists.newArrayList(
                 "USER_REQUEST_ID_B14",
-                "mcolClaim",
-                "Accepted",
+                REQUEST_TYPE_CLAIM,
+                REQUEST_STATUS_ACCEPTED,
                 "",
                 "",
                 """
@@ -202,19 +252,23 @@ public class BulkFeedbackConfigBTwo {
                        <mresp:fee>34000</mresp:fee>
                    </ind:mcolResponseDetail>
                  """
-            ),
+            )
+        );
+        individualRequestsList.add(
             Lists.newArrayList(
                 "USER_REQUEST_ID_B15",
-                "mcolJudgment",
-                "Rejected",
+                REQUEST_TYPE_JUDGMENT,
+                REQUEST_STATUS_REJECTED,
                 "CUST_XML_ERR",
                 "Individual Request format could not be processed by the Target Application. Please check the data and resubmit the request, or  contact 'SDT Contact Details' for assistance.",
                 ""
-            ),
+            )
+        );
+        individualRequestsList.add(
             Lists.newArrayList(
                 "USER_REQUEST_ID_B16",
-                "mcolSetAside",
-                "Accepted",
+                REQUEST_TYPE_SET_ASIDE,
+                REQUEST_STATUS_ACCEPTED,
                 "",
                 "",
                 """
@@ -223,31 +277,29 @@ public class BulkFeedbackConfigBTwo {
                        <mresp:fee>5000</mresp:fee>
                    </ind:mcolResponseDetail>
                  """
-            ),
+            )
+        );
+        individualRequestsList.add(
             Lists.newArrayList(
                 "USER_REQUEST_ID_B17",
-                "mcolBreathingSpace",
-                "Accepted",
+                REQUEST_TYPE_BREATHING_SPACE,
+                REQUEST_STATUS_ACCEPTED,
                 "",
                 "",
                 ""
             )
-        ));
-        methodInvokingFactoryBean.prepare();
-        methodInvokingFactoryBean.invoke();
-    }
+        );
+        individualRequestsList.add(
+            Lists.newArrayList(
+                "USER_REQUEST_ID_B18",
+                REQUEST_TYPE_SET_ASIDE,
+                REQUEST_STATUS_REJECTED,
+                "INVALID_CMC_REQUEST",
+                "Individual request USER_REQUEST_ID_B18 for CMC has an invalid request type mcolSetAside",
+                ""
+            )
+        );
 
-    @Bean("uk.gov.moj.sdt.producers.comx.utils.BulkFeedbackFactoryB00000002")
-    public BulkFeedbackFactory bulkFeedbackFactory() {
-        return new BulkFeedbackFactory(bulkSubmissionB00000001());
-    }
-
-    private BulkSubmission bulkSubmissionB00000001() {
-        BulkSubmission bulkSubmission = new BulkSubmission();
-        bulkSubmission.setCustomerReference("USER_FILE_REFERENCE_B2");
-        bulkSubmission.setNumberOfRequest(19);
-        bulkSubmission.setSubmissionStatus("Completed");
-        bulkSubmission.setCreatedDate(LocalDateTime.of(2014, 1, 22, 13, 0));
-        return bulkSubmission;
+        return individualRequestsList;
     }
 }

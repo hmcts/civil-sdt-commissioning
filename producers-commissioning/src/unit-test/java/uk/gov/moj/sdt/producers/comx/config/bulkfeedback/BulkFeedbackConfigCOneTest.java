@@ -35,7 +35,7 @@ class BulkFeedbackConfigCOneTest extends BulkFeedbackConfigTestBase {
         BulkFeedbackFactory bulkFeedbackFactory = bulkFeedbackConfigCOne.bulkFeedbackFactory();
         assertBulkFeedbackFactory(bulkFeedbackFactory,
                                   "USER_FILE_REFERENCE_C1",
-                                  106,
+                                  109,
                                   SUBMISSION_STATUS_COMPLETED,
                                   expectedCreatedDate);
     }
