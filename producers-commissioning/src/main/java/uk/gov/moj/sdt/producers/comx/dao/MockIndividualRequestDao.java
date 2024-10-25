@@ -48,8 +48,7 @@ import java.util.List;
  *
  */
 @Component("IndividualRequestDao")
-public class MockIndividualRequestDao extends MockGenericDao implements IIndividualRequestDao
-{
+public class MockIndividualRequestDao extends MockGenericDao implements IIndividualRequestDao {
 
     /**
      * Pre-defined values for valid customer references.
@@ -59,46 +58,38 @@ public class MockIndividualRequestDao extends MockGenericDao implements IIndivid
     static
     {
 
-        DUPLICATE_REFERENCE = new ArrayList<String> ();
+        DUPLICATE_REFERENCE = new ArrayList<>();
 
-        DUPLICATE_REFERENCE.add ("duplicate");
+        DUPLICATE_REFERENCE.add("duplicate");
 
     }
 
     @Override
-    public IIndividualRequest getIndividualRequest (final IBulkCustomer bulkCustomer, final String customerReference,
-                                                    final int dataRetention)
-    {
-        if (DUPLICATE_REFERENCE.contains (customerReference.toLowerCase ()))
-        {
-            return new IndividualRequest ();
-        }
-        else
-        {
+    public IIndividualRequest getIndividualRequest(final IBulkCustomer bulkCustomer, final String customerReference,
+                                                   final int dataRetention) {
+        if (DUPLICATE_REFERENCE.contains(customerReference.toLowerCase())) {
+            return new IndividualRequest();
+        } else {
             return null;
         }
-
     }
 
     @Override
-    public IIndividualRequest getRequestBySdtReference (final String sdtReferenceId) throws DataAccessException
-    {
+    public IIndividualRequest getRequestBySdtReference(final String sdtReferenceId) throws DataAccessException {
         // This method is implemented for the producers application only.
         return null;
     }
 
     @Override
-    public List<IIndividualRequest> getPendingIndividualRequests (final int maxAllowedAttempts)
-        throws DataAccessException
-    {
+    public List<IIndividualRequest> getPendingIndividualRequests(final int maxAllowedAttempts)
+        throws DataAccessException {
         // This method is implemented for the producers application only.
         return null;
     }
 
     @Override
-    public List<IIndividualRequest> getStaleIndividualRequests (final int maxAllowedAttempts)
-        throws DataAccessException
-    {
+    public List<IIndividualRequest> getStaleIndividualRequests(final int maxAllowedAttempts)
+        throws DataAccessException {
         // This method is implemented for the producers application only.
         return null;
     }
@@ -107,5 +98,12 @@ public class MockIndividualRequestDao extends MockGenericDao implements IIndivid
     public long countStaleIndividualRequests(final int minimumAgeInMinutes) throws DataAccessException {
         // This method is implemented for the producers application only.
         return 0L;
+    }
+
+    @Override
+    public List<IIndividualRequest> getCaseLockedIndividualRequests(final int minimumAgeInMinutes)
+        throws DataAccessException {
+        // This method is implemented for the producers application only.
+        return null;
     }
 }
