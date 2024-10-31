@@ -35,7 +35,7 @@ class BulkFeedbackConfigBOneTest extends BulkFeedbackConfigTestBase {
         BulkFeedbackFactory bulkFeedbackFactory = bulkFeedbackConfigBOne.bulkFeedbackFactory();
         assertBulkFeedbackFactory(bulkFeedbackFactory,
                                   "USER_FILE_REFERENCE_B1",
-                                  19,
+                                  21,
                                   SUBMISSION_STATUS_VALIDATED,
                                   expectedCreatedDate);
     }
