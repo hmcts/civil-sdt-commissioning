@@ -35,7 +35,7 @@ public class BulkFeedbackConfigBTwo extends BulkFeedbackConfigBase {
 
     private BulkSubmission bulkSubmissionB00000001() {
         LocalDateTime createdDate = LocalDateTime.of(2014, 1, 22, 13, 0);
-        return createBulkSubmission("USER_FILE_REFERENCE_B2", 20, BULK_SUBMISSION_STATUS_COMPLETED, createdDate);
+        return createBulkSubmission("USER_FILE_REFERENCE_B2", 21, BULK_SUBMISSION_STATUS_COMPLETED, createdDate);
     }
 
     private List<List<String>> createIndividualRequestsList() {
@@ -297,6 +297,25 @@ public class BulkFeedbackConfigBTwo extends BulkFeedbackConfigBase {
                 "INVALID_CMC_REQUEST",
                 "Individual request USER_REQUEST_ID_B18 for CMC has an invalid request type mcolSetAside",
                 ""
+            )
+        );
+        individualRequestsList.add(
+            Lists.newArrayList(
+                "USER_REQUEST_ID_B19",
+                REQUEST_TYPE_WARRANT,
+                REQUEST_STATUS_ACCEPTED,
+                "",
+                "",
+                """
+                  <ind:mcolResponseDetail xmlns:ind="http://ws.sdt.moj.gov.uk/2013/sdt/BulkFeedbackResponseSchema" xmlns:mresp="http://ws.sdt.moj.gov.uk/2013/mcol/ResponseDetailSchema">
+                      <mresp:issueDate>2014-01-23</mresp:issueDate>
+                      <mresp:warrantNumber>0Z000153</mresp:warrantNumber>
+                      <mresp:enforcingCourtCode>127</mresp:enforcingCourtCode>
+                      <mresp:enforcingCourtName>BIRMINGHAM</mresp:enforcingCourtName>
+                      <mresp:fee>10000</mresp:fee>
+                      <mresp:judgmentWarrantStatus>Warrant accepted by CCBC</mresp:judgmentWarrantStatus>
+                  </ind:mcolResponseDetail>
+                 """
             )
         );
 

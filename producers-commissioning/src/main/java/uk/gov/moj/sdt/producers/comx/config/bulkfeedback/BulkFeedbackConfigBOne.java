@@ -35,7 +35,7 @@ public class BulkFeedbackConfigBOne extends BulkFeedbackConfigBase {
 
     private BulkSubmission bulkSubmissionB00000001() {
         LocalDateTime createdDate = LocalDateTime.of(2014, 1, 22, 13, 0);
-        return createBulkSubmission("USER_FILE_REFERENCE_B1", 20, BULK_SUBMISSION_STATUS_VALIDATED, createdDate);
+        return createBulkSubmission("USER_FILE_REFERENCE_B1", 21, BULK_SUBMISSION_STATUS_VALIDATED, createdDate);
     }
 
     private List<List<String>> createIndividualRequestsList() {
@@ -270,6 +270,16 @@ public class BulkFeedbackConfigBOne extends BulkFeedbackConfigBase {
                 REQUEST_STATUS_REJECTED,
                 "INVALID_CMC_REQUEST",
                 "Individual request USER_REQUEST_ID_B18 for CMC has an invalid request type mcolSetAside",
+                ""
+            )
+        );
+        individualRequestsList.add(
+            Lists.newArrayList(
+                "USER_REQUEST_ID_B19",
+                REQUEST_TYPE_WARRANT,
+                REQUEST_STATUS_CASE_LOCKED,
+                "",
+                "",
                 ""
             )
         );

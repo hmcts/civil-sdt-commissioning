@@ -11,6 +11,7 @@ public class BulkFeedbackConfigBase {
 
     protected static final String REQUEST_STATUS_ACCEPTED = "Accepted";
     protected static final String REQUEST_STATUS_AWAITING_DATA = "Awaiting Data";
+    protected static final String REQUEST_STATUS_CASE_LOCKED = "Case Locked";
     protected static final String REQUEST_STATUS_INITIALLY_ACCEPTED = "Initially Accepted";
     protected static final String REQUEST_STATUS_FORWARDED = "Forwarded";
     protected static final String REQUEST_STATUS_RECEIVED = "Received";

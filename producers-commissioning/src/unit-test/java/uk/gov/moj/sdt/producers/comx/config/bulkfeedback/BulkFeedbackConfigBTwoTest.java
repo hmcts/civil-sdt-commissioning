@@ -35,7 +35,7 @@ class BulkFeedbackConfigBTwoTest extends BulkFeedbackConfigTestBase {
         BulkFeedbackFactory bulkFeedbackFactory = bulkFeedbackConfigBTwo.bulkFeedbackFactory();
         assertBulkFeedbackFactory(bulkFeedbackFactory,
                                   "USER_FILE_REFERENCE_B2",
-                                  20,
+                                  21,
                                   SUBMISSION_STATUS_COMPLETED,
                                   expectedCreatedDate);
     }
