@@ -212,7 +212,7 @@ dependencyCheck {
 ext {
   log4JVersion = '2.24.2'
   lombokVersion = '1.18.24'
-  cxfVersion = '3.6.4'
+  cxfVersion = '3.6.5'
   sdtCommonVersion = '3.2.1'
   testcontainers = '1.17.5'
   tomcatVersion = '9.0.97'
