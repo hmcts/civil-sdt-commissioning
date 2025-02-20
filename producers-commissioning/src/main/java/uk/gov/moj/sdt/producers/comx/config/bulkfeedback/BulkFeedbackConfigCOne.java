@@ -23,7 +23,7 @@ public class BulkFeedbackConfigCOne {
     private BulkSubmission bulkSubmissionC00000001() {
         BulkSubmission bulkSubmission = new BulkSubmission();
         bulkSubmission.setCustomerReference("USER_FILE_REFERENCE_C1");
-        bulkSubmission.setNumberOfRequest(106);
+        bulkSubmission.setNumberOfRequest(108);
         bulkSubmission.setSubmissionStatus("Completed");
         bulkSubmission.setCreatedDate(LocalDateTime.of(2014, 1, 22, 13, 0));
         return bulkSubmission;
@@ -889,6 +889,22 @@ public class BulkFeedbackConfigCOne {
                 "Rejected",
                 "103",
                 "A party on the case is currently in active breathing space.",
+                ""
+            ),
+            Lists.newArrayList(
+                "USER_REQUEST_ID_c106",
+                "mcolClaim",
+                "Rejected",
+                "106",
+                "Claimant or witness on behalf of claimant has been identified as vulnerable but no details have been provided",
+                ""
+            ),
+            Lists.newArrayList(
+                "USER_REQUEST_ID_c107",
+                "mcolClaim",
+                "Rejected",
+                "107",
+                "Details of vulnerable claimant or witness on behalf of claimant have been provided, but the claimant or witness on behalf of claimant has not been identified as vulnerable",
                 ""
             )
         ));
