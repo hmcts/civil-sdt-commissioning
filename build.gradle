@@ -120,7 +120,7 @@ tasks.register('fortifyScan', JavaExec)  {
 }
 
 checkstyle {
-  toolVersion = '10.21.4'
+  toolVersion = '10.22.0'
 }
 
 tasks.withType(Checkstyle).configureEach() {
