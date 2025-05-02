@@ -12,11 +12,17 @@
   <!--End of false positives section -->
 
   <!--Please add all the temporary suppression under the below section-->
-  <!--
   <suppress>
     <notes>Temporary Suppression
+      CVE-2024-6763
+      CVE-2024-8184
+      CVE-2024-22201
+      CVE-2024-38820
     </notes>
+    <cve>CVE-2024-6763</cve>
+    <cve>CVE-2024-8184</cve>
+    <cve>CVE-2024-22201</cve>
+    <cve>CVE-2024-38820</cve>
   </suppress>
-  -->
   <!--End of temporary suppression section -->
 </suppressions>
