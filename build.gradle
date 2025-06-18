@@ -213,7 +213,7 @@ ext {
   log4JVersion = '2.24.3'
   lombokVersion = '1.18.24'
   cxfVersion = '3.6.7'
-  sdtCommonVersion = '3.3.0'
+  sdtCommonVersion = '3.4.0'
   testcontainers = '1.17.5'
   tomcatVersion = '9.0.106'
   limits = [
@@ -237,7 +237,8 @@ allprojects {
     mavenLocal()
     mavenCentral()
     maven {
-      url  "https://jitpack.io"
+      url "https://pkgs.dev.azure.com/hmcts/Artifacts/_packaging/hmcts-lib/maven/v1"
+      name "HMCTS common libraries"
     }
     flatDir {
       dirs "$rootProject.projectDir/libs"
@@ -262,7 +263,16 @@ allprojects {
     implementation 'com.sun.xml.bind:jaxb-impl:4.0.5'
 
     implementation group: 'io.rest-assured', name: 'rest-assured'
-    implementation group: 'com.github.hmcts', name: 'civil-sdt-common', version: sdtCommonVersion
+    implementation group: 'com.github.hmcts.civil-sdt-common', name: 'dao-api', version: sdtCommonVersion
+    implementation group: 'com.github.hmcts.civil-sdt-common', name: 'domain', version: sdtCommonVersion
+    implementation group: 'com.github.hmcts.civil-sdt-common', name: 'handlers', version: sdtCommonVersion
+    implementation group: 'com.github.hmcts.civil-sdt-common', name: 'handlers-api', version: sdtCommonVersion
+    implementation group: 'com.github.hmcts.civil-sdt-common', name: 'interceptors', version: sdtCommonVersion
+    implementation group: 'com.github.hmcts.civil-sdt-common', name: 'producers-api', version: sdtCommonVersion
+    implementation group: 'com.github.hmcts.civil-sdt-common', name: 'services-api', version: sdtCommonVersion
+    implementation group: 'com.github.hmcts.civil-sdt-common', name: 'transformers', version: sdtCommonVersion
+    implementation group: 'com.github.hmcts.civil-sdt-common', name: 'utils', version: sdtCommonVersion
+    implementation group: 'com.github.hmcts.civil-sdt-common', name: 'validators', version: sdtCommonVersion
     implementation group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
     implementation group: 'commons-io', name: 'commons-io', version: '2.19.0'
 
@@ -279,7 +289,7 @@ allprojects {
       exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
 
-    testImplementation 'com.github.hmcts:fortify-client:1.4.8:all'
+    testImplementation 'com.github.hmcts:fortify-client:1.4.9:all'
     testImplementation 'org.mockito:mockito-core:5.13.0'
     testImplementation group: 'org.mockito', name: 'mockito-inline', version: '5.2.0'
     testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'utils', version: sdtCommonVersion, classifier: 'test'
