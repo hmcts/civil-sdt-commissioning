@@ -20,6 +20,7 @@
       CVE-2024-22259
       CVE-2024-38808
       CVE-2024-38820
+      CVE-2025-48924
     </notes>
     <cve>CVE-2024-6763</cve>
     <cve>CVE-2024-8184</cve>
@@ -27,6 +28,7 @@
     <cve>CVE-2024-22259</cve>
     <cve>CVE-2024-38808</cve>
     <cve>CVE-2024-38820</cve>
+    <cve>CVE-2025-48924</cve>
   </suppress>
   <!--End of temporary suppression section -->
 </suppressions>
