@@ -23,6 +23,7 @@
       CVE-2024-38808
       CVE-2024-38820
       CVE-2025-7962 - This is believed to be a false positive. Further investigation required.
+      CVE-2025-15104 - This is believed to be a false positive. Further investigation required.
       CVE-2025-48924
     </notes>
     <cve>CVE-2024-6763</cve>
@@ -34,6 +35,7 @@
     <cve>CVE-2024-38808</cve>
     <cve>CVE-2024-38820</cve>
     <cve>CVE-2025-7962</cve>
+    <cve>CVE-2025-15104</cve>
     <cve>CVE-2025-48924</cve>
   </suppress>
   <!--End of temporary suppression section -->
