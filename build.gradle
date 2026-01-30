@@ -128,7 +128,7 @@ tasks.withType(Checkstyle).configureEach() {
 }
 
 pmd {
-  toolVersion = "6.55.0"
+  toolVersion = "7.21.0"
   sourceSets = [sourceSets.main, sourceSets.test, sourceSets.functionalTest, sourceSets.integrationTest, sourceSets.smokeTest]
   reportsDir = layout.buildDirectory.file("reports/pmd").get().asFile
   // https://github.com/pmd/pmd/issues/876
