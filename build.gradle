@@ -27,7 +27,7 @@ version = '0.0.1'
 
 java {
   toolchain {
-    languageVersion = JavaLanguageVersion.of(17)
+    languageVersion = JavaLanguageVersion.of(21)
   }
 }
 
@@ -213,7 +213,7 @@ ext {
   log4JVersion = '2.25.3'
   lombokVersion = '1.18.24'
   cxfVersion = '3.6.10'
-  sdtCommonVersion = '3.4.0'
+  sdtCommonVersion = '3.4.0-SDT-213.0.1'
   testcontainers = '1.17.5'
   tomcatVersion = '9.0.115'
   limits = [
@@ -228,6 +228,7 @@ ext {
 
 ext['snakeyaml.version'] = '1.33'
 ext['logback.version'] = '1.2.13'
+ext['byte-buddy.version'] = '1.17.7'
 
 allprojects {
   group 'uk.gov.hmcts.civil.sdt'
@@ -256,7 +257,7 @@ allprojects {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
 
     implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.8.0'
-    implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: '6.1.9'
+    implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: '8.0.0'
     implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: log4JVersion
     implementation group: 'org.apache.logging.log4j', name: 'log4j-to-slf4j', version: log4JVersion
     implementation 'com.sun.xml.bind:jaxb-core:4.0.6'
@@ -290,8 +291,7 @@ allprojects {
     }
 
     testImplementation 'com.github.hmcts:fortify-client:1.4.10:all'
-    testImplementation 'org.mockito:mockito-core:5.13.0'
-    testImplementation group: 'org.mockito', name: 'mockito-inline', version: '5.2.0'
+    testImplementation 'org.mockito:mockito-core:5.21.0'
     testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'utils', version: sdtCommonVersion, classifier: 'test'
     testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'domain', version: sdtCommonVersion, classifier: 'test'
     testImplementation group: 'com.github.hmcts.civil-sdt-common', name: 'producers-api', version: sdtCommonVersion, classifier: 'test'
