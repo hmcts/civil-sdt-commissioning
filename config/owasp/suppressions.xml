@@ -3,9 +3,11 @@
   <!--Please add all the false positives under the below section-->
   <suppress>
     <notes>False Positives
+      CVE-2016-1000027 - This CVE should be suppressed by the global DependencyCheck suppressions list.
       CVE-2022-1471 - SnakeYaml's Constructor() class does not restrict types which can be instantiated during deserialization, spring uses SafeConstructor which is the recommended workaround
       CVE-2023-35116 - Not believed to be a valid vulnerability - see https://github.com/FasterXML/jackson-databind/issues/3972
     </notes>
+    <cve>CVE-2016-1000027</cve>
     <cve>CVE-2022-1471</cve>
     <cve>CVE-2023-35116</cve>
   </suppress>
