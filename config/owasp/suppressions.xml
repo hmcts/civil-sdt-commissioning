@@ -27,6 +27,10 @@
       CVE-2025-11143
       CVE-2025-15104 - This is believed to be a false positive. Further investigation required.
       CVE-2025-48924
+      CVE-2026-34483 
+      CVE-2026-34486
+      CVE-2026-34487
+      CVE-2026-34500
     </notes>
     <cve>CVE-2024-6763</cve>
     <cve>CVE-2024-8184</cve>
@@ -41,6 +45,10 @@
     <cve>CVE-2025-11143</cve>
     <cve>CVE-2025-15104</cve>
     <cve>CVE-2025-48924</cve>
+    <cve>CVE-2026-34483</cve>
+    <cve>CVE-2026-34486</cve>
+    <cve>CVE-2026-34487</cve>
+    <cve>CVE-2026-34500</cve>
   </suppress>
   <!--End of temporary suppression section -->
 </suppressions>
