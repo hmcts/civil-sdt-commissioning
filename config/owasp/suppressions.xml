@@ -31,6 +31,10 @@
       CVE-2026-22733
       CVE-2026-22735
       CVE-2026-22737
+      CVE-2026-40972
+      CVE-2026-40973
+      CVE-2026-40975
+      CVE-2026-40977
     </notes>
     <cve>CVE-2024-6763</cve>
     <cve>CVE-2024-8184</cve>
@@ -49,6 +53,10 @@
     <cve>CVE-2026-22733</cve>
     <cve>CVE-2026-22735</cve>
     <cve>CVE-2026-22737</cve>
+    <cve>CVE-2026-40972</cve>
+    <cve>CVE-2026-40973</cve>
+    <cve>CVE-2026-40975</cve>
+    <cve>CVE-2026-40977</cve>
   </suppress>
   <!--End of temporary suppression section -->
 </suppressions>
