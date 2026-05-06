@@ -9,9 +9,9 @@ plugins {
   id 'io.spring.dependency-management' version '1.1.7'
   id 'org.owasp.dependencycheck' version '9.2.0'
   id 'com.github.kt3k.coveralls' version '2.12.2'
-  id 'com.github.ben-manes.versions' version '0.51.0'
+  id 'com.github.ben-manes.versions' version '0.54.0'
   id "org.jetbrains.gradle.plugin.idea-ext" version "1.4.1"
-  id 'info.solidsoft.pitest' version '1.15.0' apply(false)
+  id 'info.solidsoft.pitest' version '1.19.0' apply(false)
 }
 
 apply plugin: 'java'
@@ -210,12 +210,12 @@ dependencyCheck {
 }
 
 ext {
-  log4JVersion = '2.25.3'
+  log4JVersion = '2.25.4'
   lombokVersion = '1.18.24'
   cxfVersion = '3.6.10'
   sdtCommonVersion = '3.4.0-SDT-213.0.2'
   testcontainers = '1.17.5'
-  tomcatVersion = '9.0.116'
+  tomcatVersion = '9.0.117'
   limits = [
     'instruction': 99,
     'branch'     : 99,
@@ -229,6 +229,7 @@ ext {
 ext['snakeyaml.version'] = '1.33'
 ext['logback.version'] = '1.2.13'
 ext['byte-buddy.version'] = '1.17.7'
+ext['commons-lang3.version'] = '3.20.0'
 
 allprojects {
   group 'uk.gov.hmcts.civil.sdt'
