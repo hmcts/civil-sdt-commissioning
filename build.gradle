@@ -230,6 +230,7 @@ ext['snakeyaml.version'] = '1.33'
 ext['logback.version'] = '1.2.13'
 ext['byte-buddy.version'] = '1.17.7'
 ext['commons-lang3.version'] = '3.20.0'
+ext['jetty.version'] = '9.4.58.v20250814'
 
 allprojects {
   group 'uk.gov.hmcts.civil.sdt'
