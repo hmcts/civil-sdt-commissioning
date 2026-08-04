@@ -15,14 +15,9 @@
   <suppress>
     <notes>Temporary Suppression
       CVE-2024-6763
-      CVE-2024-8184
-      CVE-2024-9823
-      CVE-2024-13009
-      CVE-2024-22201
       CVE-2024-22259
       CVE-2024-38808
       CVE-2024-38820
-      CVE-2025-5115
       CVE-2025-7962 - This is believed to be a false positive. Further investigation required.
       CVE-2025-11143
       CVE-2025-15104 - This is believed to be a false positive. Further investigation required.
@@ -87,14 +82,9 @@
       CVE-2026-66144
     </notes>
     <cve>CVE-2024-6763</cve>
-    <cve>CVE-2024-8184</cve>
-    <cve>CVE-2024-9823</cve>
-    <cve>CVE-2024-13009</cve>
-    <cve>CVE-2024-22201</cve>
     <cve>CVE-2024-22259</cve>
     <cve>CVE-2024-38808</cve>
     <cve>CVE-2024-38820</cve>
-    <cve>CVE-2025-5115</cve>
     <cve>CVE-2025-7962</cve>
     <cve>CVE-2025-11143</cve>
     <cve>CVE-2025-15104</cve>
