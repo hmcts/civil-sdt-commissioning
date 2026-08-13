@@ -9,7 +9,7 @@ properties(
                 pipelineTriggers([[$class: 'GitHubPushTrigger']])
         ]
 )
-@Library("Infrastructure")
+@Library("Infrastructure@2.5.0")
 
 import uk.gov.hmcts.contino.GradleBuilder
 
