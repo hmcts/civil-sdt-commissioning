@@ -5,9 +5,31 @@
     <notes>False Positives
       CVE-2022-1471 - SnakeYaml's Constructor() class does not restrict types which can be instantiated during deserialization, spring uses SafeConstructor which is the recommended workaround
       CVE-2023-35116 - Not believed to be a valid vulnerability - see https://github.com/FasterXML/jackson-databind/issues/3972
+      CVE-2026-49875 - This CVE is fixed in version 3.6.12 of Apache CXF. Confirmed at:- https://cxf.apache.org/security-advisories.html
+      CVE-2026-50623 - This CVE is fixed in version 3.6.12 of Apache CXF. Confirmed at:- https://cxf.apache.org/security-advisories.html
+      CVE-2026-50627 - This CVE is fixed in version 3.6.12 of Apache CXF. Confirmed at:- https://cxf.apache.org/security-advisories.html
+      CVE-2026-50628 - This CVE is fixed in version 3.6.12 of Apache CXF. Confirmed at:- https://cxf.apache.org/security-advisories.html
+      CVE-2026-50629 - This CVE is fixed in version 3.6.12 of Apache CXF. Confirmed at:- https://cxf.apache.org/security-advisories.html
+      CVE-2026-50630 - This CVE is fixed in version 3.6.12 of Apache CXF. Confirmed at:- https://cxf.apache.org/security-advisories.html
+      CVE-2026-50631 - This CVE is fixed in version 3.6.12 of Apache CXF. Confirmed at:- https://cxf.apache.org/security-advisories.html
+      CVE-2026-50632 - This CVE is fixed in version 3.6.12 of Apache CXF. Confirmed at:- https://cxf.apache.org/security-advisories.html
+      CVE-2026-50633 - This CVE is fixed in version 3.6.12 of Apache CXF. Confirmed at:- https://cxf.apache.org/security-advisories.html
+      CVE-2026-50634 - This CVE is fixed in version 3.6.12 of Apache CXF. Confirmed at:- https://cxf.apache.org/security-advisories.html
+      CVE-2026-50645 - This CVE is fixed in version 3.6.12 of Apache CXF. Confirmed at:- https://cxf.apache.org/security-advisories.html
     </notes>
     <cve>CVE-2022-1471</cve>
     <cve>CVE-2023-35116</cve>
+    <cve>CVE-2026-49875</cve>
+    <cve>CVE-2026-50623</cve>
+    <cve>CVE-2026-50627</cve>
+    <cve>CVE-2026-50628</cve>
+    <cve>CVE-2026-50629</cve>
+    <cve>CVE-2026-50630</cve>
+    <cve>CVE-2026-50631</cve>
+    <cve>CVE-2026-50632</cve>
+    <cve>CVE-2026-50633</cve>
+    <cve>CVE-2026-50634</cve>
+    <cve>CVE-2026-50645</cve>
   </suppress>
   <!--End of false positives section -->
 
@@ -57,43 +79,17 @@
       CVE-2026-42402
       CVE-2026-42403
       CVE-2026-42404
-      CVE-2026-44417
-      CVE-2026-44618
-      CVE-2026-44930
-      CVE-2026-49875
       CVE-2026-50193
-      CVE-2026-50623
-      CVE-2026-50627
-      CVE-2026-50628
-      CVE-2026-50629
-      CVE-2026-50630
-      CVE-2026-50631
-      CVE-2026-50632
-      CVE-2026-50633
-      CVE-2026-50634
-      CVE-2026-50645
-      CVE-2026-54225
       CVE-2026-54399
       CVE-2026-54428
       CVE-2026-54512
       CVE-2026-54513
       CVE-2026-54514
       CVE-2026-54515
-      CVE-2026-57817
-      CVE-2026-57818
-      CVE-2026-57819
-      CVE-2026-61466
-      CVE-2026-63687
-      CVE-2026-64958
-      CVE-2026-65432
-      CVE-2026-65583
       CVE-2026-66142
       CVE-2026-66143
       CVE-2026-66144
       CVE-2026-66299
-      CVE-2026-66909
-      CVE-2026-68079
-      CVE-2026-68481
     </notes>
     <cve>CVE-2024-6763</cve>
     <cve>CVE-2024-22259</cve>
@@ -138,43 +134,17 @@
     <cve>CVE-2026-42402</cve>
     <cve>CVE-2026-42403</cve>
     <cve>CVE-2026-42404</cve>
-    <cve>CVE-2026-44417</cve>
-    <cve>CVE-2026-44618</cve>
-    <cve>CVE-2026-44930</cve>
-    <cve>CVE-2026-49875</cve>
     <cve>CVE-2026-50193</cve>
-    <cve>CVE-2026-50623</cve>
-    <cve>CVE-2026-50627</cve>
-    <cve>CVE-2026-50628</cve>
-    <cve>CVE-2026-50629</cve>
-    <cve>CVE-2026-50630</cve>
-    <cve>CVE-2026-50631</cve>
-    <cve>CVE-2026-50632</cve>
-    <cve>CVE-2026-50633</cve>
-    <cve>CVE-2026-50634</cve>
-    <cve>CVE-2026-50645</cve>
-    <cve>CVE-2026-54225</cve>
     <cve>CVE-2026-54399</cve>
     <cve>CVE-2026-54428</cve>
     <cve>CVE-2026-54512</cve>
     <cve>CVE-2026-54513</cve>
     <cve>CVE-2026-54514</cve>
     <cve>CVE-2026-54515</cve>
-    <cve>CVE-2026-57817</cve>
-    <cve>CVE-2026-57818</cve>
-    <cve>CVE-2026-57819</cve>
-    <cve>CVE-2026-61466</cve>
-    <cve>CVE-2026-63687</cve>
-    <cve>CVE-2026-64958</cve>
-    <cve>CVE-2026-65432</cve>
-    <cve>CVE-2026-65583</cve>
     <cve>CVE-2026-66142</cve>
     <cve>CVE-2026-66143</cve>
     <cve>CVE-2026-66144</cve>
     <cve>CVE-2026-66299</cve>
-    <cve>CVE-2026-66909</cve>
-    <cve>CVE-2026-68079</cve>
-    <cve>CVE-2026-68481</cve>
   </suppress>
   <!--End of temporary suppression section -->
 </suppressions>
