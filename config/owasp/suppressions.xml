@@ -108,6 +108,9 @@
       CVE-2026-91865
       CVE-2026-91866
       CVE-2026-91867
+      CVE-2026-102495
+      CVE-2026-102496 
+      CVE-2026-102497
     </notes>
     <cve>CVE-2024-6763</cve>
     <cve>CVE-2024-22259</cve>
@@ -181,6 +184,9 @@
     <cve>CVE-2026-91865</cve>
     <cve>CVE-2026-91866</cve>
     <cve>CVE-2026-91867</cve>
+    <cve>CVE-2026-102495</cve>
+    <cve>CVE-2026-102496</cve>
+    <cve>CVE-2026-102497</cve>
   </suppress>
   <!--End of temporary suppression section -->
 </suppressions>
